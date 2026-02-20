@@ -4777,3 +4777,354 @@ div[id^="eventos"] {
         padding-bottom: max(var(--space-lg), env(safe-area-inset-bottom));
     }
 }
+
+
+/* ============================================
+   BOTÓN FLOTANTE DE NAVEGACIÓN MÓVIL
+   ============================================ */
+
+/* Botón flotante de volver/menú */
+.mobile-nav-fab {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    background: var(--primary-600);
+    color: white;
+    border: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-fab:active {
+    transform: scale(0.95);
+}
+
+.mobile-nav-fab.back-btn {
+    background: var(--gray-700);
+}
+
+.mobile-nav-fab.menu-btn {
+    background: var(--primary-600);
+}
+
+/* Mostrar en móvil */
+@media (max-width: 1024px) {
+    .mobile-nav-fab {
+        display: flex;
+    }
+    
+    /* Ajustar posición si hay múltiples botones */
+    .mobile-nav-fab.back-btn {
+        right: 90px;
+    }
+}
+
+/* Menú de acceso rápido móvil */
+.mobile-quick-menu {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    z-index: 9998;
+    background: white;
+    border-radius: var(--radius-xl);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    padding: var(--space-md);
+    min-width: 200px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.mobile-quick-menu.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.mobile-quick-menu-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    color: var(--gray-700);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.mobile-quick-menu-item:hover {
+    background: var(--gray-100);
+    color: var(--primary-600);
+}
+
+.mobile-quick-menu-item span:first-child {
+    font-size: 20px;
+}
+
+/* Breadcrumb móvil */
+.mobile-breadcrumb {
+    display: none;
+    background: white;
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--gray-200);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+    .mobile-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        font-size: 14px;
+    }
+    
+    .mobile-breadcrumb a {
+        color: var(--primary-600);
+        text-decoration: none;
+        font-weight: 600;
+    }
+    
+    .mobile-breadcrumb span {
+        color: var(--gray-500);
+    }
+}
+
+/* Botón de volver en header móvil */
+.mobile-back-header {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-back-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+        margin-bottom: var(--space-lg);
+        padding: var(--space-md);
+        background: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .mobile-back-header button {
+        background: var(--gray-100);
+        border: none;
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-md);
+        font-size: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 40px;
+    }
+    
+    .mobile-back-header h1 {
+        margin: 0;
+        font-size: 18px !important;
+        flex: 1;
+    }
+}
+
+/* Bottom navigation bar móvil */
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid var(--gray-200);
+    padding: var(--space-sm) 0;
+    z-index: 1000;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 768px) {
+    .mobile-bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    
+    .mobile-bottom-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        padding: var(--space-sm);
+        color: var(--gray-600);
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 600;
+        flex: 1;
+        transition: all 0.2s ease;
+    }
+    
+    .mobile-bottom-nav-item span:first-child {
+        font-size: 24px;
+    }
+    
+    .mobile-bottom-nav-item.active {
+        color: var(--primary-600);
+    }
+    
+    .mobile-bottom-nav-item:active {
+        transform: scale(0.95);
+    }
+    
+    /* Ajustar main-content para bottom nav */
+    .main-content {
+        padding-bottom: 80px;
+    }
+}
+
+/* Swipe indicator */
+.swipe-indicator {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: var(--gray-400);
+    font-size: 32px;
+    z-index: 100;
+    animation: swipeHint 2s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+    .swipe-indicator {
+        display: block;
+    }
+}
+
+@keyframes swipeHint {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translateY(-50%) translateX(0);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(-50%) translateX(10px);
+    }
+}
+
+/* Ocultar swipe indicator después de interacción */
+.swipe-indicator.hidden {
+    display: none;
+}
+
+/* Pull to refresh indicator */
+.pull-to-refresh {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--primary-600);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+    z-index: 10000;
+}
+
+.pull-to-refresh.active {
+    transform: translateY(0);
+}
+
+/* Mejoras de accesibilidad táctil */
+@media (max-width: 768px) {
+    /* Áreas táctiles más grandes */
+    a, button, .nav-item, .area-card, .stat-card {
+        min-height: 48px;
+        min-width: 48px;
+    }
+    
+    /* Espaciado entre elementos táctiles */
+    .form-actions .btn {
+        margin-bottom: var(--space-sm);
+    }
+    
+    /* Feedback visual mejorado */
+    .btn:active,
+    .nav-item:active,
+    .area-card:active,
+    .stat-card:active {
+        opacity: 0.7;
+        transform: scale(0.98);
+    }
+}
+
+/* Toast notifications móvil */
+.mobile-toast {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gray-900);
+    color: white;
+    padding: var(--space-md) var(--space-xl);
+    border-radius: var(--radius-full);
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 10001;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    animation: toastSlideUp 0.3s ease;
+}
+
+@keyframes toastSlideUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.mobile-toast.show {
+    display: block;
+}
+
+/* Mejoras para formularios en móvil */
+@media (max-width: 768px) {
+    /* Botones de acción fijos en móvil */
+    .form-actions {
+        position: sticky;
+        bottom: 0;
+        background: white;
+        padding: var(--space-lg);
+        margin: 0 calc(var(--space-lg) * -1);
+        border-top: 2px solid var(--gray-200);
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Scroll suave en formularios largos */
+    .form-card {
+        scroll-margin-top: 80px;
+    }
+}
