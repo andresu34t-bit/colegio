@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración Global - EduGest PME</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>📚 EduGest PME</h2>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar">A</div>
+            <p class="user-name" id="userName">Admin Global</p>
+            <p class="user-role" id="userRole">Super Admin</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="admin-global.html" class="nav-item active">🌐 Vista Global</a>
+            <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
+            <a href="areas.html" class="nav-item">📝 Registrar Evento</a>
+            <a href="informes.html" class="nav-item">📄 Informes</a>
+            <a href="finanzas.html" class="nav-item">💰 Finanzas</a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">🚪 Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <h1>🌐 Panel de Administración Global</h1>
+        <p style="color: var(--gray-600); margin-bottom: var(--space-2xl); font-size: 16px;">Vista consolidada de todos los colegios del sistema</p>
+
+        <!-- Estadísticas Globales -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Colegios</h3>
+                <p class="stat-number" id="totalColegios">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Eventos</h3>
+                <p class="stat-number" id="totalEventos">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Usuarios</h3>
+                <p class="stat-number" id="totalUsuarios">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Presupuesto Total</h3>
+                <p class="stat-number" id="presupuestoTotal">$0</p>
+            </div>
+        </div>
+
+        <!-- Lista de Colegios -->
+        <div class="form-card">
+            <h2>Colegios Registrados</h2>
+            <div id="listaColegios" style="display: grid; gap: var(--space-lg); margin-top: var(--space-lg);">
+                <!-- Se llenará con JavaScript -->
+            </div>
+        </div>
+
+        <!-- Gráficos Comparativos -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>Eventos por Colegio</h3>
+                <canvas id="chartColegios"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <h3>Distribución por Área (Global)</h3>
+                <canvas id="chartAreas"></canvas>
+            </div>
+        </div>
+
+        <!-- Tabla de Eventos Recientes (Todos los Colegios) -->
+        <div class="form-card">
+            <h2>Eventos Recientes (Todos los Colegios)</h2>
+            <div style="overflow-x: auto; margin-top: var(--space-lg);">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Colegio</th>
+                            <th>Fecha</th>
+                            <th>Área</th>
+                            <th>Acción</th>
+                            <th>Docente</th>
+                            <th>N° Eventos</th>
+                            <th>% Éxito</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaEventos">
+                        <!-- Se llenará con JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin-global-demo.js"></script>
+</body>
+</html>

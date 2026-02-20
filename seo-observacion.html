@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Observación de Clase - EduGest</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>📚 EduGest</h2>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar">U</div>
+            <p class="user-name" id="userName">Usuario</p>
+            <p class="user-role" id="userRole">Rol</p>
+            <p class="user-school" id="userSchool" style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 4px;">Colegio</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div style="padding: var(--space-sm) var(--space-lg); color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                Módulo PME
+            </div>
+            <a href="dashboard.html" class="nav-item">📊 Dashboard PME</a>
+            <a href="areas.html" class="nav-item">📝 Registrar Evento</a>
+            <a href="informes.html" class="nav-item">📄 Informes PME</a>
+            <a href="finanzas.html" class="nav-item" id="navFinanzas" style="display: none;">💰 Finanzas</a>
+            
+            <div style="padding: var(--space-lg) var(--space-lg) var(--space-sm) var(--space-lg); color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: var(--space-md);">
+                Observación Clases
+            </div>
+            <a href="seo-dashboard.html" class="nav-item">👨‍🏫 Dashboard</a>
+            <a href="seo-observacion.html" class="nav-item active">➕ Nueva Observación</a>
+            <a href="seo-lista.html" class="nav-item">📋 Mis Observaciones</a>
+            <a href="seo-informes.html" class="nav-item">📊 Informes</a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">🚪 Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <!-- Progress Bar -->
+        <div style="position: fixed; top: 0; left: var(--sidebar-width); right: 0; height: 4px; background: var(--gray-200); z-index: 1000;">
+            <div id="formProgress" style="height: 100%; width: 0%; background: var(--gradient-success); transition: width 0.3s ease; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);"></div>
+        </div>
+
+        <!-- Header -->
+        <div style="margin-bottom: var(--space-2xl); animation: fadeIn 0.5s ease-out;">
+            <div style="display: flex; align-items: center; gap: var(--space-lg); margin-bottom: var(--space-md);">
+                <button onclick="window.location.href='seo-dashboard.html'" class="btn btn-secondary" style="min-width: auto; padding: 14px 24px;">
+                    ← Volver
+                </button>
+                <div>
+                    <h1 style="font-size: 36px; font-weight: 900; margin: 0; background: var(--gradient-success); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                        ✨ Nueva Observación de Clase
+                    </h1>
+                    <p style="color: var(--gray-600); margin: var(--space-xs) 0 0 0; font-weight: 600; font-size: 16px;">
+                        Sistema de evaluación docente institucional
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <form id="observacionForm">
+            <!-- SECCIÓN 1: IDENTIFICACIÓN -->
+            <div class="form-card" style="animation: slideInUp 0.5s ease-out;">
+                <h2>🎯 Identificación de la Observación</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📅 Fecha</label>
+                        <input type="date" id="fecha" required>
+                    </div>
+                    <div class="form-group">
+                        <label>🕐 Hora Inicio</label>
+                        <input type="time" id="horaInicio" required>
+                    </div>
+                    <div class="form-group">
+                        <label>🕑 Hora Término</label>
+                        <input type="time" id="horaTermino" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>👤 Observador</label>
+                        <input type="text" id="observador" required placeholder="Nombre completo">
+                    </div>
+                    <div class="form-group">
+                        <label>💼 Cargo</label>
+                        <select id="cargoObservador" required>
+                            <option value="">Seleccione...</option>
+                            <option value="Director">Director(a)</option>
+                            <option value="UTP">Jefe(a) UTP</option>
+                            <option value="Jefe Departamento">Jefe(a) de Departamento</option>
+                            <option value="Coordinador">Coordinador(a)</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 2: DOCENTE Y CLASE -->
+            <div class="form-card" style="animation: slideInUp 0.6s ease-out;">
+                <h2>👨‍🏫 Información del Docente y la Clase</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>👨‍🏫 Docente Observado</label>
+                        <input type="text" id="docente" required placeholder="Nombre completo">
+                    </div>
+                    <div class="form-group">
+                        <label class="optional">🆔 RUT</label>
+                        <input type="text" id="rutDocente" placeholder="12.345.678-9">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📖 Asignatura</label>
+                        <input type="text" id="asignatura" required placeholder="Ej: Matemáticas">
+                    </div>
+                    <div class="form-group">
+                        <label>🎓 Curso</label>
+                        <input type="text" id="curso" required placeholder="Ej: 8° Básico A">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>👥 Estudiantes Presentes</label>
+                        <input type="number" id="estudiantesPresentes" required min="0" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label>📋 Total Matriculados</label>
+                        <input type="number" id="estudiantesMatriculados" required min="0" placeholder="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📚 Tipo de Clase</label>
+                        <select id="tipoClase" required>
+                            <option value="">Seleccione...</option>
+                            <option value="teórica">Teórica</option>
+                            <option value="práctica">Práctica</option>
+                            <option value="evaluación">Evaluación</option>
+                            <option value="taller">Taller</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>💻 Modalidad</label>
+                        <select id="modalidad" required>
+                            <option value="">Seleccione...</option>
+                            <option value="presencial">Presencial</option>
+                            <option value="online">Online</option>
+                            <option value="híbrida">Híbrida</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>🎯 Objetivo de la Clase</label>
+                    <textarea id="objetivo" required rows="3" placeholder="Describa el objetivo de aprendizaje de la clase..."></textarea>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 3: EVALUACIÓN PEDAGÓGICA -->
+            <div class="form-card" style="animation: slideInUp 0.7s ease-out;">
+                <h2>📊 Evaluación Pedagógica</h2>
+                <p style="color: var(--gray-600); font-size: 15px; margin-bottom: var(--space-2xl); font-weight: 500;">
+                    Evalúe cada aspecto según la siguiente escala
+                </p>
+                
+                <!-- Escala Visual -->
+                <div style="background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%); padding: var(--space-xl); border-radius: var(--radius-xl); margin-bottom: var(--space-2xl); border: 2px solid var(--gray-200);">
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md);">
+                        <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-lg); text-align: center; border: 3px solid var(--danger-600);">
+                            <div style="font-size: 32px; font-weight: 900; color: var(--danger-700); margin-bottom: var(--space-sm);">1</div>
+                            <div style="font-size: 13px; font-weight: 700; color: var(--danger-700);">INSUFICIENTE</div>
+                        </div>
+                        <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-lg); text-align: center; border: 3px solid var(--warning-600);">
+                            <div style="font-size: 32px; font-weight: 900; color: var(--warning-700); margin-bottom: var(--space-sm);">2</div>
+                            <div style="font-size: 13px; font-weight: 700; color: var(--warning-700);">BÁSICO</div>
+                        </div>
+                        <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-lg); text-align: center; border: 3px solid var(--success-600);">
+                            <div style="font-size: 32px; font-weight: 900; color: var(--success-700); margin-bottom: var(--space-sm);">3</div>
+                            <div style="font-size: 13px; font-weight: 700; color: var(--success-700);">ADECUADO</div>
+                        </div>
+                        <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-lg); text-align: center; border: 3px solid var(--info-600);">
+                            <div style="font-size: 32px; font-weight: 900; color: var(--info-700); margin-bottom: var(--space-sm);">4</div>
+                            <div style="font-size: 13px; font-weight: 700; color: var(--info-700);">DESTACADO</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- A. PLANIFICACIÓN -->
+                <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.02) 100%); padding: var(--space-2xl); border-radius: var(--radius-xl); margin-bottom: var(--space-xl); border-left: 6px solid var(--info-600);">
+                    <h3 style="font-size: 22px; font-weight: 900; color: var(--info-700); margin-bottom: var(--space-xl); display: flex; align-items: center; gap: var(--space-md);">
+                        <span style="font-size: 32px;">📋</span> A. PLANIFICACIÓN
+                    </h3>
+                    <div style="display: grid; gap: var(--space-lg);">
+                        <div class="form-group">
+                            <label>A1. El objetivo de la clase es claro y está comunicado</label>
+                            <select id="A1" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>A2. Hay coherencia entre objetivo y actividades</label>
+                            <select id="A2" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>A3. Se evidencia planificación previa</label>
+                            <select id="A3" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>A4. La clase está adecuada al nivel del curso</label>
+                            <select id="A4" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- B. ESTRATEGIAS DE ENSEÑANZA -->
+                <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%); padding: var(--space-2xl); border-radius: var(--radius-xl); margin-bottom: var(--space-xl); border-left: 6px solid var(--success-600);">
+                    <h3 style="font-size: 22px; font-weight: 900; color: var(--success-700); margin-bottom: var(--space-xl); display: flex; align-items: center; gap: var(--space-md);">
+                        <span style="font-size: 32px;">🎯</span> B. ESTRATEGIAS DE ENSEÑANZA
+                    </h3>
+                    <div style="display: grid; gap: var(--space-lg);">
+                        <div class="form-group">
+                            <label>B1. Utiliza metodologías activas y participativas</label>
+                            <select id="B1" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>B2. Usa ejemplos contextualizados y relevantes</label>
+                            <select id="B2" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>B3. Fomenta la participación de los estudiantes</label>
+                            <select id="B3" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>B4. Formula preguntas desafiantes</label>
+                            <select id="B4" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. EVALUACIÓN -->
+                <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.05) 0%, rgba(245, 158, 11, 0.02) 100%); padding: var(--space-2xl); border-radius: var(--radius-xl); margin-bottom: var(--space-xl); border-left: 6px solid var(--warning-600);">
+                    <h3 style="font-size: 22px; font-weight: 900; color: var(--warning-700); margin-bottom: var(--space-xl); display: flex; align-items: center; gap: var(--space-md);">
+                        <span style="font-size: 32px;">✅</span> C. EVALUACIÓN
+                    </h3>
+                    <div style="display: grid; gap: var(--space-lg);">
+                        <div class="form-group">
+                            <label>C1. Implementa evaluación formativa</label>
+                            <select id="C1" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>C2. Entrega retroalimentación efectiva</label>
+                            <select id="C2" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>C3. Verifica la comprensión de los aprendizajes</label>
+                            <select id="C3" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- D. GESTIÓN DE AULA -->
+                <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(139, 92, 246, 0.02) 100%); padding: var(--space-2xl); border-radius: var(--radius-xl); margin-bottom: var(--space-xl); border-left: 6px solid #8b5cf6;">
+                    <h3 style="font-size: 22px; font-weight: 900; color: #7c3aed; margin-bottom: var(--space-xl); display: flex; align-items: center; gap: var(--space-md);">
+                        <span style="font-size: 32px;">👥</span> D. GESTIÓN DE AULA
+                    </h3>
+                    <div style="display: grid; gap: var(--space-lg);">
+                        <div class="form-group">
+                            <label>D1. Genera un clima de aula positivo</label>
+                            <select id="D1" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>D2. Establece normas claras de convivencia</label>
+                            <select id="D2" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>D3. Maneja efectivamente el tiempo de clase</label>
+                            <select id="D3" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- E. INCLUSIÓN -->
+                <div style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.05) 0%, rgba(236, 72, 153, 0.02) 100%); padding: var(--space-2xl); border-radius: var(--radius-xl); border-left: 6px solid #ec4899;">
+                    <h3 style="font-size: 22px; font-weight: 900; color: #db2777; margin-bottom: var(--space-xl); display: flex; align-items: center; gap: var(--space-md);">
+                        <span style="font-size: 32px;">🤝</span> E. INCLUSIÓN Y DIVERSIDAD
+                    </h3>
+                    <div style="display: grid; gap: var(--space-lg);">
+                        <div class="form-group">
+                            <label>E1. Atiende la diversidad del aula</label>
+                            <select id="E1" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>E2. Apoya a estudiantes con dificultades</label>
+                            <select id="E2" required style="font-size: 18px; font-weight: 700; text-align: center;">
+                                <option value="">Seleccione evaluación...</option>
+                                <option value="1">1 - Insuficiente</option>
+                                <option value="2">2 - Básico</option>
+                                <option value="3">3 - Adecuado</option>
+                                <option value="4">4 - Destacado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 4: OBSERVACIONES -->
+            <div class="form-card" style="animation: slideInUp 0.8s ease-out;">
+                <h2>💬 Observaciones y Retroalimentación</h2>
+                
+                <div class="form-group">
+                    <label class="optional">✨ Fortalezas Observadas</label>
+                    <textarea id="fortalezas" rows="4" placeholder="Describa los aspectos positivos y fortalezas del docente..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="optional">📈 Aspectos a Mejorar</label>
+                    <textarea id="aspectosMejorar" rows="4" placeholder="Identifique áreas de oportunidad y desarrollo..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="optional">💡 Recomendaciones</label>
+                    <textarea id="recomendaciones" rows="4" placeholder="Sugerencias específicas para mejorar la práctica pedagógica..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="optional">📝 Comentarios Adicionales</label>
+                    <textarea id="comentarios" rows="3" placeholder="Observaciones generales o notas complementarias..."></textarea>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 5: SEGUIMIENTO -->
+            <div class="form-card" style="animation: slideInUp 0.9s ease-out;">
+                <h2>📅 Seguimiento</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="optional">📆 Próxima Observación</label>
+                        <input type="date" id="fechaProximaObservacion">
+                    </div>
+                    <div class="form-group">
+                        <label class="optional">👤 Responsable</label>
+                        <input type="text" id="responsableSeguimiento" placeholder="Nombre del responsable">
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTONES -->
+            <div class="form-actions" style="animation: slideInUp 1s ease-out;">
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='seo-dashboard.html'">
+                    ← Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    💾 Guardar Observación
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="js/seo-observacion-demo.js"></script>
+</body>
+</html>

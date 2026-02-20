@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Evento - EduGest PME</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>📚 EduGest PME</h2>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar">D</div>
+            <p class="user-name" id="userName">Usuario</p>
+            <p class="user-role" id="userRole">Rol</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
+            <a href="areas.html" class="nav-item active">📝 Registrar Evento</a>
+            <a href="informes.html" class="nav-item">📄 Informes</a>
+            <a href="finanzas.html" class="nav-item" id="navFinanzas" style="display: none;">💰 Finanzas</a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">🚪 Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <div class="form-progress">
+            <div class="form-progress-bar" id="formProgress"></div>
+        </div>
+        
+        <div style="display: flex; align-items: center; margin-bottom: var(--space-2xl);">
+            <button onclick="window.location.href='areas.html'" class="btn btn-secondary" style="margin-right: var(--space-lg); min-width: auto; padding: 14px 24px;">
+                ← Volver
+            </button>
+            <div>
+                <h1 id="tituloArea" style="font-size: 36px; font-weight: 900; margin: 0;">Registrar Evento</h1>
+                <p style="color: var(--gray-600); margin: var(--space-xs) 0 0 0; font-weight: 600; font-size: 16px;" id="descripcionArea">Área seleccionada</p>
+            </div>
+        </div>
+
+        <form id="eventoForm">
+            <div class="form-card">
+                <div id="headerArea" style="padding: var(--space-2xl); border-radius: var(--radius-xl); margin-bottom: var(--space-2xl); text-align: center; box-shadow: var(--shadow-md); position: relative; border: 3px solid; background: white;">
+                    <div id="iconoArea" style="font-size: 64px; margin-bottom: var(--space-lg); position: relative;">📚</div>
+                    <h2 id="nombreArea" style="margin: 0; font-size: 32px; font-weight: 900; position: relative;">Área</h2>
+                    <p id="subtituloArea" style="margin: var(--space-md) 0 0 0; font-size: 16px; font-weight: 600; position: relative; color: var(--gray-700);">Descripción del área</p>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📅 Día</label>
+                        <input type="number" id="dia" min="1" max="31" required placeholder="Ej: 15">
+                    </div>
+
+                    <div class="form-group">
+                        <label>📆 Mes</label>
+                        <select id="mes" required>
+                            <option value="">Seleccionar mes...</option>
+                            <option value="ENERO">Enero</option>
+                            <option value="FEBRERO">Febrero</option>
+                            <option value="MARZO">Marzo</option>
+                            <option value="ABRIL">Abril</option>
+                            <option value="MAYO">Mayo</option>
+                            <option value="JUNIO">Junio</option>
+                            <option value="JULIO">Julio</option>
+                            <option value="AGOSTO">Agosto</option>
+                            <option value="SEPTIEMBRE">Septiembre</option>
+                            <option value="OCTUBRE">Octubre</option>
+                            <option value="NOVIEMBRE">Noviembre</option>
+                            <option value="DICIEMBRE">Diciembre</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- El área está fija y oculta -->
+                <input type="hidden" id="area" value="">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>✏️ Acción</label>
+                        <input type="text" id="accion" required placeholder="Ej: Talleres de lectura, Reuniones de apoderados...">
+                        <small>Describe la acción o actividad realizada</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>🔢 N° Eventos</label>
+                        <input type="number" id="n_eventos" min="0" required placeholder="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📊 % Éxito Objetivo</label>
+                        <input type="number" id="exito_objetivo" min="0" max="100" required placeholder="0-100">
+                    </div>
+
+                    <div class="form-group">
+                        <label>🎯 Meta</label>
+                        <input type="number" id="meta" min="0" required placeholder="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>📈 % Éxito Meta</label>
+                    <input type="number" id="exito_meta" min="0" max="100" required placeholder="0-100">
+                </div>
+
+                <div class="form-group">
+                    <label>👨‍🏫 Docente Responsable</label>
+                    <input type="text" id="docente" required placeholder="Nombre completo del docente">
+                </div>
+
+                <div class="form-group">
+                    <label class="optional">📝 Descripción</label>
+                    <textarea id="descripcion" rows="5" placeholder="Describe la actividad o evento realizado..."></textarea>
+                    <small>Opcional: Agrega información adicional sobre el evento</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='areas.html'">
+                        ← Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="btnGuardar">
+                        💾 Guardar Evento
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Eventos recientes del área -->
+        <div class="form-card" id="eventosRecientes" style="margin-top: var(--space-2xl);">
+            <h3 style="font-size: 22px; font-weight: 900; color: var(--gray-900); margin-bottom: var(--space-xl); display: flex; align-items: center; gap: var(--space-md);">
+                <span style="font-size: 28px;">📋</span>
+                Eventos Recientes - <span id="areaEventos">Área</span>
+            </h3>
+            <div id="listaEventos" style="max-height: 400px; overflow-y: auto;">
+                <!-- Se llenarán con JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/formulario-area-demo.js"></script>
+</body>
+</html>

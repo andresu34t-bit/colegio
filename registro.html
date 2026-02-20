@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - EduGest PME</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-page">
+    <div class="login-card">
+        <div class="login-header">
+            <div class="login-logo">📚</div>
+            <h1>EduGest PME</h1>
+            <p>Registro de Nuevo Colegio</p>
+        </div>
+
+        <form id="registroForm">
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+            <div id="successMessage" class="success-message" style="display: none;"></div>
+            
+            <h3 style="margin: 0 0 var(--space-xl) 0; color: var(--gray-800); font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding-bottom: var(--space-md); border-bottom: 3px solid var(--primary-100);">
+                🏫 Datos del Colegio
+            </h3>
+            
+            <div class="form-group">
+                <label>Nombre del Colegio</label>
+                <input type="text" id="nombreColegio" required placeholder="Ej: Colegio San José">
+            </div>
+
+            <div class="form-group">
+                <label>RBD (Rol Base de Datos)</label>
+                <input type="text" id="rbd" required placeholder="Ej: 12345-6">
+                <small>Identificador único del establecimiento</small>
+            </div>
+
+            <div class="form-group">
+                <label class="optional">Región</label>
+                <select id="region">
+                    <option value="">Seleccionar región...</option>
+                    <option value="Metropolitana">Metropolitana</option>
+                    <option value="Valparaíso">Valparaíso</option>
+                    <option value="Biobío">Biobío</option>
+                    <option value="Araucanía">Araucanía</option>
+                    <option value="Los Lagos">Los Lagos</option>
+                    <option value="Otra">Otra</option>
+                </select>
+            </div>
+
+            <h3 style="margin: var(--space-2xl) 0 var(--space-xl) 0; color: var(--gray-800); font-size: 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding-bottom: var(--space-md); border-bottom: 3px solid var(--primary-100);">
+                👤 Datos del Director
+            </h3>
+
+            <div class="form-group">
+                <label>Nombre Completo</label>
+                <input type="text" id="nombreDirector" required placeholder="Nombre y apellidos">
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" required placeholder="correo@ejemplo.com">
+            </div>
+
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" id="password" required minlength="6" placeholder="Mínimo 6 caracteres">
+                <small>Debe tener al menos 6 caracteres</small>
+            </div>
+
+            <div class="form-group">
+                <label>Confirmar Contraseña</label>
+                <input type="password" id="confirmPassword" required minlength="6" placeholder="Repite la contraseña">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="margin-top: var(--space-lg);">
+                🚀 Registrar Colegio
+            </button>
+            
+            <div class="login-footer">
+                <a href="index.html">¿Ya tienes cuenta? Inicia sesión aquí</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="js/registro-demo.js"></script>
+</body>
+</html>

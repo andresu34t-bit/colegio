@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduGest PME - Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>📚 EduGest PME</h1>
+                <p>Sistema de Gestión Institucional</p>
+            </div>
+
+            <form id="loginForm">
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+                
+                <div style="text-align: center; margin-top: 16px;">
+                    <a href="registro.html" style="color: #3b82f6; text-decoration: none;">
+                        ¿No tienes cuenta? Registra tu colegio
+                    </a>
+                    <br>
+                    <a href="reset.html" style="color: #64748b; text-decoration: none; font-size: 12px; margin-top: 8px; display: inline-block;">
+                        🔧 Problemas con el login? Click aquí
+                    </a>
+                </div>
+            </form>
+
+            <div class="login-footer">
+                <p>Sistema Multi-Colegio - Cada institución con sus propios datos</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth-demo.js"></script>
+</body>
+</html>

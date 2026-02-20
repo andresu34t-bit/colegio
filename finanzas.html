@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanzas - EduGest PME</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>📚 EduGest PME</h2>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar">D</div>
+            <p class="user-name" id="userName">Usuario</p>
+            <p class="user-role" id="userRole">Rol</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
+            <a href="areas.html" class="nav-item">📝 Registrar Evento</a>
+            <a href="informes.html" class="nav-item">📄 Informes</a>
+            <a href="finanzas.html" class="nav-item active">💰 Finanzas</a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">🚪 Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <h1>💰 Módulo Financiero</h1>
+        <p style="color: #f59e0b; font-weight: 600; margin-bottom: 32px;">Solo visible para Director</p>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Presupuesto Total</h3>
+                <p class="stat-number" id="presupuestoTotal">$0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Gastado</h3>
+                <p class="stat-number" style="color: #ef4444;" id="totalGastado">$0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Disponible</h3>
+                <p class="stat-number" style="color: #10b981;" id="disponible">$0</p>
+            </div>
+            <div class="stat-card">
+                <h3>% Ejecutado</h3>
+                <p class="stat-number" id="porcentajeEjecutado">0%</p>
+            </div>
+        </div>
+
+        <div class="form-card">
+            <h2>Registrar Gasto</h2>
+            <form id="gastoForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Fecha *</label>
+                        <input type="date" id="fecha" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Categoría *</label>
+                        <select id="categoria" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="materiales">Materiales</option>
+                            <option value="servicios">Servicios</option>
+                            <option value="capacitacion">Capacitación</option>
+                            <option value="infraestructura">Infraestructura</option>
+                            <option value="otros">Otros</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Monto *</label>
+                        <input type="number" id="monto" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Proveedor</label>
+                        <input type="text" id="proveedor">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="descripcionGasto" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">💾 Registrar Gasto</button>
+            </form>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>Gastos por Categoría</h3>
+                <canvas id="chartCategorias"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <h3>Ejecución Presupuestaria</h3>
+                <canvas id="chartEjecucion"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/finanzas-demo.js"></script>
+</body>
+</html>

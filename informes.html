@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informes PME - EduGest</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>📚 EduGest PME</h2>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar">D</div>
+            <p class="user-name" id="userName">Usuario</p>
+            <p class="user-role" id="userRole">Rol</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
+            <a href="areas.html" class="nav-item">📝 Registrar Evento</a>
+            <a href="informes.html" class="nav-item active">📄 Informes</a>
+            <a href="finanzas.html" class="nav-item" id="navFinanzas" style="display: none;">💰 Finanzas</a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">🚪 Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <!-- Header -->
+        <div style="margin-bottom: var(--space-2xl); animation: fadeIn 0.5s ease-out;">
+            <h1 style="font-size: 36px; font-weight: 900; margin: 0; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                📊 Informes PME 2026
+            </h1>
+            <p style="color: var(--gray-600); margin: var(--space-xs) 0 0 0; font-weight: 600; font-size: 16px;" id="colegioInfo">
+                Generación de informes y análisis de datos
+            </p>
+        </div>
+
+        <!-- Selector de Área -->
+        <div class="form-card" style="animation: slideInUp 0.6s ease-out;">
+            <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-2xl);">
+                <span style="font-size: 28px;">🎯</span>
+                <h2 style="margin: 0; font-size: 24px; font-weight: 900;">Seleccionar Área para Informe</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-2xl);">
+                
+                <!-- Currículum -->
+                <div onclick="seleccionarArea('Currículum')" style="background: white; padding: var(--space-2xl); border-radius: var(--radius-xl); cursor: pointer; position: relative; border: 3px solid var(--info-600); transition: all var(--transition-base); box-shadow: var(--shadow-md);">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 6px; background: var(--info-600); border-radius: var(--radius-xl) var(--radius-xl) 0 0;"></div>
+                    <div style="position: relative; text-align: center;">
+                        <div style="font-size: 64px; margin-bottom: var(--space-lg);">📚</div>
+                        <h3 style="font-size: 24px; font-weight: 900; color: var(--info-700); margin-bottom: var(--space-md); text-transform: uppercase; letter-spacing: 0.5px;">Currículum</h3>
+                        <p style="color: var(--gray-700); font-size: 15px; font-weight: 600; margin-bottom: var(--space-md);">Gestión Pedagógica y Enseñanza</p>
+                        <div style="display: inline-block; padding: 10px 20px; background: var(--info-100); color: var(--info-700); border-radius: var(--radius-full); font-weight: 800; font-size: 14px;" id="statCurriculum">
+                            0 eventos
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Liderazgo -->
+                <div onclick="seleccionarArea('Liderazgo')" style="background: white; padding: var(--space-2xl); border-radius: var(--radius-xl); cursor: pointer; position: relative; border: 3px solid var(--success-600); transition: all var(--transition-base); box-shadow: var(--shadow-md);">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 6px; background: var(--success-600); border-radius: var(--radius-xl) var(--radius-xl) 0 0;"></div>
+                    <div style="position: relative; text-align: center;">
+                        <div style="font-size: 64px; margin-bottom: var(--space-lg);">👔</div>
+                        <h3 style="font-size: 24px; font-weight: 900; color: var(--success-700); margin-bottom: var(--space-md); text-transform: uppercase; letter-spacing: 0.5px;">Liderazgo</h3>
+                        <p style="color: var(--gray-700); font-size: 15px; font-weight: 600; margin-bottom: var(--space-md);">Dirección y Gestión Institucional</p>
+                        <div style="display: inline-block; padding: 10px 20px; background: var(--success-100); color: var(--success-700); border-radius: var(--radius-full); font-weight: 800; font-size: 14px;" id="statLiderazgo">
+                            0 eventos
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Convivencia -->
+                <div onclick="seleccionarArea('Convivencia')" style="background: white; padding: var(--space-2xl); border-radius: var(--radius-xl); cursor: pointer; position: relative; border: 3px solid var(--warning-600); transition: all var(--transition-base); box-shadow: var(--shadow-md);">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 6px; background: var(--warning-600); border-radius: var(--radius-xl) var(--radius-xl) 0 0;"></div>
+                    <div style="position: relative; text-align: center;">
+                        <div style="font-size: 64px; margin-bottom: var(--space-lg);">🤝</div>
+                        <h3 style="font-size: 24px; font-weight: 900; color: var(--warning-700); margin-bottom: var(--space-md); text-transform: uppercase; letter-spacing: 0.5px;">Convivencia</h3>
+                        <p style="color: var(--gray-700); font-size: 15px; font-weight: 600; margin-bottom: var(--space-md);">Clima Escolar y Bienestar</p>
+                        <div style="display: inline-block; padding: 10px 20px; background: var(--warning-100); color: var(--warning-700); border-radius: var(--radius-full); font-weight: 800; font-size: 14px;" id="statConvivencia">
+                            0 eventos
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recursos -->
+                <div onclick="seleccionarArea('Recursos')" style="background: white; padding: var(--space-2xl); border-radius: var(--radius-xl); cursor: pointer; position: relative; border: 3px solid #8b5cf6; transition: all var(--transition-base); box-shadow: var(--shadow-md);">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 6px; background: #8b5cf6; border-radius: var(--radius-xl) var(--radius-xl) 0 0;"></div>
+                    <div style="position: relative; text-align: center;">
+                        <div style="font-size: 64px; margin-bottom: var(--space-lg);">💼</div>
+                        <h3 style="font-size: 24px; font-weight: 900; color: #7c3aed; margin-bottom: var(--space-md); text-transform: uppercase; letter-spacing: 0.5px;">Recursos</h3>
+                        <p style="color: var(--gray-700); font-size: 15px; font-weight: 600; margin-bottom: var(--space-md);">Gestión de Recursos y Finanzas</p>
+                        <div style="display: inline-block; padding: 10px 20px; background: rgba(139, 92, 246, 0.1); color: #7c3aed; border-radius: var(--radius-full); font-weight: 800; font-size: 14px;" id="statRecursos">
+                            0 eventos
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Todas las áreas -->
+            <div onclick="seleccionarArea('TODAS')" style="margin-top: var(--space-xl); padding: var(--space-2xl); background: white; border: 3px solid var(--primary-600); border-radius: var(--radius-xl); cursor: pointer; text-align: center; transition: all var(--transition-base); box-shadow: var(--shadow-lg); position: relative;">
+                <div style="position: absolute; top: 0; left: 0; right: 0; height: 6px; background: var(--primary-600); border-radius: var(--radius-xl) var(--radius-xl) 0 0;"></div>
+                <div style="font-size: 64px; margin-bottom: var(--space-md); position: relative;">📋</div>
+                <h3 style="font-size: 26px; font-weight: 900; margin: 0 0 var(--space-sm) 0; position: relative; color: var(--primary-700);">INFORME CONSOLIDADO</h3>
+                <p style="font-size: 16px; font-weight: 600; margin: 0; position: relative; color: var(--gray-700);">Todas las áreas • Análisis completo</p>
+            </div>
+        </div>
+
+        <!-- Estadísticas del Área -->
+        <div id="areaStats" style="display: none; animation: slideInUp 0.7s ease-out;">
+            <div class="form-card">
+                <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-2xl);">
+                    <span style="font-size: 28px;" id="areaIcono">📊</span>
+                    <h2 style="margin: 0; font-size: 24px; font-weight: 900;" id="areaTitulo">Estadísticas del Área</h2>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card" style="background: white; border: 3px solid var(--info-600);">
+                        <h3 style="color: var(--info-700); font-size: 14px;">Total Eventos</h3>
+                        <p class="stat-number" id="statEventos" style="color: var(--gray-900);">0</p>
+                        <small style="color: var(--gray-600); font-size: 13px;">Actividades registradas</small>
+                    </div>
+                    <div class="stat-card" style="background: white; border: 3px solid var(--success-600);">
+                        <h3 style="color: var(--success-700); font-size: 14px;">Promedio Éxito Objetivo</h3>
+                        <p class="stat-number" id="statExito" style="color: var(--gray-900);">0%</p>
+                        <small style="color: var(--gray-600); font-size: 13px;">Cumplimiento de objetivos</small>
+                    </div>
+                    <div class="stat-card" style="background: white; border: 3px solid var(--warning-600);">
+                        <h3 style="color: var(--warning-700); font-size: 14px;">Docentes Participantes</h3>
+                        <p class="stat-number" id="statDocentes" style="color: var(--gray-900);">0</p>
+                        <small style="color: var(--gray-600); font-size: 13px;">Profesores involucrados</small>
+                    </div>
+                    <div class="stat-card" style="background: white; border: 3px solid #8b5cf6;">
+                        <h3 style="color: #7c3aed; font-size: 14px;">Promedio Éxito Meta</h3>
+                        <p class="stat-number" id="statMeta" style="color: var(--gray-900);">0%</p>
+                        <small style="color: var(--gray-600); font-size: 13px;">Cumplimiento de metas</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico -->
+        <div id="chartArea" style="display: none; animation: slideInUp 0.8s ease-out;">
+            <div class="chart-card">
+                <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+                    <span style="font-size: 28px;">📈</span>
+                    <h3 style="margin: 0; font-size: 20px; font-weight: 800;">Análisis de Desempeño</h3>
+                </div>
+                <canvas id="chartInforme" style="max-height: 400px;"></canvas>
+            </div>
+        </div>
+
+        <!-- Tabla de Eventos -->
+        <div id="tablaEventos" style="display: none; animation: slideInUp 0.9s ease-out;">
+            <div class="form-card">
+                <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xl);">
+                    <span style="font-size: 28px;">📋</span>
+                    <h3 style="margin: 0; font-size: 22px; font-weight: 900;">Detalle de Eventos</h3>
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Área</th>
+                                <th>Acción</th>
+                                <th style="text-align: center;">N° Eventos</th>
+                                <th style="text-align: center;">% Éxito Obj.</th>
+                                <th style="text-align: center;">% Éxito Meta</th>
+                                <th>Docente</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div id="botonesInforme" style="display: none; animation: slideInUp 1s ease-out;">
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="location.reload()">
+                    ← Volver
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="window.print()">
+                    🖨️ Imprimir
+                </button>
+                <button type="button" class="btn btn-primary" id="btnGenerarPDF">
+                    📄 Generar PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/informes-demo.js"></script>
+</body>
+</html>
