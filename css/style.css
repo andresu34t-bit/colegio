@@ -362,6 +362,7 @@ body {
     top: 0;
     box-shadow: var(--shadow-xl);
     z-index: 1000;
+    transition: transform var(--transition-base);
 }
 
 .sidebar-header {
@@ -426,6 +427,24 @@ body {
     flex: 1;
     padding: var(--space-lg) 0;
     overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .nav-item {
@@ -1013,13 +1032,69 @@ tbody td {
    RESPONSIVE DESIGN
    ============================================ */
 
+/* Botón hamburguesa móvil */
+.mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 10001;
+    background: var(--primary-600);
+    color: white;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+}
+
+.mobile-menu-btn:active {
+    transform: scale(0.95);
+}
+
+/* Overlay para cerrar sidebar */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
 @media (max-width: 1024px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
     .sidebar {
         transform: translateX(-100%);
+        z-index: 1000;
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
     }
     
     .main-content {
         margin-left: 0;
+        padding-top: 80px;
     }
     
     .charts-grid {
@@ -4375,9 +4450,85 @@ div[id^="eventos"] {
         font-size: 18px !important;
     }
     
+    /* Sidebar móvil mejorado */
+    .sidebar {
+        width: 85vw;
+        max-width: 320px;
+    }
+    
+    .sidebar-nav {
+        padding: var(--space-md) 0;
+        /* Scrollbar visible y pegable en móvil */
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+    }
+    
+    .sidebar-nav::-webkit-scrollbar {
+        width: 12px;
+        background: rgba(255, 255, 255, 0.05);
+    }
+    
+    .sidebar-nav::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        margin: 8px 0;
+    }
+    
+    .sidebar-nav::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 10px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+    
+    .sidebar-nav::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.6);
+        background-clip: padding-box;
+    }
+    
+    .sidebar-nav::-webkit-scrollbar-thumb:active {
+        background: rgba(255, 255, 255, 0.8);
+        background-clip: padding-box;
+    }
+    
+    /* Separadores de sección más visibles */
+    .sidebar-nav > div[style*="padding"] {
+        padding: var(--space-md) var(--space-lg) !important;
+        margin-top: var(--space-md);
+        background: rgba(255, 255, 255, 0.05);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        letter-spacing: 1px;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+    }
+    
+    /* Nav items más grandes para táctil */
+    .nav-item {
+        padding: 16px var(--space-lg);
+        font-size: 15px;
+        margin: 0 var(--space-sm) var(--space-xs) var(--space-sm);
+        min-height: 52px;
+    }
+    
+    /* Botón de logout más visible */
+    .logout-btn {
+        margin: var(--space-lg);
+        padding: 16px;
+        font-size: 15px;
+        min-height: 52px;
+    }
+    
     /* Main content */
     .main-content {
         padding: var(--space-md);
+        padding-top: 80px;
     }
     
     /* Dashboard header */
@@ -4385,6 +4536,7 @@ div[id^="eventos"] {
         flex-direction: column;
         align-items: flex-start;
         gap: var(--space-md);
+        margin-bottom: var(--space-lg);
     }
     
     .dashboard-header h1 {
@@ -4461,12 +4613,28 @@ div[id^="eventos"] {
         font-size: 48px !important;
     }
     
-    /* Tablas responsivas */
+    /* Tablas responsivas con scroll horizontal visible */
     table {
         display: block;
         overflow-x: auto;
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: var(--primary-600) var(--gray-200);
+    }
+    
+    table::-webkit-scrollbar {
+        height: 10px;
+    }
+    
+    table::-webkit-scrollbar-track {
+        background: var(--gray-200);
+        border-radius: 5px;
+    }
+    
+    table::-webkit-scrollbar-thumb {
+        background: var(--primary-600);
+        border-radius: 5px;
     }
     
     thead th,
@@ -4528,12 +4696,6 @@ div[id^="eventos"] {
     
     .user-role {
         font-size: 12px;
-    }
-    
-    /* Nav items */
-    .nav-item {
-        padding: 12px var(--space-md);
-        font-size: 14px;
     }
     
     /* Dimensiones y escalas */
