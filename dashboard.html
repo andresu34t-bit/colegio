@@ -42,7 +42,12 @@
 
     <div class="main-content">
         <div class="dashboard-header">
-            <h1>Dashboard PME 2026</h1>
+            <div>
+                <h1>Tablero Central Dashboard</h1>
+                <p style="color: var(--gray-600); font-size: 18px; font-weight: 600; margin-top: var(--space-sm);">
+                    Plan de Mejoramiento Educativo PME 2026
+                </p>
+            </div>
             <select id="mesFilter" class="filter-select">
                 <option value="">Todos los meses</option>
                 <option value="ENERO">Enero</option>
@@ -58,6 +63,73 @@
                 <option value="NOVIEMBRE">Noviembre</option>
                 <option value="DICIEMBRE">Diciembre</option>
             </select>
+        </div>
+
+        <!-- Tarjetas de Módulos -->
+        <div class="modules-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-xl); margin-bottom: var(--space-2xl);">
+            <div class="module-card" onclick="window.location.href='areas.html'" style="background: white; padding: var(--space-xl); border-radius: var(--radius-xl); box-shadow: var(--shadow-md); cursor: pointer; transition: all var(--transition-base); border-left: 6px solid var(--primary-600);">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-lg);">
+                    <div style="font-size: 48px;">📋</div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 32px; font-weight: 900; color: var(--primary-600);" id="avancePME">0%</div>
+                        <div style="font-size: 12px; color: var(--gray-500); font-weight: 600;">Avance General</div>
+                    </div>
+                </div>
+                <h3 style="font-size: 20px; font-weight: 800; color: var(--gray-900); margin-bottom: var(--space-sm);">
+                    Plan de Mejoramiento Educativo PME 2026
+                </h3>
+                <button style="width: 100%; padding: 12px; background: var(--gradient-primary); color: white; border: none; border-radius: var(--radius-md); font-weight: 700; margin-top: var(--space-md); cursor: pointer;">
+                    Ingreso
+                </button>
+            </div>
+
+            <div class="module-card" onclick="window.location.href='seo-dashboard.html'" style="background: white; padding: var(--space-xl); border-radius: var(--radius-xl); box-shadow: var(--shadow-md); cursor: pointer; transition: all var(--transition-base); border-left: 6px solid var(--success-600);">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-lg);">
+                    <div style="font-size: 48px;">👨‍🏫</div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 32px; font-weight: 900; color: var(--success-600);" id="avanceOBS">0%</div>
+                        <div style="font-size: 12px; color: var(--gray-500); font-weight: 600;">Avance General</div>
+                    </div>
+                </div>
+                <h3 style="font-size: 20px; font-weight: 800; color: var(--gray-900); margin-bottom: var(--space-sm);">
+                    Observación de Clases 2026
+                </h3>
+                <button style="width: 100%; padding: 12px; background: var(--gradient-success); color: white; border: none; border-radius: var(--radius-md); font-weight: 700; margin-top: var(--space-md); cursor: pointer;">
+                    Ingreso
+                </button>
+            </div>
+
+            <div class="module-card" onclick="alert('Módulo en desarrollo')" style="background: white; padding: var(--space-xl); border-radius: var(--radius-xl); box-shadow: var(--shadow-md); cursor: pointer; transition: all var(--transition-base); border-left: 6px solid var(--info-600);">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-lg);">
+                    <div style="font-size: 48px;">📚</div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 32px; font-weight: 900; color: var(--info-600);" id="avanceCC">0%</div>
+                        <div style="font-size: 12px; color: var(--gray-500); font-weight: 600;">Avance General</div>
+                    </div>
+                </div>
+                <h3 style="font-size: 20px; font-weight: 800; color: var(--gray-900); margin-bottom: var(--space-sm);">
+                    Cobertura Curricular 2026
+                </h3>
+                <button style="width: 100%; padding: 12px; background: var(--gradient-info); color: white; border: none; border-radius: var(--radius-md); font-weight: 700; margin-top: var(--space-md); cursor: pointer;">
+                    Ingreso
+                </button>
+            </div>
+
+            <div class="module-card" onclick="alert('Módulo en desarrollo')" style="background: white; padding: var(--space-xl); border-radius: var(--radius-xl); box-shadow: var(--shadow-md); cursor: pointer; transition: all var(--transition-base); border-left: 6px solid var(--warning-600);">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-lg);">
+                    <div style="font-size: 48px;">🤝</div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 32px; font-weight: 900; color: var(--warning-600);" id="avancePIE">0%</div>
+                        <div style="font-size: 12px; color: var(--gray-500); font-weight: 600;">Avance General</div>
+                    </div>
+                </div>
+                <h3 style="font-size: 20px; font-weight: 800; color: var(--gray-900); margin-bottom: var(--space-sm);">
+                    Programa de Integración Escolar PIE 2026
+                </h3>
+                <button style="width: 100%; padding: 12px; background: var(--gradient-warning); color: white; border: none; border-radius: var(--radius-md); font-weight: 700; margin-top: var(--space-md); cursor: pointer;">
+                    Ingreso
+                </button>
+            </div>
         </div>
 
         <div class="stats-grid">

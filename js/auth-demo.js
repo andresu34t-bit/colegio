@@ -173,8 +173,8 @@ loginForm.addEventListener('submit', (e) => {
             verTodosColegios: usuario.verTodosColegios || false
         }));
         
-        // Redirigir al dashboard
-        window.location.href = 'dashboard.html';
+        // Redirigir a la pantalla de bienvenida
+        window.location.href = 'welcome.html';
     } else {
         // Login fallido
         console.error('❌ Credenciales incorrectas');

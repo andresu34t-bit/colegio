@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido - EduGest</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .welcome-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: var(--space-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-page::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .welcome-container {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(30px);
+            padding: var(--space-2xl);
+            border-radius: var(--radius-2xl);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            animation: slideInUp 0.6s ease-out;
+            text-align: center;
+        }
+
+        .welcome-title {
+            font-size: 48px;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-2xl);
+            letter-spacing: -1px;
+        }
+
+        .welcome-title-editable {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: var(--space-xl);
+            padding: var(--space-md);
+            border: 3px dashed transparent;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-base);
+            cursor: text;
+        }
+
+        .welcome-title-editable:hover {
+            border-color: var(--primary-300);
+            background: var(--gray-50);
+        }
+
+        .welcome-title-editable:focus {
+            outline: none;
+            border-color: var(--primary-600);
+            background: white;
+        }
+
+        .logos-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-2xl);
+            margin: var(--space-2xl) 0;
+            flex-wrap: wrap;
+        }
+
+        .logo-box {
+            width: 180px;
+            height: 180px;
+            border: 3px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            transition: all var(--transition-base);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-box:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-600);
+        }
+
+        .logo-box img {
+            max-width: 140px;
+            max-height: 140px;
+            object-fit: contain;
+        }
+
+        .logo-placeholder {
+            font-size: 64px;
+            color: var(--gray-300);
+            margin-bottom: var(--space-sm);
+        }
+
+        .logo-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: var(--space-sm);
+        }
+
+        .logo-upload-hint {
+            font-size: 11px;
+            color: var(--gray-400);
+            margin-top: var(--space-xs);
+        }
+
+        .welcome-btn {
+            margin-top: var(--space-2xl);
+            padding: 24px 64px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .welcome-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(99, 102, 241, 0.4);
+        }
+
+        .welcome-subtitle {
+            font-size: 16px;
+            color: var(--gray-600);
+            margin-top: var(--space-lg);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="welcome-page">
+    <div class="welcome-container">
+        <h1 class="welcome-title">EDUGEST</h1>
+        
+        <h2 class="welcome-title-editable" contenteditable="true" id="schoolName">
+            Colegio [Nombre]
+        </h2>
+
+        <div class="logos-container">
+            <div class="logo-box" onclick="document.getElementById('logoRed').click()">
+                <input type="file" id="logoRed" accept="image/*" style="display: none;" onchange="loadLogo(this, 'logoRedImg')">
+                <img id="logoRedImg" style="display: none;">
+                <div id="logoRedPlaceholder">
+                    <div class="logo-placeholder">🌐</div>
+                    <div class="logo-label">Logo Red</div>
+                    <div class="logo-upload-hint">Click para subir</div>
+                </div>
+            </div>
+
+            <div class="logo-box" onclick="document.getElementById('logoColegio').click()">
+                <input type="file" id="logoColegio" accept="image/*" style="display: none;" onchange="loadLogo(this, 'logoColegioImg')">
+                <img id="logoColegioImg" style="display: none;">
+                <div id="logoColegioPlaceholder">
+                    <div class="logo-placeholder">🏫</div>
+                    <div class="logo-label">Logo Colegio</div>
+                    <div class="logo-upload-hint">Click para subir</div>
+                </div>
+            </div>
+
+            <div class="logo-box" onclick="document.getElementById('logoEdugest').click()">
+                <input type="file" id="logoEdugest" accept="image/*" style="display: none;" onchange="loadLogo(this, 'logoEdugestImg')">
+                <img id="logoEdugestImg" style="display: none;">
+                <div id="logoEdugestPlaceholder">
+                    <div class="logo-placeholder">📚</div>
+                    <div class="logo-label">Logo EDUGEST</div>
+                    <div class="logo-upload-hint">Click para subir</div>
+                </div>
+            </div>
+        </div>
+
+        <button class="welcome-btn" onclick="ingresarSistema()">
+            🚀 Ingresar al Sistema
+        </button>
+
+        <p class="welcome-subtitle">
+            Sistema de Gestión Educativa Integral
+        </p>
+    </div>
+
+    <script>
+        // Cargar nombre guardado
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedName = localStorage.getItem('schoolName');
+            if (savedName) {
+                document.getElementById('schoolName').textContent = savedName;
+            }
+
+            // Cargar logos guardados
+            loadSavedLogo('logoRed', 'logoRedImg', 'logoRedPlaceholder');
+            loadSavedLogo('logoColegio', 'logoColegioImg', 'logoColegioPlaceholder');
+            loadSavedLogo('logoEdugest', 'logoEdugestImg', 'logoEdugestPlaceholder');
+        });
+
+        // Guardar nombre al editar
+        document.getElementById('schoolName').addEventListener('blur', function() {
+            localStorage.setItem('schoolName', this.textContent);
+        });
+
+        // Función para cargar logo
+        function loadLogo(input, imgId) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById(imgId);
+                    const placeholder = document.getElementById(imgId.replace('Img', 'Placeholder'));
+                    
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    placeholder.style.display = 'none';
+                    
+                    // Guardar en localStorage
+                    localStorage.setItem(imgId, e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Función para cargar logo guardado
+        function loadSavedLogo(inputId, imgId, placeholderId) {
+            const savedLogo = localStorage.getItem(imgId);
+            if (savedLogo) {
+                const img = document.getElementById(imgId);
+                const placeholder = document.getElementById(placeholderId);
+                
+                img.src = savedLogo;
+                img.style.display = 'block';
+                placeholder.style.display = 'none';
+            }
+        }
+
+        // Función para ingresar al sistema
+        function ingresarSistema() {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>
