@@ -205,7 +205,6 @@ document.getElementById('observacionForm').addEventListener('submit', (e) => {
             observador: document.getElementById('observador').value,
             cargoObservador: document.getElementById('cargoObservador').value,
             docente: document.getElementById('docente').value,
-            rutDocente: document.getElementById('rutDocente').value,
             asignatura: document.getElementById('asignatura').value,
             curso: document.getElementById('curso').value,
             tipoClase: document.getElementById('tipoClase').value,

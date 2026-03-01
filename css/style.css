@@ -176,6 +176,23 @@ body {
     margin-bottom: var(--space-2xl);
 }
 
+.login-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+}
+
+.login-logo-img {
+    max-width: 180px;
+    max-height: 180px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(99, 102, 241, 0.3));
+    animation: pulse 2s ease-in-out infinite;
+}
+
 .login-logo {
     font-size: 64px;
     margin-bottom: var(--space-lg);
@@ -369,15 +386,41 @@ body {
     padding: var(--space-xl) var(--space-lg);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.sidebar-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar-logo-img {
+    max-width: 80px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.2));
+}
+
+.sidebar-logo-emoji {
+    font-size: 48px;
+    filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.2));
 }
 
 .sidebar-header h2 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 800;
     background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-align: center;
+    margin: 0;
 }
 
 .user-info {
@@ -4448,6 +4491,25 @@ div[id^="eventos"] {
     
     h3 {
         font-size: 18px !important;
+    }
+    
+    /* Logo responsive */
+    .login-logo-img {
+        max-width: 140px;
+        max-height: 140px;
+    }
+    
+    .sidebar-logo-img {
+        max-width: 60px;
+        max-height: 60px;
+    }
+    
+    .sidebar-logo-emoji {
+        font-size: 36px;
+    }
+    
+    .sidebar-header h2 {
+        font-size: 18px;
     }
     
     /* Sidebar móvil mejorado */
