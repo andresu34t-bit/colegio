@@ -50,17 +50,26 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 
 // Cargar gastos desde localStorage (solo del colegio actual)
 function loadGastos() {
-    const gastosStr = localStorage.getItem('demoGastos');
-    const todosGastos = gastosStr ? JSON.parse(gastosStr) : [];
+    const finanzasStr = localStorage.getItem('finanzas');
+    const todasFinanzas = finanzasStr ? JSON.parse(finanzasStr) : [];
     
-    // Filtrar solo gastos del colegio actual
-    allGastos = todosGastos.filter(g => g.colegioId === currentUser.colegioId);
+    // Filtrar solo gastos (egresos) del colegio actual
+    allGastos = todasFinanzas.filter(f => 
+        f.colegioId === currentUser.colegioId && f.tipo === 'Egreso'
+    ).map(f => ({
+        colegioId: f.colegioId,
+        fecha: f.fecha,
+        categoria: f.categoria.toLowerCase().replace(/\s+/g, ''),
+        monto: f.monto,
+        proveedor: f.responsable,
+        descripcion: f.descripcion
+    }));
     
     // Si no hay gastos, crear datos demo para este colegio
     if (allGastos.length === 0) {
         allGastos = getGastosDemo();
         // Guardar gastos demo
-        const gastosActualizados = [...todosGastos, ...allGastos];
+        const gastosActualizados = [...todasFinanzas, ...allGastos];
         localStorage.setItem('demoGastos', JSON.stringify(gastosActualizados));
     }
     

@@ -166,43 +166,17 @@
 </head>
 <body class="welcome-page">
     <div class="welcome-container">
-        <h1 class="welcome-title">EDUGEST</h1>
-        
-        <h2 class="welcome-title-editable" contenteditable="true" id="schoolName">
-            Colegio [Nombre]
-        </h2>
-
-        <div class="logos-container">
-            <div class="logo-box" onclick="document.getElementById('logoRed').click()">
-                <input type="file" id="logoRed" accept="image/*" style="display: none;" onchange="loadLogo(this, 'logoRedImg')">
-                <img id="logoRedImg" style="display: none;">
-                <div id="logoRedPlaceholder">
-                    <div class="logo-placeholder">🌐</div>
-                    <div class="logo-label">Logo Red</div>
-                    <div class="logo-upload-hint">Click para subir</div>
-                </div>
-            </div>
-
-            <div class="logo-box" onclick="document.getElementById('logoColegio').click()">
-                <input type="file" id="logoColegio" accept="image/*" style="display: none;" onchange="loadLogo(this, 'logoColegioImg')">
-                <img id="logoColegioImg" style="display: none;">
-                <div id="logoColegioPlaceholder">
-                    <div class="logo-placeholder">🏫</div>
-                    <div class="logo-label">Logo Colegio</div>
-                    <div class="logo-upload-hint">Click para subir</div>
-                </div>
-            </div>
-
-            <div class="logo-box" onclick="document.getElementById('logoEdugest').click()">
-                <input type="file" id="logoEdugest" accept="image/*" style="display: none;" onchange="loadLogo(this, 'logoEdugestImg')">
-                <img id="logoEdugestImg" style="display: none;">
-                <div id="logoEdugestPlaceholder">
-                    <div class="logo-placeholder">📚</div>
-                    <div class="logo-label">Logo EDUGEST</div>
-                    <div class="logo-upload-hint">Click para subir</div>
-                </div>
+        <div class="logos-container" style="margin-bottom: var(--space-xl);">
+            <div class="logo-box" style="border: none; box-shadow: none; cursor: default;">
+                <div class="logo-placeholder" style="font-size: 120px;">📚</div>
             </div>
         </div>
+
+        <h1 class="welcome-title">EDUGEST</h1>
+        
+        <h2 class="welcome-title-editable" id="schoolName" style="cursor: default; border: none;">
+            Cargando...
+        </h2>
 
         <button class="welcome-btn" onclick="ingresarSistema()">
             🚀 Ingresar al Sistema
@@ -214,56 +188,18 @@
     </div>
 
     <script>
-        // Cargar nombre guardado
+        // Cargar nombre del colegio desde la sesión
         window.addEventListener('DOMContentLoaded', () => {
-            const savedName = localStorage.getItem('schoolName');
-            if (savedName) {
-                document.getElementById('schoolName').textContent = savedName;
+            const demoUser = localStorage.getItem('demoUser');
+            if (demoUser) {
+                const user = JSON.parse(demoUser);
+                const schoolNameEl = document.getElementById('schoolName');
+                schoolNameEl.textContent = user.colegioNombre || 'Sistema EduGest';
+            } else {
+                // Si no hay sesión, redirigir al login
+                window.location.href = 'index.html';
             }
-
-            // Cargar logos guardados
-            loadSavedLogo('logoRed', 'logoRedImg', 'logoRedPlaceholder');
-            loadSavedLogo('logoColegio', 'logoColegioImg', 'logoColegioPlaceholder');
-            loadSavedLogo('logoEdugest', 'logoEdugestImg', 'logoEdugestPlaceholder');
         });
-
-        // Guardar nombre al editar
-        document.getElementById('schoolName').addEventListener('blur', function() {
-            localStorage.setItem('schoolName', this.textContent);
-        });
-
-        // Función para cargar logo
-        function loadLogo(input, imgId) {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.getElementById(imgId);
-                    const placeholder = document.getElementById(imgId.replace('Img', 'Placeholder'));
-                    
-                    img.src = e.target.result;
-                    img.style.display = 'block';
-                    placeholder.style.display = 'none';
-                    
-                    // Guardar en localStorage
-                    localStorage.setItem(imgId, e.target.result);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // Función para cargar logo guardado
-        function loadSavedLogo(inputId, imgId, placeholderId) {
-            const savedLogo = localStorage.getItem(imgId);
-            if (savedLogo) {
-                const img = document.getElementById(imgId);
-                const placeholder = document.getElementById(placeholderId);
-                
-                img.src = savedLogo;
-                img.style.display = 'block';
-                placeholder.style.display = 'none';
-            }
-        }
 
         // Función para ingresar al sistema
         function ingresarSistema() {

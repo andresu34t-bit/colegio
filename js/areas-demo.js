@@ -41,7 +41,7 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 
 // Cargar estadísticas de eventos por área
 function cargarEstadisticas() {
-    const eventosStr = localStorage.getItem('demoEventos');
+    const eventosStr = localStorage.getItem('eventos');
     const todosEventos = eventosStr ? JSON.parse(eventosStr) : [];
     const eventosDelColegio = todosEventos.filter(e => e.colegioId === currentUser.colegioId);
     

@@ -73,6 +73,15 @@ function loadEventos() {
 
 // Datos de ejemplo para el colegio actual
 function getEventosDemo() {
+    // Cargar eventos desde localStorage
+    const eventosStr = localStorage.getItem('eventos');
+    if (eventosStr) {
+        const todosEventos = JSON.parse(eventosStr);
+        // Filtrar por colegio del usuario actual
+        return todosEventos.filter(e => e.colegioId === currentUser.colegioId);
+    }
+    
+    // Si no hay eventos en localStorage, retornar datos por defecto
     return [
         {
             colegioId: currentUser.colegioId,
