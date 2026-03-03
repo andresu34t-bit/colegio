@@ -195,15 +195,66 @@ Tu app estará en: `https://edugest-pme.web.app`
 
 ---
 
+## 💬 Módulo de Chat en Tiempo Real
+
+El sistema incluye un módulo de chat interno para comunicación entre usuarios del mismo colegio.
+
+### Características del Chat
+
+- ✅ Mensajes en tiempo real (sin recargar)
+- ✅ Chat privado (1 a 1)
+- ✅ Chat grupal por colegio
+- ✅ Lista de usuarios conectados
+- ✅ Notificaciones de mensajes nuevos
+- ✅ Historial de mensajes guardado
+- ✅ Interfaz moderna tipo WhatsApp
+- ✅ Botón flotante en todas las páginas
+
+### Configuración del Chat
+
+1. **Habilitar Realtime Database en Firebase:**
+   - Ve a Firebase Console → Realtime Database
+   - Click en "Crear base de datos"
+   - Selecciona ubicación y modo de prueba
+   - Copia la URL de la database
+
+2. **Actualizar firebase-config.js:**
+   ```javascript
+   const firebaseConfig = {
+       // ... configuración existente
+       databaseURL: "https://edugest-pme-default-rtdb.firebaseio.com"
+   };
+   ```
+
+3. **Configurar reglas de seguridad:**
+   - Ver archivo `CHAT-SETUP.md` para reglas detalladas
+
+### Permisos de Chat
+
+| Rol | Puede chatear con |
+|-----|-------------------|
+| Director | Todos |
+| Administrador | Todos |
+| Profesor | Director, Administrador, otros Profesores |
+
+### Probar el Chat
+
+Abre `test-chat.html` para probar el chat con diferentes usuarios.
+
+📖 **Documentación completa:** Ver `CHAT-SETUP.md`
+
+---
+
 ## 📝 Próximos Pasos
 
 1. ✅ Configurar Firebase
 2. ✅ Crear usuario de prueba
 3. ✅ Abrir sistema
-4. ⏳ Completar archivos JS (dashboard.js, formulario.js, finanzas.js)
-5. ⏳ Agregar generación de PDF
-6. ⏳ Desplegar en Firebase Hosting
+4. ✅ Módulo de chat en tiempo real
+5. ⏳ Completar archivos JS (dashboard.js, formulario.js, finanzas.js)
+6. ⏳ Agregar generación de PDF
+7. ⏳ Desplegar en Firebase Hosting
 
 ---
 
-**¡Sistema simple y funcional listo para usar!** 🚀
+**¡Sistema simple y funcional con chat en tiempo real listo para usar!** 🚀💬

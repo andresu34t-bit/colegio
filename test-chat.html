@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Chat - EduGest PME</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo-container">
+                <img src="LOGO EDUGEST.png" alt="Logo EduGest PME" class="sidebar-logo-img">
+            </div>
+            <h2>EduGest PME</h2>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar">T</div>
+            <p class="user-name" id="userName">Usuario Test</p>
+            <p class="user-role" id="userRole">Profesor</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
+            <a href="test-chat.html" class="nav-item active">💬 Test Chat</a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">🚪 Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <h1>💬 Prueba del Chat en Tiempo Real</h1>
+        <p style="color: var(--gray-600); margin-bottom: var(--space-2xl);">
+            Esta página te permite probar el módulo de chat con diferentes usuarios
+        </p>
+
+        <!-- Panel de configuración de usuario -->
+        <div class="form-card">
+            <h2>Configurar Usuario de Prueba</h2>
+            <p style="color: var(--gray-600); margin-bottom: var(--space-lg);">
+                Configura los datos del usuario para probar el chat. Abre esta página en múltiples pestañas con diferentes usuarios para simular conversaciones.
+            </p>
+
+            <form id="userConfigForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nombre de Usuario *</label>
+                        <input type="text" id="testUserName" value="Usuario Test" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rol *</label>
+                        <select id="testUserRole" required>
+                            <option value="profesor">Profesor</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="director">Director</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>ID de Colegio *</label>
+                        <input type="text" id="testSchoolId" value="colegio-demo" required>
+                        <small style="color: var(--gray-500);">Usa el mismo ID para usuarios que deben verse entre sí</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ID de Usuario (auto-generado)</label>
+                        <input type="text" id="testUserId" readonly>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">💾 Guardar y Activar Chat</button>
+            </form>
+        </div>
+
+        <!-- Estado del chat -->
+        <div class="form-card">
+            <h2>Estado del Chat</h2>
+            <div id="chatStatus" style="padding: var(--space-lg); background: var(--gray-100); border-radius: var(--radius-lg); font-family: monospace; font-size: 14px;">
+                <p><strong>Estado:</strong> <span id="statusText">No configurado</span></p>
+                <p><strong>Usuario ID:</strong> <span id="currentUserId">-</span></p>
+                <p><strong>Nombre:</strong> <span id="currentUserName">-</span></p>
+                <p><strong>Rol:</strong> <span id="currentUserRole">-</span></p>
+                <p><strong>Colegio ID:</strong> <span id="currentSchoolId">-</span></p>
+            </div>
+        </div>
+
+        <!-- Instrucciones -->
+        <div class="form-card">
+            <h2>📋 Instrucciones de Prueba</h2>
+            <ol style="line-height: 2; color: var(--gray-700);">
+                <li>Configura un usuario de prueba usando el formulario de arriba</li>
+                <li>Haz clic en "Guardar y Activar Chat"</li>
+                <li>El botón flotante del chat aparecerá en la esquina inferior derecha</li>
+                <li>Abre esta página en otra pestaña o navegador</li>
+                <li>Configura un usuario diferente con el mismo "ID de Colegio"</li>
+                <li>Ahora podrás ver ambos usuarios en la lista y chatear entre ellos</li>
+                <li>Prueba el chat privado y el chat grupal</li>
+            </ol>
+
+            <div style="background: var(--warning-100); padding: var(--space-lg); border-radius: var(--radius-lg); margin-top: var(--space-lg); border-left: 4px solid var(--warning-600);">
+                <p style="margin: 0; color: var(--warning-800); font-weight: 600;">
+                    ⚠️ <strong>Importante:</strong> Asegúrate de haber configurado Firebase Realtime Database correctamente. 
+                    Consulta el archivo <code>CHAT-SETUP.md</code> para instrucciones detalladas.
+                </p>
+            </div>
+        </div>
+
+        <!-- Usuarios de ejemplo -->
+        <div class="form-card">
+            <h2>👥 Usuarios de Ejemplo</h2>
+            <p style="color: var(--gray-600); margin-bottom: var(--space-lg);">
+                Usa estos perfiles para probar diferentes escenarios:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-lg);">
+                <div style="padding: var(--space-lg); background: var(--primary-50); border-radius: var(--radius-lg); border: 2px solid var(--primary-200);">
+                    <h4 style="color: var(--primary-700); margin-bottom: var(--space-sm);">Director</h4>
+                    <p style="font-size: 14px; color: var(--gray-700); margin: 0;">
+                        <strong>Nombre:</strong> María González<br>
+                        <strong>Rol:</strong> director<br>
+                        <strong>Colegio:</strong> colegio-demo
+                    </p>
+                    <button onclick="loadUser('María González', 'director', 'colegio-demo')" class="btn btn-primary" style="margin-top: var(--space-md); width: 100%; font-size: 13px; padding: 8px;">
+                        Cargar Usuario
+                    </button>
+                </div>
+
+                <div style="padding: var(--space-lg); background: var(--success-50); border-radius: var(--radius-lg); border: 2px solid var(--success-200);">
+                    <h4 style="color: var(--success-700); margin-bottom: var(--space-sm);">Administrador</h4>
+                    <p style="font-size: 14px; color: var(--gray-700); margin: 0;">
+                        <strong>Nombre:</strong> Carlos Ruiz<br>
+                        <strong>Rol:</strong> administrador<br>
+                        <strong>Colegio:</strong> colegio-demo
+                    </p>
+                    <button onclick="loadUser('Carlos Ruiz', 'administrador', 'colegio-demo')" class="btn btn-primary" style="margin-top: var(--space-md); width: 100%; font-size: 13px; padding: 8px;">
+                        Cargar Usuario
+                    </button>
+                </div>
+
+                <div style="padding: var(--space-lg); background: var(--info-50); border-radius: var(--radius-lg); border: 2px solid var(--info-200);">
+                    <h4 style="color: var(--info-700); margin-bottom: var(--space-sm);">Profesor</h4>
+                    <p style="font-size: 14px; color: var(--gray-700); margin: 0;">
+                        <strong>Nombre:</strong> Ana Martínez<br>
+                        <strong>Rol:</strong> profesor<br>
+                        <strong>Colegio:</strong> colegio-demo
+                    </p>
+                    <button onclick="loadUser('Ana Martínez', 'profesor', 'colegio-demo')" class="btn btn-primary" style="margin-top: var(--space-md); width: 100%; font-size: 13px; padding: 8px;">
+                        Cargar Usuario
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { chatFirebase } from './js/chat-firebase.js';
+        import { ChatUI } from './js/chat-ui.js';
+
+        // Generar ID único para el usuario
+        function generateUserId() {
+            return 'user-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Cargar datos actuales
+        function loadCurrentData() {
+            const userId = localStorage.getItem('userId');
+            const userName = localStorage.getItem('userName');
+            const userRole = localStorage.getItem('userRole');
+            const schoolId = localStorage.getItem('schoolId');
+
+            if (userId) {
+                document.getElementById('testUserId').value = userId;
+                document.getElementById('testUserName').value = userName || '';
+                document.getElementById('testUserRole').value = userRole || 'profesor';
+                document.getElementById('testSchoolId').value = schoolId || 'colegio-demo';
+                
+                updateStatus();
+            } else {
+                document.getElementById('testUserId').value = generateUserId();
+            }
+        }
+
+        // Actualizar estado
+        function updateStatus() {
+            const userId = localStorage.getItem('userId');
+            const userName = localStorage.getItem('userName');
+            const userRole = localStorage.getItem('userRole');
+            const schoolId = localStorage.getItem('schoolId');
+
+            if (userId) {
+                document.getElementById('statusText').textContent = '✅ Activo';
+                document.getElementById('statusText').style.color = 'var(--success-600)';
+                document.getElementById('currentUserId').textContent = userId;
+                document.getElementById('currentUserName').textContent = userName;
+                document.getElementById('currentUserRole').textContent = userRole;
+                document.getElementById('currentSchoolId').textContent = schoolId;
+            } else {
+                document.getElementById('statusText').textContent = '❌ No configurado';
+                document.getElementById('statusText').style.color = 'var(--danger-600)';
+            }
+        }
+
+        // Guardar configuración
+        document.getElementById('userConfigForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const userId = document.getElementById('testUserId').value;
+            const userName = document.getElementById('testUserName').value;
+            const userRole = document.getElementById('testUserRole').value;
+            const schoolId = document.getElementById('testSchoolId').value;
+
+            localStorage.setItem('userId', userId);
+            localStorage.setItem('userName', userName);
+            localStorage.setItem('userRole', userRole);
+            localStorage.setItem('schoolId', schoolId);
+
+            updateStatus();
+
+            alert('✅ Usuario configurado correctamente. El chat se activará en unos segundos.');
+            
+            // Recargar para activar el chat
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        });
+
+        // Cargar usuario predefinido
+        window.loadUser = function(name, role, school) {
+            document.getElementById('testUserName').value = name;
+            document.getElementById('testUserRole').value = role;
+            document.getElementById('testSchoolId').value = school;
+            document.getElementById('testUserId').value = generateUserId();
+        };
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        });
+
+        // Inicializar
+        loadCurrentData();
+        updateStatus();
+    </script>
+
+    <script src="js/mobile-menu.js"></script>
+    <script type="module" src="js/chat-firebase.js"></script>
+    <script type="module" src="js/chat-ui.js"></script>
+    <script type="module" src="js/chat.js"></script>
+</body>
+</html>

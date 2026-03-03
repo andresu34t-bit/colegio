@@ -1,121 +1,159 @@
-// Chat Principal - Inicialización y Coordinación
-(function() {
-    'use strict';
-    
-    // Verificar si el usuario está autenticado
-    function initChat() {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+// chat.js - Controlador principal del chat
+import { chatFirebase } from './chat-firebase.js';
+import { ChatUI } from './chat-ui.js';
+
+class ChatController {
+    constructor() {
+        this.ui = null;
+        this.initialized = false;
+    }
+
+    async init() {
+        if (this.initialized) return;
+
+        // Obtener datos del usuario actual
+        const userData = this.getUserData();
         
-        if (!currentUser) {
-            console.log('Chat: Usuario no autenticado');
+        if (!userData) {
+            console.warn('⚠️ No hay usuario autenticado para el chat');
             return;
         }
-        
+
         // Inicializar Firebase
-        window.chatFirebase.init(currentUser).then(() => {
-            console.log('Chat Firebase inicializado');
+        chatFirebase.initUser(
+            userData.userId,
+            userData.userName,
+            userData.userRole,
+            userData.schoolId
+        );
+
+        // Inicializar UI
+        this.ui = new ChatUI();
+        this.ui.requestNotificationPermission();
+
+        // Cargar usuarios del colegio
+        this.loadSchoolUsers();
+
+        // Escuchar notificaciones
+        this.listenNotifications();
+
+        // Configurar event listeners
+        this.setupEventListeners();
+
+        this.initialized = true;
+        console.log('✅ Chat inicializado correctamente');
+    }
+
+    getUserData() {
+        // Intentar obtener datos del usuario desde localStorage
+        const userId = localStorage.getItem('userId');
+        const userName = localStorage.getItem('userName');
+        const userRole = localStorage.getItem('userRole');
+        const schoolId = localStorage.getItem('schoolId');
+
+        // Si no existen, usar datos de demostración
+        if (!userId) {
+            return {
+                userId: 'demo-user-' + Date.now(),
+                userName: document.getElementById('userName')?.textContent || 'Usuario Demo',
+                userRole: localStorage.getItem('userRole') || 'profesor',
+                schoolId: localStorage.getItem('schoolId') || 'colegio-demo'
+            };
+        }
+
+        return { userId, userName, userRole, schoolId };
+    }
+
+    loadSchoolUsers() {
+        chatFirebase.getUsersBySchool((users) => {
+            // Filtrar usuarios según permisos
+            const filteredUsers = users.filter(user => 
+                chatFirebase.canChatWith(user.role)
+            );
             
-            // Inicializar UI
-            window.chatUI.init();
-            console.log('Chat UI inicializado');
+            this.ui.renderUsers(filteredUsers);
+        });
+    }
+
+    listenNotifications() {
+        chatFirebase.getUnreadNotifications((count) => {
+            this.ui.updateUnreadCount(count);
+        });
+    }
+
+    setupEventListeners() {
+        // Cuando se abre una conversación
+        document.addEventListener('conversationOpened', (e) => {
+            const { userId, type } = e.detail;
             
-            // Actualizar badge inicial
-            window.chatUI.updateBadge();
+            if (type === 'private') {
+                this.loadPrivateConversation(userId);
+            } else if (type === 'group') {
+                this.loadGroupConversation();
+            }
+        });
+
+        // Cuando se envía un mensaje
+        document.addEventListener('messageSent', async (e) => {
+            const { message, recipientId, type } = e.detail;
             
-            // Escuchar nuevos mensajes para notificaciones
-            window.addEventListener('nuevoMensaje', (event) => {
-                const { conversacionId, mensaje } = event.detail;
-                
-                // Si el mensaje no es del usuario actual y el chat no está abierto en esa conversación
-                if (mensaje.emisor !== currentUser.email && 
-                    (!window.chatUI.isOpen || window.chatUI.currentConversacion !== conversacionId)) {
-                    
-                    // Mostrar notificación
-                    mostrarNotificacion(mensaje);
-                    
-                    // Reproducir sonido (opcional)
-                    reproducirSonido();
+            try {
+                if (type === 'private') {
+                    await chatFirebase.sendPrivateMessage(recipientId, message);
+                } else if (type === 'group') {
+                    await chatFirebase.sendGroupMessage(message);
                 }
-                
-                // Actualizar badge
-                window.chatUI.updateBadge();
-            });
-            
-            console.log('✅ Chat en tiempo real activado');
-        }).catch(error => {
-            console.error('Error al inicializar chat:', error);
+            } catch (error) {
+                console.error('❌ Error al enviar mensaje:', error);
+                alert('Error al enviar el mensaje. Intenta nuevamente.');
+            }
         });
     }
-    
-    // Mostrar notificación
-    function mostrarNotificacion(mensaje) {
-        // Notificación visual en la aplicación
-        if (window.showMobileToast) {
-            window.showMobileToast(`💬 ${mensaje.emisorNombre}: ${mensaje.contenido.substring(0, 50)}...`, 3000);
-        }
-        
-        // Notificación del navegador (si tiene permisos)
-        if ('Notification' in window && Notification.permission === 'granted') {
-            new Notification('Nuevo mensaje - EduGest', {
-                body: `${mensaje.emisorNombre}: ${mensaje.contenido}`,
-                icon: 'images/logo-edugest.png',
-                badge: 'images/logo-edugest.png',
-                tag: 'chat-message',
-                requireInteraction: false
-            });
-        }
-    }
-    
-    // Reproducir sonido de notificación
-    function reproducirSonido() {
-        // Crear un sonido simple usando Web Audio API
-        try {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.value = 800;
-            oscillator.type = 'sine';
-            
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.3);
-        } catch (error) {
-            console.log('No se pudo reproducir sonido:', error);
-        }
-    }
-    
-    // Solicitar permisos de notificación
-    function solicitarPermisosNotificacion() {
-        if ('Notification' in window && Notification.permission === 'default') {
-            Notification.requestPermission().then(permission => {
-                console.log('Permiso de notificaciones:', permission);
-            });
-        }
-    }
-    
-    // Inicializar cuando el DOM esté listo
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            initChat();
-            // Solicitar permisos después de 3 segundos (para no ser intrusivo)
-            setTimeout(solicitarPermisosNotificacion, 3000);
+
+    loadPrivateConversation(recipientId) {
+        // Limpiar listener anterior si existe
+        chatFirebase.cleanup();
+
+        // Escuchar mensajes en tiempo real
+        chatFirebase.listenPrivateMessages(recipientId, (messages) => {
+            this.ui.renderMessages(messages);
         });
-    } else {
-        initChat();
-        setTimeout(solicitarPermisosNotificacion, 3000);
+
+        // Marcar como leído
+        const conversationId = chatFirebase.getConversationId(
+            chatFirebase.currentUser.id, 
+            recipientId
+        );
+        chatFirebase.markAsRead(conversationId);
     }
-    
-    // Limpiar al cerrar la página
-    window.addEventListener('beforeunload', () => {
-        if (window.chatFirebase) {
-            window.chatFirebase.cleanup();
-        }
+
+    loadGroupConversation() {
+        // Limpiar listener anterior si existe
+        chatFirebase.cleanup();
+
+        // Escuchar mensajes grupales en tiempo real
+        chatFirebase.listenGroupMessages((messages) => {
+            this.ui.renderMessages(messages);
+        });
+    }
+
+    destroy() {
+        chatFirebase.cleanup();
+        this.initialized = false;
+    }
+}
+
+// Crear instancia global
+const chatController = new ChatController();
+
+// Auto-inicializar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        chatController.init();
     });
-    
-})();
+} else {
+    chatController.init();
+}
+
+// Exportar para uso manual si es necesario
+export default chatController;
