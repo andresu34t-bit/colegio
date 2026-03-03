@@ -22,13 +22,9 @@
         </div>
 
         <nav class="sidebar-nav">
-            <div style="padding: var(--space-sm) var(--space-lg); color: var(--gray-500); font-size: 12px; font-weight: 600; text-transform: uppercase;">
-                Módulo PME
-            </div>
-            <a href="dashboard.html" class="nav-item">📊 Dashboard PME</a>
+            <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
             <a href="areas.html" class="nav-item active">📝 Registrar Evento</a>
-            <a href="informaciones-generales.html" class="nav-item">⚙️ Informaciones Generales</a>
-            <a href="informes.html" class="nav-item">📄 Informes PME</a>
+            <a href="informes.html" class="nav-item">📄 Informes</a>
             <a href="finanzas.html" class="nav-item" id="navFinanzas" style="display: none;">💰 Finanzas</a>
         </nav>
 
@@ -86,20 +82,6 @@
 
                 <!-- El área está fija y oculta -->
                 <input type="hidden" id="area" value="">
-
-                <!-- Información automática desde Informaciones Generales -->
-                <div id="infoAutomatica" style="display: none; background: var(--gray-50); padding: var(--space-xl); border-radius: var(--radius-lg); margin-bottom: var(--space-xl); border-left: 6px solid var(--primary-600);">
-                    <h3 style="font-size: 18px; font-weight: 800; color: var(--gray-900); margin-bottom: var(--space-lg); display: flex; align-items: center; gap: var(--space-sm);">
-                        <span>🎯</span> Información Asociada
-                    </h3>
-                    
-                    <div id="subdimensionInfo" style="margin-bottom: var(--space-md);"></div>
-                    <div id="objetivoInfo" style="margin-bottom: var(--space-md);"></div>
-                    <div id="estrategiaInfo" style="margin-bottom: var(--space-md);"></div>
-                    <div id="indicadoresInfo" style="margin-bottom: var(--space-md);"></div>
-                    <div id="accionesInfo" style="margin-bottom: var(--space-md);"></div>
-                    <div id="metasInfo"></div>
-                </div>
 
                 <div class="form-row">
                     <div class="form-group">

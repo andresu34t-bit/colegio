@@ -45,8 +45,8 @@ function cargarEstadisticas() {
     const todosEventos = eventosStr ? JSON.parse(eventosStr) : [];
     const eventosDelColegio = todosEventos.filter(e => e.colegioId === currentUser.colegioId);
     
-    // Contar eventos por área (SIN RECURSOS)
-    const areas = ['Currículum', 'Liderazgo', 'Convivencia'];
+    // Contar eventos por área
+    const areas = ['Currículum', 'Liderazgo', 'Convivencia', 'Recursos'];
     areas.forEach(area => {
         const eventosArea = eventosDelColegio.filter(e => e.area === area);
         const totalEventos = eventosArea.reduce((sum, e) => sum + (e.n_eventos || 0), 0);
@@ -54,7 +54,7 @@ function cargarEstadisticas() {
         const elementId = 'eventos' + area.replace(' ', '');
         const element = document.getElementById(elementId);
         if (element) {
-            element.textContent = `${totalEventos} eventos`;
+            element.textContent = totalEventos;
         }
     });
 }
