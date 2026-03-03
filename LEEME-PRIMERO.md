@@ -4,6 +4,11 @@
 
 El sistema de chat en tiempo real para EDUGEST está **100% implementado**.
 
+### 💬 Dos Formas de Usar el Chat
+
+1. **Botón Flotante** - Disponible en todas las páginas (esquina inferior derecha)
+2. **Chat Integrado** - Pestaña en el dashboard para conversaciones largas
+
 ---
 
 ## ⚡ Inicio Rápido (Elige UNA opción)
