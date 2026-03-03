@@ -334,48 +334,78 @@
             const usersList = document.getElementById('dashboardChatUsersList');
             
             if (!chatFirebase.currentUser) {
-                usersList.innerHTML = '<div style="padding: var(--space-lg); text-align: center; color: var(--gray-500);">Inicia sesión para ver usuarios</div>';
+                // Mostrar usuarios de demostración
+                const usuariosDemo = [
+                    { id: 'demo-1', name: 'María González', role: 'director', online: true },
+                    { id: 'demo-2', name: 'Juan Pérez', role: 'profesor', online: true },
+                    { id: 'demo-3', name: 'Ana Martínez', role: 'administrador', online: false },
+                    { id: 'demo-4', name: 'Carlos López', role: 'profesor', online: true },
+                    { id: 'demo-5', name: 'Laura Rodríguez', role: 'profesor', online: false },
+                    { id: 'demo-6', name: 'Pedro Sánchez', role: 'profesor', online: true },
+                    { id: 'demo-7', name: 'Carmen Díaz', role: 'administrador', online: true },
+                    { id: 'demo-8', name: 'Roberto Torres', role: 'profesor', online: false }
+                ];
+                
+                renderizarListaUsuarios(usuariosDemo);
                 return;
             }
             
             chatFirebase.getUsersBySchool((users) => {
                 if (users.length === 0) {
-                    usersList.innerHTML = '<div style="padding: var(--space-lg); text-align: center; color: var(--gray-500);">No hay usuarios disponibles</div>';
+                    // Si no hay usuarios en Firebase, mostrar demo
+                    const usuariosDemo = [
+                        { id: 'demo-1', name: 'María González', role: 'director', online: true },
+                        { id: 'demo-2', name: 'Juan Pérez', role: 'profesor', online: true },
+                        { id: 'demo-3', name: 'Ana Martínez', role: 'administrador', online: false },
+                        { id: 'demo-4', name: 'Carlos López', role: 'profesor', online: true },
+                        { id: 'demo-5', name: 'Laura Rodríguez', role: 'profesor', online: false },
+                        { id: 'demo-6', name: 'Pedro Sánchez', role: 'profesor', online: true },
+                        { id: 'demo-7', name: 'Carmen Díaz', role: 'administrador', online: true },
+                        { id: 'demo-8', name: 'Roberto Torres', role: 'profesor', online: false }
+                    ];
+                    renderizarListaUsuarios(usuariosDemo);
                     return;
                 }
                 
-                usersList.innerHTML = users.map(user => `
-                    <div class="dashboard-chat-user-item" data-user-id="${user.id}" data-user-name="${user.name}" data-user-role="${user.role}" style="display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md); border-radius: var(--radius-md); cursor: pointer; transition: all var(--transition-base); margin-bottom: var(--space-xs);">
-                        <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--primary-600); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; position: relative;">
-                            ${user.name.charAt(0).toUpperCase()}
-                            ${user.online ? '<span style="position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: var(--success-500); border: 2px solid white; border-radius: 50%;"></span>' : ''}
-                        </div>
-                        <div style="flex: 1; min-width: 0;">
-                            <div style="font-weight: 700; color: var(--gray-900); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.name}</div>
-                            <div style="font-size: 12px; color: var(--gray-600);">${getRoleLabel(user.role)}</div>
-                        </div>
-                        <div style="font-size: 10px; color: ${user.online ? 'var(--success-600)' : 'var(--gray-400)'}; font-weight: 700;">
-                            ${user.online ? '● Online' : '○ Offline'}
-                        </div>
+                renderizarListaUsuarios(users);
+            });
+        }
+        
+        // Renderizar lista de usuarios
+        function renderizarListaUsuarios(users) {
+            const usersList = document.getElementById('dashboardChatUsersList');
+            
+            usersList.innerHTML = users.map(user => `
+                <div class="dashboard-chat-user-item" data-user-id="${user.id}" data-user-name="${user.name}" data-user-role="${user.role}" style="display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md); border-radius: var(--radius-md); cursor: pointer; transition: all var(--transition-base); margin-bottom: var(--space-xs);">
+                    <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--primary-600); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; position: relative;">
+                        ${user.name.charAt(0).toUpperCase()}
+                        ${user.online ? '<span style="position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: var(--success-500); border: 2px solid white; border-radius: 50%;"></span>' : ''}
                     </div>
-                `).join('');
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="font-weight: 700; color: var(--gray-900); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.name}</div>
+                        <div style="font-size: 12px; color: var(--gray-600);">${getRoleLabel(user.role)}</div>
+                    </div>
+                    <div style="font-size: 10px; color: ${user.online ? 'var(--success-600)' : 'var(--gray-400)'}; font-weight: 700;">
+                        ${user.online ? '● Online' : '○ Offline'}
+                    </div>
+                </div>
+            `).join('');
+            
+            // Agregar event listeners
+            document.querySelectorAll('.dashboard-chat-user-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const userId = item.dataset.userId;
+                    const userName = item.dataset.userName;
+                    const userRole = item.dataset.userRole;
+                    abrirConversacionPrivada(userId, userName, userRole);
+                });
                 
-                // Agregar event listeners
-                document.querySelectorAll('.dashboard-chat-user-item').forEach(item => {
-                    item.addEventListener('click', () => {
-                        const userId = item.dataset.userId;
-                        const userName = item.dataset.userName;
-                        const userRole = item.dataset.userRole;
-                        abrirConversacionPrivada(userId, userName, userRole);
-                    });
-                    
-                    item.addEventListener('mouseenter', (e) => {
-                        e.currentTarget.style.background = 'var(--gray-100)';
-                    });
-                    
-                    item.addEventListener('mouseleave', (e) => {
-                        e.currentTarget.style.background = 'transparent';
-                    });
+                item.addEventListener('mouseenter', (e) => {
+                    e.currentTarget.style.background = 'var(--gray-100)';
+                });
+                
+                item.addEventListener('mouseleave', (e) => {
+                    e.currentTarget.style.background = 'transparent';
                 });
             });
         }
@@ -401,10 +431,69 @@
                 chatListener();
             }
             
-            // Escuchar mensajes
-            chatFirebase.listenPrivateMessages(userId, (messages) => {
-                renderizarMensajes(messages);
-            });
+            // Si es usuario demo, mostrar mensajes de ejemplo
+            if (userId.startsWith('demo-')) {
+                const mensajesDemo = generarMensajesDemo(userId, userName);
+                renderizarMensajes(mensajesDemo);
+            } else {
+                // Escuchar mensajes reales de Firebase
+                chatFirebase.listenPrivateMessages(userId, (messages) => {
+                    renderizarMensajes(messages);
+                });
+            }
+        }
+        
+        // Generar mensajes de demostración
+        function generarMensajesDemo(userId, userName) {
+            const currentUserId = localStorage.getItem('userId') || 'current-user';
+            const now = Date.now();
+            
+            const mensajesPorUsuario = {
+                'demo-1': [
+                    { id: '1', senderId: userId, senderName: userName, message: '¡Hola! ¿Cómo va el proyecto PME?', timestamp: now - 3600000 },
+                    { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Muy bien, estamos avanzando según lo planificado', timestamp: now - 3500000 },
+                    { id: '3', senderId: userId, senderName: userName, message: 'Excelente, necesito que me envíes el informe de esta semana', timestamp: now - 3400000 },
+                    { id: '4', senderId: currentUserId, senderName: 'Tú', message: 'Claro, te lo envío en la tarde', timestamp: now - 3300000 }
+                ],
+                'demo-2': [
+                    { id: '1', senderId: userId, senderName: userName, message: 'Hola, ¿tienes los materiales para la clase de mañana?', timestamp: now - 7200000 },
+                    { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Sí, ya están listos en la sala de profesores', timestamp: now - 7100000 },
+                    { id: '3', senderId: userId, senderName: userName, message: 'Perfecto, gracias!', timestamp: now - 7000000 }
+                ],
+                'demo-3': [
+                    { id: '1', senderId: currentUserId, senderName: 'Tú', message: 'Ana, necesito ayuda con el sistema de registro', timestamp: now - 5400000 },
+                    { id: '2', senderId: userId, senderName: userName, message: 'Claro, ¿qué necesitas?', timestamp: now - 5300000 },
+                    { id: '3', senderId: currentUserId, senderName: 'Tú', message: 'No puedo acceder al módulo de finanzas', timestamp: now - 5200000 },
+                    { id: '4', senderId: userId, senderName: userName, message: 'Déjame revisar tus permisos', timestamp: now - 5100000 }
+                ],
+                'demo-4': [
+                    { id: '1', senderId: userId, senderName: userName, message: '¿Vamos a tener reunión esta semana?', timestamp: now - 1800000 },
+                    { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Sí, el miércoles a las 15:00', timestamp: now - 1700000 }
+                ],
+                'demo-5': [
+                    { id: '1', senderId: userId, senderName: userName, message: 'Hola! ¿Cómo estás?', timestamp: now - 86400000 },
+                    { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Bien, gracias. ¿Y tú?', timestamp: now - 86300000 }
+                ],
+                'demo-6': [
+                    { id: '1', senderId: currentUserId, senderName: 'Tú', message: 'Pedro, ¿tienes las notas del trimestre?', timestamp: now - 10800000 },
+                    { id: '2', senderId: userId, senderName: userName, message: 'Sí, las subo al sistema ahora', timestamp: now - 10700000 },
+                    { id: '3', senderId: currentUserId, senderName: 'Tú', message: 'Perfecto, gracias!', timestamp: now - 10600000 }
+                ],
+                'demo-7': [
+                    { id: '1', senderId: userId, senderName: userName, message: 'Recordatorio: Reunión de coordinación mañana a las 10:00', timestamp: now - 43200000 },
+                    { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Anotado, ahí estaré', timestamp: now - 43100000 }
+                ],
+                'demo-8': [
+                    { id: '1', senderId: userId, senderName: userName, message: '¿Tienes tiempo para revisar mi planificación?', timestamp: now - 21600000 },
+                    { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Claro, envíamela por correo', timestamp: now - 21500000 },
+                    { id: '3', senderId: userId, senderName: userName, message: 'Ya te la envié', timestamp: now - 21400000 }
+                ]
+            };
+            
+            return mensajesPorUsuario[userId] || [
+                { id: '1', senderId: userId, senderName: userName, message: '¡Hola! Este es un mensaje de demostración', timestamp: now - 3600000 },
+                { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Hola, ¿cómo estás?', timestamp: now - 3500000 }
+            ];
         }
         
         // Abrir chat grupal
@@ -428,10 +517,36 @@
                 chatListener();
             }
             
-            // Escuchar mensajes grupales
-            chatFirebase.listenGroupMessages((messages) => {
-                renderizarMensajes(messages);
-            });
+            // Si no hay Firebase, mostrar mensajes demo
+            if (!chatFirebase.currentUser) {
+                const mensajesGrupoDemo = generarMensajesGrupoDemo();
+                renderizarMensajes(mensajesGrupoDemo);
+            } else {
+                // Escuchar mensajes grupales reales
+                chatFirebase.listenGroupMessages((messages) => {
+                    renderizarMensajes(messages);
+                });
+            }
+        }
+        
+        // Generar mensajes de grupo de demostración
+        function generarMensajesGrupoDemo() {
+            const currentUserId = localStorage.getItem('userId') || 'current-user';
+            const now = Date.now();
+            
+            return [
+                { id: '1', senderId: 'demo-1', senderName: 'María González', message: 'Buenos días a todos! Recordatorio de la reunión de hoy a las 15:00', timestamp: now - 7200000 },
+                { id: '2', senderId: 'demo-2', senderName: 'Juan Pérez', message: 'Gracias María, ahí estaré', timestamp: now - 7100000 },
+                { id: '3', senderId: 'demo-4', senderName: 'Carlos López', message: 'Confirmado!', timestamp: now - 7000000 },
+                { id: '4', senderId: 'demo-7', senderName: 'Carmen Díaz', message: 'Les recuerdo que deben subir las planificaciones antes del viernes', timestamp: now - 3600000 },
+                { id: '5', senderId: 'demo-6', senderName: 'Pedro Sánchez', message: 'Ya subí la mía', timestamp: now - 3500000 },
+                { id: '6', senderId: currentUserId, senderName: 'Tú', message: 'Yo también ya la subí', timestamp: now - 3400000 },
+                { id: '7', senderId: 'demo-1', senderName: 'María González', message: 'Excelente trabajo equipo! 👏', timestamp: now - 3300000 },
+                { id: '8', senderId: 'demo-3', senderName: 'Ana Martínez', message: '¿Alguien necesita ayuda con el sistema?', timestamp: now - 1800000 },
+                { id: '9', senderId: 'demo-2', senderName: 'Juan Pérez', message: 'Todo bien por aquí, gracias Ana', timestamp: now - 1700000 },
+                { id: '10', senderId: 'demo-4', senderName: 'Carlos López', message: 'Yo tengo una duda sobre el módulo de observaciones', timestamp: now - 1600000 },
+                { id: '11', senderId: 'demo-3', senderName: 'Ana Martínez', message: 'Claro Carlos, te escribo por privado', timestamp: now - 1500000 }
+            ];
         }
         
         // Cerrar conversación
@@ -479,10 +594,70 @@
             if (!message || !currentConversationId) return;
             
             try {
-                if (currentConversationType === 'private') {
-                    await chatFirebase.sendPrivateMessage(currentConversationId, message);
+                // Si es usuario demo, simular envío
+                if (currentConversationId.startsWith('demo-') || currentConversationId === 'group') {
+                    const currentUserId = localStorage.getItem('userId') || 'current-user';
+                    const currentUserName = localStorage.getItem('userName') || 'Tú';
+                    
+                    // Obtener mensajes actuales
+                    const container = document.getElementById('dashboardChatMessages');
+                    const mensajesActuales = Array.from(container.children);
+                    
+                    // Crear nuevo mensaje
+                    const nuevoMensaje = {
+                        id: Date.now().toString(),
+                        senderId: currentUserId,
+                        senderName: currentUserName,
+                        message: message,
+                        timestamp: Date.now()
+                    };
+                    
+                    // Agregar a la lista actual
+                    const mensajes = [];
+                    mensajesActuales.forEach((elem, index) => {
+                        mensajes.push({
+                            id: index.toString(),
+                            senderId: elem.querySelector('[style*="flex-end"]') ? currentUserId : currentConversationId,
+                            senderName: 'Usuario',
+                            message: elem.textContent.trim(),
+                            timestamp: Date.now() - (mensajesActuales.length - index) * 60000
+                        });
+                    });
+                    mensajes.push(nuevoMensaje);
+                    
+                    // Renderizar todos los mensajes
+                    renderizarMensajes(mensajes);
+                    
+                    // Simular respuesta automática después de 2 segundos
+                    if (currentConversationType === 'private') {
+                        setTimeout(() => {
+                            const respuestas = [
+                                '¡Perfecto! Gracias por la información',
+                                'Entendido, lo revisaré',
+                                'Excelente, nos vemos entonces',
+                                'De acuerdo, cualquier cosa te aviso',
+                                'Gracias! 👍'
+                            ];
+                            const respuestaAleatoria = respuestas[Math.floor(Math.random() * respuestas.length)];
+                            
+                            mensajes.push({
+                                id: (Date.now() + 1).toString(),
+                                senderId: currentConversationId,
+                                senderName: document.getElementById('dashboardChatUserName').textContent,
+                                message: respuestaAleatoria,
+                                timestamp: Date.now()
+                            });
+                            
+                            renderizarMensajes(mensajes);
+                        }, 2000);
+                    }
                 } else {
-                    await chatFirebase.sendGroupMessage(message);
+                    // Envío real con Firebase
+                    if (currentConversationType === 'private') {
+                        await chatFirebase.sendPrivateMessage(currentConversationId, message);
+                    } else {
+                        await chatFirebase.sendGroupMessage(message);
+                    }
                 }
                 
                 input.value = '';
