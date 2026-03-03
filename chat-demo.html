@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Demo - EDUGEST</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .demo-header h1 {
+            color: #667eea;
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+        
+        .demo-header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .demo-user {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .demo-user h3 {
+            margin: 0 0 20px 0;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        
+        .user-badge.director {
+            background: #667eea;
+            color: white;
+        }
+        
+        .user-badge.profesor {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .demo-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .demo-form label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        
+        .demo-form input,
+        .demo-form select {
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        
+        .demo-form input:focus,
+        .demo-form select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .demo-btn {
+            padding: 15px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .demo-info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .demo-info h4 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+        }
+        
+        .demo-info ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .demo-info li {
+            margin: 5px 0;
+            color: #555;
+        }
+        
+        .demo-warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .demo-warning h4 {
+            margin: 0 0 10px 0;
+            color: #856404;
+        }
+        
+        .demo-warning p {
+            margin: 5px 0;
+            color: #856404;
+        }
+        
+        .demo-warning a {
+            color: #856404;
+            font-weight: 600;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .status-indicator.online {
+            background: #48bb78;
+            box-shadow: 0 0 10px rgba(72, 187, 120, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-container {
+                padding: 20px;
+            }
+            
+            .demo-header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>💬 Chat en Tiempo Real - Demo</h1>
+            <p>Prueba la interfaz del chat sin necesidad de configurar Firebase</p>
+        </div>
+        
+        <div class="demo-info">
+            <h4>📋 Instrucciones</h4>
+            <ul>
+                <li>Configura dos usuarios diferentes (uno en cada columna)</li>
+                <li>Ambos usuarios deben tener el mismo <strong>Colegio</strong></li>
+                <li>Click en "Activar Chat" para cada usuario</li>
+                <li>Usa el botón flotante (esquina inferior derecha) para abrir el chat</li>
+                <li>¡Envía mensajes entre los usuarios!</li>
+            </ul>
+        </div>
+        
+        <div class="demo-grid">
+            <!-- Usuario 1 -->
+            <div class="demo-user">
+                <h3>
+                    <span class="status-indicator online"></span>
+                    Usuario 1
+                    <span class="user-badge director">Director</span>
+                </h3>
+                <div class="demo-form">
+                    <div>
+                        <label>Nombre:</label>
+                        <input type="text" id="user1Name" value="María González" />
+                    </div>
+                    <div>
+                        <label>Rol:</label>
+                        <select id="user1Role">
+                            <option value="director" selected>Director</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="profesor">Profesor</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Colegio:</label>
+                        <input type="text" id="user1School" value="colegio-demo" />
+                    </div>
+                    <button class="demo-btn" onclick="activarUsuario(1)">
+                        🚀 Activar Chat Usuario 1
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Usuario 2 -->
+            <div class="demo-user">
+                <h3>
+                    <span class="status-indicator online"></span>
+                    Usuario 2
+                    <span class="user-badge profesor">Profesor</span>
+                </h3>
+                <div class="demo-form">
+                    <div>
+                        <label>Nombre:</label>
+                        <input type="text" id="user2Name" value="Juan Pérez" />
+                    </div>
+                    <div>
+                        <label>Rol:</label>
+                        <select id="user2Role">
+                            <option value="director">Director</option>
+                            <option value="administrador">Administrador</option>
+                            <option value="profesor" selected>Profesor</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Colegio:</label>
+                        <input type="text" id="user2School" value="colegio-demo" />
+                    </div>
+                    <button class="demo-btn" onclick="activarUsuario(2)">
+                        🚀 Activar Chat Usuario 2
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-warning">
+            <h4>⚠️ Modo Demostración</h4>
+            <p>Esta es una demostración de la interfaz del chat.</p>
+            <p>Para usar el chat en tiempo real con Firebase, consulta: <a href="GUIA-FIREBASE-CHAT.md">GUIA-FIREBASE-CHAT.md</a></p>
+            <p>Los mensajes en este demo se guardan localmente y se sincronizan entre pestañas del mismo navegador.</p>
+        </div>
+    </div>
+    
+    <!-- Scripts del chat -->
+    <script src="js/mobile-menu.js"></script>
+    <script type="module">
+        // Simulación del chat sin Firebase
+        import { ChatUI } from './js/chat-ui.js';
+        
+        let chatUI = null;
+        let currentUser = null;
+        
+        // Función para activar el chat para un usuario
+        window.activarUsuario = function(userNum) {
+            const name = document.getElementById(`user${userNum}Name`).value;
+            const role = document.getElementById(`user${userNum}Role`).value;
+            const school = document.getElementById(`user${userNum}School`).value;
+            
+            if (!name || !role || !school) {
+                alert('Por favor completa todos los campos');
+                return;
+            }
+            
+            // Guardar datos del usuario
+            const userId = `demo-user-${userNum}`;
+            localStorage.setItem('userId', userId);
+            localStorage.setItem('userName', name);
+            localStorage.setItem('userRole', role);
+            localStorage.setItem('schoolId', school);
+            
+            currentUser = { id: userId, name, role, schoolId: school };
+            
+            // Inicializar UI del chat si no existe
+            if (!chatUI) {
+                chatUI = new ChatUI();
+                setupDemoChat();
+            }
+            
+            // Actualizar lista de usuarios
+            actualizarListaUsuarios();
+            
+            alert(`✅ Chat activado para ${name}\n\nAhora puedes:\n1. Click en el botón flotante (esquina inferior derecha)\n2. Seleccionar un usuario para chatear\n3. Enviar mensajes`);
+        };
+        
+        function setupDemoChat() {
+            // Escuchar cuando se abre una conversación
+            document.addEventListener('conversationOpened', (e) => {
+                const { userId, type } = e.detail;
+                
+                if (type === 'private') {
+                    cargarMensajesPrivados(userId);
+                } else if (type === 'group') {
+                    cargarMensajesGrupales();
+                }
+            });
+            
+            // Escuchar cuando se envía un mensaje
+            document.addEventListener('messageSent', (e) => {
+                const { message, recipientId, type } = e.detail;
+                
+                if (type === 'private') {
+                    enviarMensajePrivado(recipientId, message);
+                } else if (type === 'group') {
+                    enviarMensajeGrupal(message);
+                }
+            });
+            
+            // Simular sincronización entre pestañas
+            window.addEventListener('storage', (e) => {
+                if (e.key && e.key.startsWith('demo_messages_')) {
+                    // Recargar mensajes cuando cambian
+                    if (chatUI.currentConversation) {
+                        if (chatUI.conversationType === 'private') {
+                            cargarMensajesPrivados(chatUI.currentConversation);
+                        } else {
+                            cargarMensajesGrupales();
+                        }
+                    }
+                    
+                    // Actualizar badge
+                    actualizarBadge();
+                }
+            });
+        }
+        
+        function actualizarListaUsuarios() {
+            const schoolId = localStorage.getItem('schoolId');
+            const currentUserId = localStorage.getItem('userId');
+            
+            // Obtener todos los usuarios del mismo colegio
+            const usuarios = [];
+            
+            // Simular usuarios de demostración
+            for (let i = 1; i <= 2; i++) {
+                const userId = `demo-user-${i}`;
+                if (userId !== currentUserId) {
+                    const name = i === 1 ? 'María González' : 'Juan Pérez';
+                    const role = i === 1 ? 'director' : 'profesor';
+                    
+                    usuarios.push({
+                        id: userId,
+                        name: name,
+                        role: role,
+                        schoolId: schoolId,
+                        online: true
+                    });
+                }
+            }
+            
+            chatUI.renderUsers(usuarios);
+        }
+        
+        function cargarMensajesPrivados(recipientId) {
+            const conversationId = getConversationId(currentUser.id, recipientId);
+            const key = `demo_messages_${conversationId}`;
+            const mensajes = JSON.parse(localStorage.getItem(key) || '[]');
+            
+            chatUI.renderMessages(mensajes);
+        }
+        
+        function cargarMensajesGrupales() {
+            const schoolId = localStorage.getItem('schoolId');
+            const key = `demo_group_${schoolId}`;
+            const mensajes = JSON.parse(localStorage.getItem(key) || '[]');
+            
+            chatUI.renderMessages(mensajes);
+        }
+        
+        function enviarMensajePrivado(recipientId, message) {
+            const conversationId = getConversationId(currentUser.id, recipientId);
+            const key = `demo_messages_${conversationId}`;
+            const mensajes = JSON.parse(localStorage.getItem(key) || '[]');
+            
+            const nuevoMensaje = {
+                id: Date.now().toString(),
+                senderId: currentUser.id,
+                senderName: currentUser.name,
+                recipientId: recipientId,
+                message: message,
+                timestamp: Date.now(),
+                read: false
+            };
+            
+            mensajes.push(nuevoMensaje);
+            localStorage.setItem(key, JSON.stringify(mensajes));
+            
+            // Recargar mensajes
+            cargarMensajesPrivados(recipientId);
+            
+            // Actualizar badge
+            actualizarBadge();
+        }
+        
+        function enviarMensajeGrupal(message) {
+            const schoolId = localStorage.getItem('schoolId');
+            const key = `demo_group_${schoolId}`;
+            const mensajes = JSON.parse(localStorage.getItem(key) || '[]');
+            
+            const nuevoMensaje = {
+                id: Date.now().toString(),
+                senderId: currentUser.id,
+                senderName: currentUser.name,
+                senderRole: currentUser.role,
+                message: message,
+                timestamp: Date.now()
+            };
+            
+            mensajes.push(nuevoMensaje);
+            localStorage.setItem(key, JSON.stringify(mensajes));
+            
+            // Recargar mensajes
+            cargarMensajesGrupales();
+        }
+        
+        function getConversationId(userId1, userId2) {
+            return [userId1, userId2].sort().join('_');
+        }
+        
+        function actualizarBadge() {
+            // Contar mensajes no leídos (simplificado para demo)
+            const count = 0; // En producción, contar mensajes reales no leídos
+            chatUI.updateUnreadCount(count);
+        }
+        
+        // Auto-inicializar si hay datos guardados
+        window.addEventListener('DOMContentLoaded', () => {
+            const userId = localStorage.getItem('userId');
+            if (userId && userId.startsWith('demo-user-')) {
+                const name = localStorage.getItem('userName');
+                const role = localStorage.getItem('userRole');
+                const schoolId = localStorage.getItem('schoolId');
+                
+                currentUser = { id: userId, name, role, schoolId };
+                chatUI = new ChatUI();
+                setupDemoChat();
+                actualizarListaUsuarios();
+            }
+        });
+    </script>
+</body>
+</html>

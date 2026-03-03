@@ -1,16 +1,21 @@
 {
   "name": "edugest-pme",
   "version": "1.0.0",
-  "description": "Sistema de gestión PME con Firebase",
+  "description": "Sistema de gestión PME con Firebase y Chat en Tiempo Real",
   "main": "index.html",
   "scripts": {
     "start": "npx http-server -p 8080 -o",
-    "dev": "npx http-server -p 8080 -o"
+    "dev": "npx http-server -p 8080 -o",
+    "chat:demo": "npx http-server -p 8080 -o chat-demo.html",
+    "chat:test": "npx http-server -p 8080 -o test-chat.html",
+    "chat:config": "node configurar-firebase.js"
   },
   "keywords": [
     "pme",
     "educacion",
-    "firebase"
+    "firebase",
+    "chat",
+    "tiempo-real"
   ],
   "author": "",
   "license": "ISC"

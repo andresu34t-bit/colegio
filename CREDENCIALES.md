@@ -5,6 +5,28 @@
 El sistema ahora funciona **sin necesidad de configurar Firebase**.  
 Usa datos locales (localStorage) para que puedas probarlo inmediatamente.
 
+## 💬 Chat en Tiempo Real
+
+El módulo de chat está **100% implementado** y listo para usar.
+
+### Estado del Chat
+- ✅ Código completo (3 archivos JavaScript)
+- ✅ Interfaz integrada en todas las páginas
+- ✅ Documentación completa
+- ⚠️ **Requiere configurar Firebase Realtime Database**
+
+### Activar el Chat (10 minutos)
+
+**Guía completa:** Ver `GUIA-FIREBASE-CHAT.md`
+
+**Pasos rápidos:**
+1. Habilitar Realtime Database en Firebase Console
+2. Copiar credenciales de Firebase
+3. Actualizar `js/firebase-config.js`
+4. Probar en `test-chat.html`
+
+**Costo:** $0/mes (plan gratuito de Firebase)
+
 ---
 
 ## 👤 Usuarios de Prueba

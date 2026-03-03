@@ -8,7 +8,42 @@ Sistema de gestión PME basado en tu Excel, con Firebase (sin servidor).
 - **Backend:** Firebase (sin servidor)
 - **Gráficos:** Chart.js
 - **PDF:** jsPDF + html2pdf
+- **Chat:** Firebase Realtime Database 💬
 - **Costo:** GRATIS
+
+---
+
+## 💬 Chat en Tiempo Real (NUEVO)
+
+El sistema incluye un módulo de chat en tiempo real completamente implementado.
+
+### Estado: ✅ 100% Implementado
+
+- ✅ Código completo (3 archivos JavaScript)
+- ✅ Interfaz tipo WhatsApp
+- ✅ Chat privado y grupal
+- ✅ Sistema de permisos por rol
+- ✅ Notificaciones en tiempo real
+- ⚠️ Requiere configurar Firebase Realtime Database
+
+### Documentación del Chat
+
+- **Inicio Rápido:** `CHAT-INICIO.md`
+- **Guía Completa:** `GUIA-FIREBASE-CHAT.md`
+- **Demo sin Firebase:** `chat-demo.html`
+
+### Activar el Chat (10 minutos)
+
+```bash
+# Opción 1: Script automático
+node configurar-firebase.js
+
+# Opción 2: Script PowerShell (Windows)
+.\configurar-firebase.ps1
+
+# Opción 3: Manual
+# Lee: GUIA-FIREBASE-CHAT.md
+```
 
 ---
 

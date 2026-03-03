@@ -11,3 +11,10 @@ env/
 node_modules/
 dist/
 build/
+
+# Firebase credentials
+firebase-credentials.txt
+js/firebase-config.backup.js
+.firebase/
+firebase-debug.log
+.firebaserc
