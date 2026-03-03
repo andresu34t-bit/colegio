@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido - EduGest</title>
+    <title>Bienvenido - EDUGEST</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
         .welcome-page {
@@ -30,51 +30,33 @@
 
         .welcome-container {
             background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(30px);
+            backdrop-filter: blur(40px);
             padding: var(--space-2xl);
             border-radius: var(--radius-2xl);
-            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35);
             width: 100%;
             max-width: 900px;
+            text-align: center;
             position: relative;
             z-index: 1;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            animation: slideInUp 0.6s ease-out;
-            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .welcome-title {
             font-size: 48px;
             font-weight: 900;
+            color: var(--gray-900);
+            margin-bottom: var(--space-lg);
+            line-height: 1.2;
+        }
+
+        .welcome-title-editable {
             background: var(--gradient-primary);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: var(--space-2xl);
-            letter-spacing: -1px;
-        }
-
-        .welcome-title-editable {
-            font-size: 42px;
-            font-weight: 800;
-            color: var(--gray-900);
-            margin-bottom: var(--space-xl);
-            padding: var(--space-md);
-            border: 3px dashed transparent;
-            border-radius: var(--radius-md);
-            transition: all var(--transition-base);
-            cursor: text;
-        }
-
-        .welcome-title-editable:hover {
-            border-color: var(--primary-300);
-            background: var(--gray-50);
-        }
-
-        .welcome-title-editable:focus {
-            outline: none;
-            border-color: var(--primary-600);
-            background: white;
+            display: inline-block;
         }
 
         .logos-container {
@@ -86,19 +68,24 @@
             flex-wrap: wrap;
         }
 
-        .logo-box {
-            width: 180px;
-            height: 180px;
-            border: 3px solid var(--gray-200);
-            border-radius: var(--radius-xl);
+        .logo-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            gap: var(--space-md);
+        }
+
+        .logo-box {
+            width: 180px;
+            height: 180px;
+            border-radius: var(--radius-xl);
             background: white;
+            border: 3px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
             transition: all var(--transition-base);
-            cursor: pointer;
-            position: relative;
             overflow: hidden;
         }
 
@@ -109,35 +96,27 @@
         }
 
         .logo-box img {
-            max-width: 140px;
-            max-height: 140px;
+            max-width: 90%;
+            max-height: 90%;
             object-fit: contain;
         }
 
         .logo-placeholder {
             font-size: 64px;
-            color: var(--gray-300);
-            margin-bottom: var(--space-sm);
+            color: var(--gray-400);
         }
 
         .logo-label {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 700;
-            color: var(--gray-600);
+            color: var(--gray-700);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-top: var(--space-sm);
-        }
-
-        .logo-upload-hint {
-            font-size: 11px;
-            color: var(--gray-400);
-            margin-top: var(--space-xs);
         }
 
         .welcome-btn {
             margin-top: var(--space-2xl);
-            padding: 24px 64px;
+            padding: 24px 48px;
             background: var(--gradient-primary);
             color: white;
             border: none;
@@ -146,65 +125,139 @@
             font-weight: 800;
             cursor: pointer;
             transition: all var(--transition-base);
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 12px 32px rgba(99, 102, 241, 0.35);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
         }
 
         .welcome-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(99, 102, 241, 0.4);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 16px 48px rgba(99, 102, 241, 0.45);
         }
 
         .welcome-subtitle {
-            font-size: 16px;
+            font-size: 18px;
             color: var(--gray-600);
             margin-top: var(--space-lg);
-            font-weight: 500;
+            font-weight: 600;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-30px, -30px) rotate(180deg); }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 32px;
+            }
+
+            .logos-container {
+                gap: var(--space-lg);
+            }
+
+            .logo-box {
+                width: 120px;
+                height: 120px;
+            }
+
+            .logo-placeholder {
+                font-size: 48px;
+            }
+
+            .welcome-btn {
+                padding: 18px 36px;
+                font-size: 16px;
+            }
         }
     </style>
 </head>
-<body class="welcome-page">
-    <div class="welcome-container">
-        <div class="logos-container" style="margin-bottom: var(--space-xl);">
-            <div class="logo-box" style="border: none; box-shadow: none; cursor: default;">
-                <img src="LOGO EDUGEST.png" alt="Logo EduGest" style="max-width: 200px; max-height: 200px;">
+<body>
+    <div class="welcome-page">
+        <div class="welcome-container">
+            <h1 class="welcome-title">
+                Colegio <span class="welcome-title-editable" id="schoolName">Mi Colegio</span>
+            </h1>
+
+            <div class="logos-container">
+                <!-- Logo Red de Colegios -->
+                <div class="logo-item">
+                    <div class="logo-box">
+                        <div class="logo-placeholder" id="logoRed">🏫</div>
+                    </div>
+                    <span class="logo-label">Red de Colegios</span>
+                </div>
+
+                <!-- Logo del Colegio -->
+                <div class="logo-item">
+                    <div class="logo-box">
+                        <div class="logo-placeholder" id="logoColegio">🎓</div>
+                    </div>
+                    <span class="logo-label">Nuestro Colegio</span>
+                </div>
+
+                <!-- Logo EDUGEST -->
+                <div class="logo-item">
+                    <div class="logo-box">
+                        <img src="LOGO EDUGEST.png" alt="EDUGEST" id="logoEdugest">
+                    </div>
+                    <span class="logo-label">Sistema EDUGEST</span>
+                </div>
             </div>
+
+            <button class="welcome-btn" onclick="ingresarSistema()">
+                🚀 Ingresar al Sistema
+            </button>
+
+            <p class="welcome-subtitle">
+                Sistema de Gestión Educativa PME 2026
+            </p>
         </div>
-
-        <h1 class="welcome-title">EDUGEST</h1>
-        
-        <h2 class="welcome-title-editable" id="schoolName" style="cursor: default; border: none;">
-            Cargando...
-        </h2>
-
-        <button class="welcome-btn" onclick="ingresarSistema()">
-            🚀 Ingresar al Sistema
-        </button>
-
-        <p class="welcome-subtitle">
-            Sistema de Gestión Educativa Integral
-        </p>
     </div>
 
     <script>
-        // Cargar nombre del colegio desde la sesión
-        window.addEventListener('DOMContentLoaded', () => {
-            const demoUser = localStorage.getItem('demoUser');
-            if (demoUser) {
-                const user = JSON.parse(demoUser);
-                const schoolNameEl = document.getElementById('schoolName');
-                schoolNameEl.textContent = user.colegioNombre || 'Sistema EduGest';
-            } else {
-                // Si no hay sesión, redirigir al login
-                window.location.href = 'index.html';
-            }
-        });
+        // Cargar nombre del colegio desde localStorage
+        const schoolName = localStorage.getItem('schoolName') || 'Mi Colegio';
+        document.getElementById('schoolName').textContent = schoolName;
 
         // Función para ingresar al sistema
         function ingresarSistema() {
-            window.location.href = 'dashboard.html';
+            // Verificar si el usuario está autenticado
+            const userId = localStorage.getItem('userId');
+            
+            if (userId) {
+                // Si está autenticado, ir al dashboard
+                window.location.href = 'dashboard.html';
+            } else {
+                // Si no está autenticado, ir al login
+                window.location.href = 'index.html';
+            }
         }
+
+        // Cargar logos personalizados si existen
+        window.addEventListener('DOMContentLoaded', () => {
+            const logoRedUrl = localStorage.getItem('logoRedUrl');
+            const logoColegioUrl = localStorage.getItem('logoColegioUrl');
+
+            if (logoRedUrl) {
+                document.getElementById('logoRed').innerHTML = `<img src="${logoRedUrl}" alt="Red">`;
+            }
+
+            if (logoColegioUrl) {
+                document.getElementById('logoColegio').innerHTML = `<img src="${logoColegioUrl}" alt="Colegio">`;
+            }
+        });
     </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 let currentUser = null;
 let areaSeleccionada = null;
 
-// Configuración de áreas
+// Configuración de áreas (SIN RECURSOS)
 const areasConfig = {
     'Currículum': {
         icono: '📚',
@@ -19,11 +19,6 @@ const areasConfig = {
         icono: '🤝',
         color: 'linear-gradient(135deg, #f59e0b, #d97706)',
         descripcion: 'Clima y convivencia escolar'
-    },
-    'Recursos': {
-        icono: '💼',
-        color: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
-        descripcion: 'Gestión de recursos y administración'
     }
 };
 
@@ -82,7 +77,103 @@ function configurarInterfaz() {
         
         // Título de eventos recientes
         document.getElementById('areaEventos').textContent = areaSeleccionada;
+        
+        // NUEVA FUNCIONALIDAD: Cargar información automática
+        cargarInformacionAutomatica();
     }
+}
+
+// NUEVA FUNCIÓN: Cargar información desde Informaciones Generales
+function cargarInformacionAutomatica() {
+    const informacionesStr = localStorage.getItem('informacionesGenerales');
+    if (!informacionesStr) return;
+    
+    const informaciones = JSON.parse(informacionesStr);
+    
+    // Mapear nombres de áreas
+    const dimensionMap = {
+        'Currículum': 'Currículum',
+        'Liderazgo': 'Liderazgo',
+        'Convivencia': 'Convivencia Escolar'
+    };
+    
+    const dimensionBuscada = dimensionMap[areaSeleccionada];
+    const infoArea = informaciones.filter(info => info.dimension === dimensionBuscada);
+    
+    if (infoArea.length === 0) return;
+    
+    // Mostrar sección de información automática
+    const infoAutomatica = document.getElementById('infoAutomatica');
+    infoAutomatica.style.display = 'block';
+    
+    // Renderizar información
+    infoArea.forEach((info, index) => {
+        if (index === 0) {
+            // Subdimensión
+            document.getElementById('subdimensionInfo').innerHTML = `
+                <div style="margin-bottom: var(--space-sm);">
+                    <strong style="color: var(--gray-700); font-size: 14px;">📌 Subdimensión:</strong>
+                    <p style="color: var(--gray-600); margin: var(--space-xs) 0 0 0; font-size: 14px;">${info.subdimension}</p>
+                </div>
+            `;
+            
+            // Objetivo Estratégico
+            document.getElementById('objetivoInfo').innerHTML = `
+                <div style="margin-bottom: var(--space-sm);">
+                    <strong style="color: var(--gray-700); font-size: 14px;">🎯 Objetivo Estratégico:</strong>
+                    <p style="color: var(--gray-600); margin: var(--space-xs) 0 0 0; font-size: 14px;">${info.objetivoEstrategico}</p>
+                </div>
+            `;
+            
+            // Estrategia
+            document.getElementById('estrategiaInfo').innerHTML = `
+                <div style="margin-bottom: var(--space-sm);">
+                    <strong style="color: var(--gray-700); font-size: 14px;">📋 Estrategia:</strong>
+                    <p style="color: var(--gray-600); margin: var(--space-xs) 0 0 0; font-size: 14px;">${info.estrategia}</p>
+                </div>
+            `;
+            
+            // Indicadores
+            if (info.indicadores && info.indicadores.length > 0) {
+                document.getElementById('indicadoresInfo').innerHTML = `
+                    <div style="margin-bottom: var(--space-sm);">
+                        <strong style="color: var(--gray-700); font-size: 14px;">📊 Indicadores:</strong>
+                        <ul style="margin: var(--space-xs) 0 0 0; padding-left: var(--space-lg);">
+                            ${info.indicadores.map(ind => `
+                                <li style="color: var(--gray-600); font-size: 14px; margin-bottom: var(--space-xs);">
+                                    <strong>${ind.nombre}</strong>${ind.descripcion ? ': ' + ind.descripcion : ''}
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            // Acciones
+            if (info.acciones && info.acciones.length > 0) {
+                document.getElementById('accionesInfo').innerHTML = `
+                    <div style="margin-bottom: var(--space-sm);">
+                        <strong style="color: var(--gray-700); font-size: 14px;">🎯 Acciones Sugeridas:</strong>
+                        <ul style="margin: var(--space-xs) 0 0 0; padding-left: var(--space-lg);">
+                            ${info.acciones.map(acc => `
+                                <li style="color: var(--gray-600); font-size: 14px; margin-bottom: var(--space-xs);">
+                                    <strong>${acc.nombre}</strong>${acc.descripcion ? ': ' + acc.descripcion : ''}
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            // Metas Estratégicas
+            document.getElementById('metasInfo').innerHTML = `
+                <div>
+                    <strong style="color: var(--gray-700); font-size: 14px;">🏆 Metas Estratégicas:</strong>
+                    <p style="color: var(--gray-600); margin: var(--space-xs) 0 0 0; font-size: 14px;">${info.metasEstrategicas}</p>
+                </div>
+            `;
+        }
+    });
 }
 
 function getRoleName(rol) {
