@@ -231,18 +231,10 @@
         const schoolName = localStorage.getItem('schoolName') || 'Mi Colegio';
         document.getElementById('schoolName').textContent = schoolName;
 
-        // Función para ingresar al sistema
+        // Función para ingresar al sistema - ACCESO DIRECTO
         function ingresarSistema() {
-            // Verificar si el usuario está autenticado
-            const userId = localStorage.getItem('userId');
-            
-            if (userId) {
-                // Si está autenticado, ir al dashboard
-                window.location.href = 'dashboard.html';
-            } else {
-                // Si no está autenticado, ir al login
-                window.location.href = 'index.html';
-            }
+            // Ir directamente al dashboard sin verificar autenticación
+            window.location.href = 'dashboard.html';
         }
 
         // Cargar logos personalizados si existen
