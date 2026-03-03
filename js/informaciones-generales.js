@@ -1,14 +1,21 @@
-// Verificar autenticación
+// Verificar autenticación y colegio
 const userId = localStorage.getItem('userId');
 const userRole = localStorage.getItem('userRole');
+const colegioActual = localStorage.getItem('colegioActual');
 
-if (!userId) {
-    window.location.href = 'index.html';
+if (!userId || !colegioActual) {
+    window.location.href = 'seleccionar-colegio.html';
 }
 
-// Mostrar información del usuario
+// Mostrar información del usuario y colegio
 document.getElementById('userName').textContent = localStorage.getItem('userName') || 'Usuario';
 document.getElementById('userRole').textContent = userRole || 'Rol';
+
+// Mostrar nombre del colegio en el info
+const colegio = obtenerColegioActual();
+if (colegio) {
+    document.getElementById('colegioInfo').textContent = `${colegio.nombre} - Selecciona el área de gestión para registrar tu evento`;
+}
 
 // Mostrar/ocultar finanzas según rol
 if (userRole === 'director' || userRole === 'administrador') {
@@ -38,7 +45,6 @@ document.getElementById('formInformacionGeneral').addEventListener('submit', (e)
 // Función para guardar información
 function guardarInformacion() {
     const informacion = {
-        id: Date.now(),
         dimension: document.getElementById('dimension').value,
         subdimension: document.getElementById('subdimension').value,
         objetivoEstrategico: document.getElementById('objetivoEstrategico').value,
@@ -48,27 +54,17 @@ function guardarInformacion() {
         accion: document.getElementById('accion').value,
         descripcionAccion: document.getElementById('descripcionAccion').value,
         metasEstrategicas: document.getElementById('metasEstrategicas').value,
-        fechaCreacion: new Date().toISOString(),
         creadoPor: localStorage.getItem('userName')
     };
 
-    // Obtener informaciones existentes
-    let informaciones = JSON.parse(localStorage.getItem('informacionesGenerales') || '[]');
-    
-    // Agregar nueva información
-    informaciones.push(informacion);
-    
-    // Guardar en localStorage
-    localStorage.setItem('informacionesGenerales', JSON.stringify(informaciones));
-
-    // Mostrar mensaje de éxito
-    alert('✅ Información guardada exitosamente');
-
-    // Limpiar formulario
-    limpiarFormulario();
-
-    // Recargar lista
-    cargarInformaciones();
+    // Agregar usando el sistema multi-colegio
+    if (agregarDatoColegio('informacionesGenerales', informacion)) {
+        alert('✅ Información guardada exitosamente');
+        limpiarFormulario();
+        cargarInformaciones();
+    } else {
+        alert('❌ Error al guardar la información');
+    }
 }
 
 // Función para limpiar formulario
@@ -78,7 +74,8 @@ function limpiarFormulario() {
 
 // Función para cargar informaciones
 function cargarInformaciones() {
-    const informaciones = JSON.parse(localStorage.getItem('informacionesGenerales') || '[]');
+    // Obtener informaciones del colegio actual
+    const informaciones = obtenerDatosColegio('informacionesGenerales');
     const container = document.getElementById('listaInformaciones');
 
     if (informaciones.length === 0) {
@@ -165,7 +162,8 @@ function cargarInformaciones() {
 // Función para filtrar informaciones
 function filtrarInformaciones() {
     const filtro = document.getElementById('filtroDimension').value;
-    const informaciones = JSON.parse(localStorage.getItem('informacionesGenerales') || '[]');
+    // Obtener informaciones del colegio actual
+    const informaciones = obtenerDatosColegio('informacionesGenerales');
     const container = document.getElementById('listaInformaciones');
 
     let informacionesFiltradas = informaciones;
@@ -260,12 +258,12 @@ function eliminarInformacion(id) {
         return;
     }
 
-    let informaciones = JSON.parse(localStorage.getItem('informacionesGenerales') || '[]');
-    informaciones = informaciones.filter(info => info.id !== id);
-    localStorage.setItem('informacionesGenerales', JSON.stringify(informaciones));
-
-    alert('✅ Información eliminada exitosamente');
-    cargarInformaciones();
+    if (eliminarDatoColegio('informacionesGenerales', id)) {
+        alert('✅ Información eliminada exitosamente');
+        cargarInformaciones();
+    } else {
+        alert('❌ Error al eliminar la información');
+    }
 }
 
 // Función para obtener color según dimensión

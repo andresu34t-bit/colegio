@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Colegio - EDUGEST</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .selector-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: var(--space-2xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .selector-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .selector-card {
+            background: white;
+            padding: var(--space-2xl);
+            border-radius: var(--radius-2xl);
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35);
+            max-width: 900px;
+            width: 100%;
+            animation: slideInUp 0.8s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        .selector-header {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+            padding-bottom: var(--space-xl);
+            border-bottom: 3px solid var(--primary-100);
+        }
+
+        .selector-title {
+            font-size: 42px;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-md);
+        }
+
+        .selector-subtitle {
+            font-size: 16px;
+            color: var(--gray-600);
+            font-weight: 600;
+        }
+
+        .colegios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .colegio-card {
+            background: var(--gray-50);
+            padding: var(--space-xl);
+            border-radius: var(--radius-xl);
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            text-align: center;
+        }
+
+        .colegio-card:hover {
+            border-color: var(--primary-600);
+            background: white;
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .colegio-icon {
+            font-size: 64px;
+            margin-bottom: var(--space-md);
+        }
+
+        .colegio-nombre {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: var(--space-sm);
+        }
+
+        .colegio-info {
+            font-size: 13px;
+            color: var(--gray-600);
+            font-weight: 600;
+        }
+
+        .btn-nuevo-colegio {
+            width: 100%;
+            padding: 18px;
+            background: var(--gradient-success);
+            color: white;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            box-shadow: var(--shadow-md);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-nuevo-colegio:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .info-box {
+            background: var(--info-50);
+            border: 2px solid var(--info-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-top: var(--space-xl);
+            text-align: center;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: var(--info-800);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-30px, -30px) rotate(180deg); }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="selector-container">
+        <div class="selector-card">
+            <div class="selector-header">
+                <h1 class="selector-title">🏫 Seleccionar Colegio</h1>
+                <p class="selector-subtitle">Cada colegio tiene sus propios datos independientes</p>
+            </div>
+
+            <div id="colegiosGrid" class="colegios-grid">
+                <!-- Se llenará dinámicamente -->
+            </div>
+
+            <button class="btn-nuevo-colegio" onclick="crearNuevoColegio()">
+                ➕ Registrar Nuevo Colegio
+            </button>
+
+            <div class="info-box">
+                <p>🔒 Los datos de cada colegio están completamente separados y protegidos</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/multi-colegio.js"></script>
+    <script>
+        // Cargar colegios al iniciar
+        window.addEventListener('DOMContentLoaded', () => {
+            cargarColegios();
+        });
+
+        function cargarColegios() {
+            const colegios = obtenerColegios();
+            const grid = document.getElementById('colegiosGrid');
+
+            if (colegios.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: var(--space-2xl); color: var(--gray-500);">
+                        <div style="font-size: 64px; margin-bottom: var(--space-lg);">🏫</div>
+                        <p style="font-size: 18px; font-weight: 600;">No hay colegios registrados</p>
+                        <p style="font-size: 14px;">Haz clic en "Registrar Nuevo Colegio" para comenzar</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = colegios.map(colegio => `
+                <div class="colegio-card" onclick="seleccionarColegio('${colegio.id}')">
+                    <div class="colegio-icon">🎓</div>
+                    <div class="colegio-nombre">${colegio.nombre}</div>
+                    <div class="colegio-info">
+                        ${colegio.usuarios || 0} usuarios registrados
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function seleccionarColegio(colegioId) {
+            // Guardar el colegio seleccionado
+            localStorage.setItem('colegioActual', colegioId);
+            
+            // Redirigir al login
+            window.location.href = 'index.html';
+        }
+
+        function crearNuevoColegio() {
+            window.location.href = 'registro-colegio.html';
+        }
+    </script>
+</body>
+</html>
