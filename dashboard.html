@@ -135,96 +135,89 @@
             </div>
         </div>
 
-        <!-- Pestañas del Dashboard -->
-        <div class="dashboard-tabs" style="background: white; border-radius: var(--radius-xl); box-shadow: var(--shadow-md); margin-bottom: var(--space-2xl); overflow: hidden;">
-            <div class="tabs-header" style="display: flex; border-bottom: 2px solid var(--gray-200); background: var(--gray-50);">
-                <button class="tab-btn active" data-tab="estadisticas" style="flex: 1; padding: var(--space-lg); border: none; background: transparent; font-weight: 700; font-size: 16px; cursor: pointer; transition: all var(--transition-base); border-bottom: 3px solid var(--primary-600); color: var(--primary-600);">
-                    📊 Estadísticas
-                </button>
-                <button class="tab-btn" data-tab="chat" style="flex: 1; padding: var(--space-lg); border: none; background: transparent; font-weight: 700; font-size: 16px; cursor: pointer; transition: all var(--transition-base); border-bottom: 3px solid transparent; color: var(--gray-600);">
-                    💬 Chat del Colegio
-                </button>
+        <!-- Estadísticas -->
+        <div class="stats-grid">
+            <div class="stat-card" style="background: white; border: 3px solid var(--primary-600);">
+                <h3 style="color: var(--primary-700);">Total Eventos</h3>
+                <p class="stat-number" id="totalEventos" style="color: var(--gray-900);">0</p>
             </div>
+            <div class="stat-card" style="background: white; border: 3px solid var(--success-600);">
+                <h3 style="color: var(--success-700);">Promedio Éxito</h3>
+                <p class="stat-number" id="promedioExito" style="color: var(--gray-900);">0%</p>
+            </div>
+            <div class="stat-card" style="background: white; border: 3px solid var(--warning-600);">
+                <h3 style="color: var(--warning-700);">Áreas Activas</h3>
+                <p class="stat-number" id="areasActivas" style="color: var(--gray-900);">0</p>
+            </div>
+            <div class="stat-card" style="background: white; border: 3px solid var(--info-600);">
+                <h3 style="color: var(--info-700);">Docentes</h3>
+                <p class="stat-number" id="totalDocentes" style="color: var(--gray-900);">0</p>
+            </div>
+        </div>
 
-            <!-- Contenido Pestaña Estadísticas -->
-            <div class="tab-content active" id="tab-estadisticas" style="padding: var(--space-2xl);">
-                <div class="stats-grid">
-                    <div class="stat-card" style="background: white; border: 3px solid var(--primary-600);">
-                        <h3 style="color: var(--primary-700);">Total Eventos</h3>
-                        <p class="stat-number" id="totalEventos" style="color: var(--gray-900);">0</p>
+        <!-- Chat del Colegio - Siempre Visible -->
+        <div class="dashboard-chat-section" style="background: white; border-radius: var(--radius-xl); box-shadow: var(--shadow-md); margin-bottom: var(--space-2xl); overflow: hidden;">
+            <div class="chat-section-header" style="padding: var(--space-xl); border-bottom: 2px solid var(--gray-200); background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%);">
+                <h2 style="margin: 0; font-size: 24px; font-weight: 900; color: white; display: flex; align-items: center; gap: var(--space-md);">
+                    💬 Chat del Colegio
+                </h2>
+                <p style="margin: var(--space-sm) 0 0 0; color: rgba(255,255,255,0.9); font-size: 14px;">Comunícate en tiempo real con tu equipo</p>
+            </div>
+            
+            <div class="dashboard-chat-container" style="display: flex; height: 600px;">
+                <!-- Lista de Conversaciones -->
+                <div class="chat-sidebar" style="width: 320px; border-right: 2px solid var(--gray-200); display: flex; flex-direction: column; background: var(--gray-50);">
+                    <div class="chat-sidebar-header" style="padding: var(--space-lg); border-bottom: 2px solid var(--gray-200); background: white;">
+                        <h3 style="margin: 0 0 var(--space-md) 0; font-size: 18px; font-weight: 800; color: var(--gray-900);">Mensajes</h3>
+                        <div class="chat-tabs-mini" style="display: flex; gap: var(--space-sm);">
+                            <button class="chat-tab-mini active" data-chat-tab="users" style="flex: 1; padding: var(--space-sm); border: 2px solid var(--primary-600); background: var(--primary-600); color: white; border-radius: var(--radius-md); font-weight: 700; font-size: 14px; cursor: pointer; transition: all var(--transition-base);">
+                                👥 Usuarios
+                            </button>
+                            <button class="chat-tab-mini" data-chat-tab="group" style="flex: 1; padding: var(--space-sm); border: 2px solid var(--gray-300); background: white; color: var(--gray-700); border-radius: var(--radius-md); font-weight: 700; font-size: 14px; cursor: pointer; transition: all var(--transition-base);">
+                                🏫 Grupo
+                            </button>
+                        </div>
                     </div>
-                    <div class="stat-card" style="background: white; border: 3px solid var(--success-600);">
-                        <h3 style="color: var(--success-700);">Promedio Éxito</h3>
-                        <p class="stat-number" id="promedioExito" style="color: var(--gray-900);">0%</p>
+                    <div class="chat-search" style="padding: var(--space-md); background: white; border-bottom: 2px solid var(--gray-200);">
+                        <input type="text" id="dashboardChatSearch" placeholder="🔍 Buscar usuario..." style="width: 100%; padding: var(--space-sm) var(--space-md); border: 2px solid var(--gray-300); border-radius: var(--radius-md); font-size: 14px;">
                     </div>
-                    <div class="stat-card" style="background: white; border: 3px solid var(--warning-600);">
-                        <h3 style="color: var(--warning-700);">Áreas Activas</h3>
-                        <p class="stat-number" id="areasActivas" style="color: var(--gray-900);">0</p>
-                    </div>
-                    <div class="stat-card" style="background: white; border: 3px solid var(--info-600);">
-                        <h3 style="color: var(--info-700);">Docentes</h3>
-                        <p class="stat-number" id="totalDocentes" style="color: var(--gray-900);">0</p>
+                    <div id="dashboardChatUsersList" class="chat-users-list" style="flex: 1; overflow-y: auto; padding: var(--space-sm);">
+                        <!-- Se llenará dinámicamente -->
                     </div>
                 </div>
-            </div>
 
-            <!-- Contenido Pestaña Chat -->
-            <div class="tab-content" id="tab-chat" style="padding: 0; display: none;">
-                <div class="dashboard-chat-container" style="display: flex; height: 600px;">
-                    <!-- Lista de Conversaciones -->
-                    <div class="chat-sidebar" style="width: 320px; border-right: 2px solid var(--gray-200); display: flex; flex-direction: column; background: var(--gray-50);">
-                        <div class="chat-sidebar-header" style="padding: var(--space-lg); border-bottom: 2px solid var(--gray-200); background: white;">
-                            <h3 style="margin: 0 0 var(--space-md) 0; font-size: 18px; font-weight: 800; color: var(--gray-900);">Mensajes</h3>
-                            <div class="chat-tabs-mini" style="display: flex; gap: var(--space-sm);">
-                                <button class="chat-tab-mini active" data-chat-tab="users" style="flex: 1; padding: var(--space-sm); border: 2px solid var(--primary-600); background: var(--primary-600); color: white; border-radius: var(--radius-md); font-weight: 700; font-size: 14px; cursor: pointer; transition: all var(--transition-base);">
-                                    👥 Usuarios
-                                </button>
-                                <button class="chat-tab-mini" data-chat-tab="group" style="flex: 1; padding: var(--space-sm); border: 2px solid var(--gray-300); background: white; color: var(--gray-700); border-radius: var(--radius-md); font-weight: 700; font-size: 14px; cursor: pointer; transition: all var(--transition-base);">
-                                    🏫 Grupo
-                                </button>
-                            </div>
-                        </div>
-                        <div class="chat-search" style="padding: var(--space-md); background: white; border-bottom: 2px solid var(--gray-200);">
-                            <input type="text" id="dashboardChatSearch" placeholder="🔍 Buscar usuario..." style="width: 100%; padding: var(--space-sm) var(--space-md); border: 2px solid var(--gray-300); border-radius: var(--radius-md); font-size: 14px;">
-                        </div>
-                        <div id="dashboardChatUsersList" class="chat-users-list" style="flex: 1; overflow-y: auto; padding: var(--space-sm);">
-                            <!-- Se llenará dinámicamente -->
-                        </div>
+                <!-- Área de Conversación -->
+                <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; background: white;">
+                    <div id="dashboardChatWelcome" style="flex: 1; display: flex; align-items: center; justify-content: center; flex-direction: column; color: var(--gray-500); padding: var(--space-2xl);">
+                        <div style="font-size: 64px; margin-bottom: var(--space-lg);">💬</div>
+                        <h3 style="font-size: 24px; font-weight: 800; color: var(--gray-700); margin-bottom: var(--space-sm);">Chat del Colegio</h3>
+                        <p style="text-align: center; max-width: 400px; line-height: 1.6;">Selecciona un usuario de la lista para iniciar una conversación o usa el chat grupal para comunicarte con todo el colegio.</p>
                     </div>
 
-                    <!-- Área de Conversación -->
-                    <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; background: white;">
-                        <div id="dashboardChatWelcome" style="flex: 1; display: flex; align-items: center; justify-content: center; flex-direction: column; color: var(--gray-500); padding: var(--space-2xl);">
-                            <div style="font-size: 64px; margin-bottom: var(--space-lg);">💬</div>
-                            <h3 style="font-size: 24px; font-weight: 800; color: var(--gray-700); margin-bottom: var(--space-sm);">Chat del Colegio</h3>
-                            <p style="text-align: center; max-width: 400px; line-height: 1.6;">Selecciona un usuario de la lista para iniciar una conversación o usa el chat grupal para comunicarte con todo el colegio.</p>
+                    <div id="dashboardChatConversation" style="flex: 1; display: none; flex-direction: column;">
+                        <div class="chat-conversation-header" style="padding: var(--space-lg); border-bottom: 2px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; background: var(--gray-50);">
+                            <div style="display: flex; align-items: center; gap: var(--space-md);">
+                                <div id="dashboardChatAvatar" style="width: 48px; height: 48px; border-radius: 50%; background: var(--primary-600); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px;">U</div>
+                                <div>
+                                    <h4 id="dashboardChatUserName" style="margin: 0; font-size: 16px; font-weight: 800; color: var(--gray-900);">Usuario</h4>
+                                    <p id="dashboardChatUserRole" style="margin: 0; font-size: 12px; color: var(--gray-600);">Rol</p>
+                                </div>
+                            </div>
+                            <button id="dashboardChatClose" style="padding: var(--space-sm) var(--space-md); border: 2px solid var(--gray-300); background: white; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; transition: all var(--transition-base);">
+                                ← Volver
+                            </button>
                         </div>
 
-                        <div id="dashboardChatConversation" style="flex: 1; display: none; flex-direction: column;">
-                            <div class="chat-conversation-header" style="padding: var(--space-lg); border-bottom: 2px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; background: var(--gray-50);">
-                                <div style="display: flex; align-items: center; gap: var(--space-md);">
-                                    <div id="dashboardChatAvatar" style="width: 48px; height: 48px; border-radius: 50%; background: var(--primary-600); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px;">U</div>
-                                    <div>
-                                        <h4 id="dashboardChatUserName" style="margin: 0; font-size: 16px; font-weight: 800; color: var(--gray-900);">Usuario</h4>
-                                        <p id="dashboardChatUserRole" style="margin: 0; font-size: 12px; color: var(--gray-600);">Rol</p>
-                                    </div>
-                                </div>
-                                <button id="dashboardChatClose" style="padding: var(--space-sm) var(--space-md); border: 2px solid var(--gray-300); background: white; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; transition: all var(--transition-base);">
-                                    ← Volver
+                        <div id="dashboardChatMessages" class="chat-messages" style="flex: 1; overflow-y: auto; padding: var(--space-lg); background: var(--gray-50);">
+                            <!-- Mensajes se cargarán aquí -->
+                        </div>
+
+                        <div class="chat-input-container" style="padding: var(--space-lg); border-top: 2px solid var(--gray-200); background: white;">
+                            <div style="display: flex; gap: var(--space-md);">
+                                <input type="text" id="dashboardChatInput" placeholder="Escribe un mensaje..." style="flex: 1; padding: var(--space-md); border: 2px solid var(--gray-300); border-radius: var(--radius-md); font-size: 14px;">
+                                <button id="dashboardChatSend" style="padding: var(--space-md) var(--space-xl); background: var(--gradient-primary); color: white; border: none; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; transition: all var(--transition-base);">
+                                    Enviar 📤
                                 </button>
-                            </div>
-
-                            <div id="dashboardChatMessages" class="chat-messages" style="flex: 1; overflow-y: auto; padding: var(--space-lg); background: var(--gray-50);">
-                                <!-- Mensajes se cargarán aquí -->
-                            </div>
-
-                            <div class="chat-input-container" style="padding: var(--space-lg); border-top: 2px solid var(--gray-200); background: white;">
-                                <div style="display: flex; gap: var(--space-md);">
-                                    <input type="text" id="dashboardChatInput" placeholder="Escribe un mensaje..." style="flex: 1; padding: var(--space-md); border: 2px solid var(--gray-300); border-radius: var(--radius-md); font-size: 14px;">
-                                    <button id="dashboardChatSend" style="padding: var(--space-md) var(--space-xl); background: var(--gradient-primary); color: white; border: none; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; transition: all var(--transition-base);">
-                                        Enviar 📤
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -265,39 +258,15 @@
     <script src="js/chat.js"></script>
     <script src="js/dashboard-demo.js"></script>
     
-    <!-- Script para pestañas y chat integrado -->
+    <!-- Script para chat integrado -->
     <script type="module">
         import { chatFirebase } from './js/chat-firebase.js';
         
-        // Manejo de pestañas principales
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tabName = btn.dataset.tab;
-                
-                // Actualizar botones
-                document.querySelectorAll('.tab-btn').forEach(b => {
-                    b.classList.remove('active');
-                    b.style.borderBottom = '3px solid transparent';
-                    b.style.color = 'var(--gray-600)';
-                });
-                btn.classList.add('active');
-                btn.style.borderBottom = '3px solid var(--primary-600)';
-                btn.style.color = 'var(--primary-600)';
-                
-                // Actualizar contenido
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.style.display = 'none';
-                    content.classList.remove('active');
-                });
-                const activeContent = document.getElementById(`tab-${tabName}`);
-                activeContent.style.display = 'block';
-                activeContent.classList.add('active');
-                
-                // Si se abre el chat, cargar usuarios
-                if (tabName === 'chat') {
-                    cargarUsuariosChat();
-                }
-            });
+        // Cargar usuarios al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                cargarUsuariosChat();
+            }, 1000);
         });
         
         // Manejo de pestañas del chat (Usuarios/Grupo)
