@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Inicio Rápido - EDUGEST</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .inicio-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: var(--space-2xl);
+        }
+
+        .inicio-card {
+            background: white;
+            padding: var(--space-2xl);
+            border-radius: var(--radius-2xl);
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35);
+            max-width: 800px;
+            width: 100%;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .inicio-header {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+            padding-bottom: var(--space-xl);
+            border-bottom: 3px solid var(--primary-100);
+        }
+
+        .inicio-title {
+            font-size: 48px;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-md);
+        }
+
+        .inicio-subtitle {
+            font-size: 18px;
+            color: var(--gray-600);
+            font-weight: 600;
+        }
+
+        .opciones-grid {
+            display: grid;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .opcion-card {
+            background: var(--gray-50);
+            padding: var(--space-xl);
+            border-radius: var(--radius-xl);
+            border: 3px solid transparent;
+            transition: all var(--transition-base);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+
+        .opcion-card:hover {
+            border-color: var(--primary-600);
+            background: white;
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .opcion-icon {
+            font-size: 48px;
+            min-width: 60px;
+        }
+
+        .opcion-content h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: var(--space-xs);
+        }
+
+        .opcion-content p {
+            font-size: 14px;
+            color: var(--gray-600);
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .badge-new {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--success-600);
+            color: white;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-left: var(--space-sm);
+        }
+
+        .info-box {
+            background: var(--info-50);
+            border: 2px solid var(--info-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+
+        .info-box h4 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--info-800);
+            margin-bottom: var(--space-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .info-box ul {
+            margin: var(--space-sm) 0 0 var(--space-lg);
+            color: var(--info-700);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .info-box li {
+            margin-bottom: var(--space-xs);
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="inicio-container">
+        <div class="inicio-card">
+            <div class="inicio-header">
+                <h1 class="inicio-title">🚀 Bienvenido a EDUGEST</h1>
+                <p class="inicio-subtitle">Sistema de Gestión Educativa - Fase 1 Implementada</p>
+            </div>
+
+            <div class="opciones-grid">
+                <div class="opcion-card" onclick="window.location.href='portada.html'">
+                    <div class="opcion-icon">🏠</div>
+                    <div class="opcion-content">
+                        <h3>Pantalla de Portada <span class="badge-new">Nuevo</span></h3>
+                        <p>Pantalla inicial con logos personalizables y nombre del colegio editable</p>
+                    </div>
+                </div>
+
+                <div class="opcion-card" onclick="window.location.href='index.html'">
+                    <div class="opcion-icon">🔐</div>
+                    <div class="opcion-content">
+                        <h3>Iniciar Sesión</h3>
+                        <p>Accede al sistema con tu cuenta (usa el modo demo para probar)</p>
+                    </div>
+                </div>
+
+                <div class="opcion-card" onclick="irDashboardDirecto()">
+                    <div class="opcion-icon">📊</div>
+                    <div class="opcion-content">
+                        <h3>Dashboard Principal</h3>
+                        <p>Acceso directo al tablero central con todas las funcionalidades</p>
+                    </div>
+                </div>
+
+                <div class="opcion-card" onclick="irInformacionesGenerales()">
+                    <div class="opcion-icon">⚙️</div>
+                    <div class="opcion-content">
+                        <h3>Informaciones Generales <span class="badge-new">Nuevo</span></h3>
+                        <p>Configura dimensiones, objetivos estratégicos, estrategias e indicadores</p>
+                    </div>
+                </div>
+
+                <div class="opcion-card" onclick="irAreas()">
+                    <div class="opcion-icon">📝</div>
+                    <div class="opcion-content">
+                        <h3>Registrar Eventos</h3>
+                        <p>Registra eventos en las 3 áreas: Currículum, Liderazgo y Convivencia</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>💡 Novedades de la Fase 1:</h4>
+                <ul>
+                    <li>✅ Nueva pantalla de portada con logos personalizables</li>
+                    <li>✅ Módulo "Informaciones Generales" para configuración PME</li>
+                    <li>✅ Dashboard mejorado con tarjetas de módulos</li>
+                    <li>✅ Eliminado "Recursos" - Solo 3 áreas principales</li>
+                    <li>✅ Control de accesos por rol (Director/Administrador/Docente)</li>
+                    <li>✅ Chat en línea tipo WhatsApp integrado</li>
+                    <li>✅ Diseño moderno y profesional mejorado</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-xl); padding-top: var(--space-xl); border-top: 2px solid var(--gray-200);">
+                <p style="font-size: 14px; color: var(--gray-600); font-weight: 600;">
+                    📄 Lee <a href="FASE-1-IMPLEMENTADA.md" style="color: var(--primary-600); text-decoration: none; font-weight: 800;">FASE-1-IMPLEMENTADA.md</a> para más detalles
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function irDashboardDirecto() {
+            // Crear sesión demo si no existe
+            if (!localStorage.getItem('userId')) {
+                localStorage.setItem('userId', 'demo-director');
+                localStorage.setItem('userName', 'Director Demo');
+                localStorage.setItem('userRole', 'director');
+                localStorage.setItem('userEmail', 'director@demo.com');
+            }
+            window.location.href = 'dashboard.html';
+        }
+
+        function irInformacionesGenerales() {
+            // Crear sesión demo si no existe
+            if (!localStorage.getItem('userId')) {
+                localStorage.setItem('userId', 'demo-director');
+                localStorage.setItem('userName', 'Director Demo');
+                localStorage.setItem('userRole', 'director');
+                localStorage.setItem('userEmail', 'director@demo.com');
+            }
+            window.location.href = 'informaciones-generales.html';
+        }
+
+        function irAreas() {
+            // Crear sesión demo si no existe
+            if (!localStorage.getItem('userId')) {
+                localStorage.setItem('userId', 'demo-director');
+                localStorage.setItem('userName', 'Director Demo');
+                localStorage.setItem('userRole', 'director');
+                localStorage.setItem('userEmail', 'director@demo.com');
+            }
+            window.location.href = 'areas.html';
+        }
+    </script>
+</body>
+</html>

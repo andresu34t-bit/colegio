@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido - EDUGEST</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .portada-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: var(--space-2xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portada-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .portada-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(40px);
+            padding: var(--space-2xl) var(--space-2xl) var(--space-2xl);
+            border-radius: var(--radius-2xl);
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35);
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .portada-title {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: var(--space-xl);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .portada-title-editable {
+            display: inline-block;
+            padding: 8px 16px;
+            border: 3px dashed transparent;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-base);
+            cursor: pointer;
+        }
+
+        .portada-title-editable:hover {
+            border-color: var(--primary-400);
+            background: var(--primary-50);
+        }
+
+        .logos-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-2xl);
+            margin: var(--space-2xl) 0;
+            flex-wrap: wrap;
+        }
+
+        .logo-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .logo-placeholder {
+            width: 150px;
+            height: 150px;
+            border: 3px dashed var(--gray-300);
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray-50);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-placeholder:hover {
+            border-color: var(--primary-600);
+            background: var(--primary-50);
+            transform: scale(1.05);
+        }
+
+        .logo-placeholder img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gray-700);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-ingresar {
+            padding: 24px 64px;
+            font-size: 20px;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-xl);
+            cursor: pointer;
+            box-shadow: 0 16px 48px rgba(99, 102, 241, 0.4);
+            transition: all var(--transition-base);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: var(--space-2xl);
+        }
+
+        .btn-ingresar:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 24px 64px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-ingresar:active {
+            transform: translateY(-2px);
+        }
+
+        .portada-subtitle {
+            font-size: 18px;
+            color: var(--gray-600);
+            font-weight: 600;
+            margin-top: var(--space-lg);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-30px, -30px) rotate(180deg); }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="portada-container">
+        <div class="portada-card">
+            <h1 class="portada-title">
+                <span class="portada-title-editable" id="colegioNombre" contenteditable="true">
+                    Colegio [Nombre]
+                </span>
+            </h1>
+
+            <div class="logos-container">
+                <div class="logo-box">
+                    <div class="logo-placeholder" onclick="document.getElementById('logoRed').click()">
+                        <img id="logoRedImg" src="" alt="Logo Red" style="display: none;">
+                        <span id="logoRedText" style="font-size: 48px; color: var(--gray-400);">🏫</span>
+                    </div>
+                    <input type="file" id="logoRed" accept="image/*" style="display: none;">
+                    <span class="logo-label">Logo Red de Colegios</span>
+                </div>
+
+                <div class="logo-box">
+                    <div class="logo-placeholder" onclick="document.getElementById('logoColegio').click()">
+                        <img id="logoColegioImg" src="" alt="Logo Colegio" style="display: none;">
+                        <span id="logoColegioText" style="font-size: 48px; color: var(--gray-400);">🎓</span>
+                    </div>
+                    <input type="file" id="logoColegio" accept="image/*" style="display: none;">
+                    <span class="logo-label">Logo del Colegio</span>
+                </div>
+
+                <div class="logo-box">
+                    <div class="logo-placeholder">
+                        <img src="LOGO EDUGEST.png" alt="Logo EDUGEST" style="display: block;">
+                    </div>
+                    <span class="logo-label">Sistema EDUGEST</span>
+                </div>
+            </div>
+
+            <button class="btn-ingresar" onclick="ingresarSistema()">
+                🚀 Ingresar al Sistema
+            </button>
+
+            <p class="portada-subtitle">
+                Sistema de Gestión Educativa Integral
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Cargar datos guardados
+        window.addEventListener('DOMContentLoaded', () => {
+            const nombreGuardado = localStorage.getItem('colegioNombre');
+            if (nombreGuardado) {
+                document.getElementById('colegioNombre').textContent = nombreGuardado;
+            }
+
+            const logoRedGuardado = localStorage.getItem('logoRed');
+            if (logoRedGuardado) {
+                document.getElementById('logoRedImg').src = logoRedGuardado;
+                document.getElementById('logoRedImg').style.display = 'block';
+                document.getElementById('logoRedText').style.display = 'none';
+            }
+
+            const logoColegioGuardado = localStorage.getItem('logoColegio');
+            if (logoColegioGuardado) {
+                document.getElementById('logoColegioImg').src = logoColegioGuardado;
+                document.getElementById('logoColegioImg').style.display = 'block';
+                document.getElementById('logoColegioText').style.display = 'none';
+            }
+        });
+
+        // Guardar nombre del colegio
+        document.getElementById('colegioNombre').addEventListener('blur', function() {
+            localStorage.setItem('colegioNombre', this.textContent.trim());
+        });
+
+        // Manejar carga de logo red
+        document.getElementById('logoRed').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const imgData = event.target.result;
+                    localStorage.setItem('logoRed', imgData);
+                    document.getElementById('logoRedImg').src = imgData;
+                    document.getElementById('logoRedImg').style.display = 'block';
+                    document.getElementById('logoRedText').style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Manejar carga de logo colegio
+        document.getElementById('logoColegio').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const imgData = event.target.result;
+                    localStorage.setItem('logoColegio', imgData);
+                    document.getElementById('logoColegioImg').src = imgData;
+                    document.getElementById('logoColegioImg').style.display = 'block';
+                    document.getElementById('logoColegioText').style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Función para ingresar al sistema
+        function ingresarSistema() {
+            // Verificar si hay sesión activa
+            const userId = localStorage.getItem('userId');
+            if (userId) {
+                window.location.href = 'dashboard.html';
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

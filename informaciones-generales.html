@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informaciones Generales - EduGest PME</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo-container">
+                <img src="LOGO EDUGEST.png" alt="Logo EduGest PME" class="sidebar-logo-img">
+            </div>
+            <h2>EduGest PME</h2>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar">D</div>
+            <p class="user-name" id="userName">Usuario</p>
+            <p class="user-role" id="userRole">Rol</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div style="padding: var(--space-sm) var(--space-lg); color: var(--gray-500); font-size: 12px; font-weight: 600; text-transform: uppercase;">
+                Módulo PME
+            </div>
+            <a href="dashboard.html" class="nav-item">📊 Dashboard PME</a>
+            <a href="informaciones-generales.html" class="nav-item active">⚙️ Informaciones Generales</a>
+            <a href="areas.html" class="nav-item">📝 Registrar Evento</a>
+            <a href="informes.html" class="nav-item">📄 Informes PME</a>
+            <a href="finanzas.html" class="nav-item" id="navFinanzas" style="display: none;">💰 Finanzas</a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">🚪 Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <div style="margin-bottom: var(--space-2xl);">
+            <h1 style="font-size: 36px; font-weight: 900; margin: 0; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                ⚙️ Informaciones Generales PME
+            </h1>
+            <p style="color: var(--gray-600); margin: var(--space-xs) 0 0 0; font-weight: 600; font-size: 16px;">
+                Configuración de dimensiones, objetivos estratégicos, estrategias e indicadores
+            </p>
+        </div>
+
+        <!-- Formulario de Informaciones Generales -->
+        <div class="form-card">
+            <h2>📋 Registrar Información General</h2>
+
+            <form id="formInformacionGeneral">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Dimensión</label>
+                        <select id="dimension" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="Currículum">Currículum</option>
+                            <option value="Liderazgo">Liderazgo</option>
+                            <option value="Convivencia Escolar">Convivencia Escolar</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subdimensión</label>
+                        <input type="text" id="subdimension" placeholder="Ej: Gestión Pedagógica" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Objetivo Estratégico (OE)</label>
+                    <textarea id="objetivoEstrategico" rows="3" placeholder="Describe el objetivo estratégico..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Estrategia (E)</label>
+                    <textarea id="estrategia" rows="3" placeholder="Describe la estrategia..." required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Indicador</label>
+                        <input type="text" id="indicador" placeholder="Nombre del indicador" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción del Indicador</label>
+                        <input type="text" id="descripcionIndicador" placeholder="Descripción breve" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Acción</label>
+                        <input type="text" id="accion" placeholder="Nombre de la acción" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción de la Acción</label>
+                        <input type="text" id="descripcionAccion" placeholder="Descripción breve" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Metas Estratégicas</label>
+                    <textarea id="metasEstrategicas" rows="3" placeholder="Describe las metas estratégicas..." required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="limpiarFormulario()">🔄 Limpiar</button>
+                    <button type="submit" class="btn btn-primary">💾 Guardar Información</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Lista de Informaciones Registradas -->
+        <div class="form-card">
+            <h2>📚 Informaciones Registradas</h2>
+            
+            <div style="margin-bottom: var(--space-lg);">
+                <select id="filtroDimension" class="filter-select" onchange="filtrarInformaciones()">
+                    <option value="">Todas las dimensiones</option>
+                    <option value="Currículum">Currículum</option>
+                    <option value="Liderazgo">Liderazgo</option>
+                    <option value="Convivencia Escolar">Convivencia Escolar</option>
+                </select>
+            </div>
+
+            <div id="listaInformaciones" style="display: grid; gap: var(--space-lg);">
+                <!-- Se llenará dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/mobile-menu.js"></script>
+    <script src="js/informaciones-generales.js"></script>
+</body>
+</html>
