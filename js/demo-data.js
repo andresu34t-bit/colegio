@@ -143,47 +143,162 @@ const DEMO_USERS_EXTENDED = {
 };
 
 /**
- * Generar eventos de prueba
+ * Generar eventos de prueba COMPLETOS Y REALISTAS
  */
-function generateDemoEvents(schoolId, count = 20) {
-    const areas = ['Currículo', 'Liderazgo', 'Convivencia', 'Recursos'];
+function generateDemoEvents(schoolId, count = 50) {
+    const areas = ['Currículum', 'Liderazgo', 'Convivencia', 'Recursos'];
     const meses = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'];
-    const actividades = [
-        'Taller de capacitación docente',
-        'Reunión de coordinación',
-        'Evaluación de aprendizajes',
-        'Jornada de planificación',
-        'Actividad de convivencia escolar',
-        'Consejo de profesores',
-        'Reunión de apoderados',
-        'Actividad extracurricular',
-        'Evaluación institucional',
-        'Capacitación en TIC'
-    ];
+    
+    // Actividades detalladas por área
+    const actividadesPorArea = {
+        'Currículum': [
+            'Taller de estrategias pedagógicas innovadoras',
+            'Capacitación en evaluación formativa',
+            'Jornada de planificación curricular',
+            'Implementación de metodologías activas',
+            'Evaluación de aprendizajes por competencias',
+            'Taller de diferenciación en el aula',
+            'Capacitación en uso de TIC en el aula',
+            'Análisis de resultados de aprendizaje',
+            'Diseño de unidades didácticas',
+            'Taller de retroalimentación efectiva',
+            'Implementación de ABP (Aprendizaje Basado en Proyectos)',
+            'Capacitación en DUA (Diseño Universal de Aprendizaje)',
+            'Evaluación diagnóstica integral',
+            'Taller de lectoescritura inicial',
+            'Capacitación en matemática para la vida'
+        ],
+        'Liderazgo': [
+            'Consejo de profesores mensual',
+            'Reunión de coordinación académica',
+            'Jornada de planificación estratégica',
+            'Evaluación institucional semestral',
+            'Reunión de equipo directivo',
+            'Análisis de indicadores de gestión',
+            'Planificación del PME anual',
+            'Reunión con sostenedor',
+            'Jornada de autocuidado docente',
+            'Evaluación de desempeño docente',
+            'Reunión de articulación entre niveles',
+            'Planificación de recursos educativos',
+            'Análisis de clima laboral',
+            'Reunión de mejora continua',
+            'Jornada de trabajo colaborativo'
+        ],
+        'Convivencia': [
+            'Taller de resolución de conflictos',
+            'Actividad de convivencia escolar',
+            'Reunión de apoderados por curso',
+            'Jornada de prevención del bullying',
+            'Taller de habilidades socioemocionales',
+            'Actividad de integración familiar',
+            'Charla de salud mental estudiantil',
+            'Taller de parentalidad positiva',
+            'Actividad recreativa y deportiva',
+            'Jornada de valores y ética',
+            'Taller de mediación escolar',
+            'Actividad de inclusión y diversidad',
+            'Charla de prevención de drogas',
+            'Taller de comunicación efectiva',
+            'Actividad de vida saludable'
+        ],
+        'Recursos': [
+            'Gestión de recursos materiales',
+            'Planificación presupuestaria',
+            'Adquisición de material didáctico',
+            'Mantención de infraestructura',
+            'Gestión de biblioteca escolar',
+            'Implementación de laboratorio',
+            'Adquisición de tecnología educativa',
+            'Gestión de recursos humanos',
+            'Optimización de espacios educativos',
+            'Gestión de inventario',
+            'Planificación de inversiones',
+            'Gestión de proveedores',
+            'Implementación de sala de recursos',
+            'Gestión de transporte escolar',
+            'Optimización de recursos energéticos'
+        ]
+    };
+    
+    // Subdimensiones por área
+    const subdimensiones = {
+        'Currículum': ['Gestión Pedagógica', 'Enseñanza y Aprendizaje', 'Apoyo al Desarrollo'],
+        'Liderazgo': ['Liderazgo del Director', 'Planificación y Gestión', 'Gestión de Resultados'],
+        'Convivencia': ['Formación', 'Convivencia Escolar', 'Participación y Vida Democrática'],
+        'Recursos': ['Gestión de Personal', 'Gestión de Recursos Financieros', 'Gestión de Recursos Educativos']
+    };
+    
+    // Objetivos estratégicos por área
+    const objetivos = {
+        'Currículum': [
+            'Mejorar los resultados de aprendizaje en todas las asignaturas',
+            'Implementar prácticas pedagógicas innovadoras y efectivas',
+            'Fortalecer el desarrollo integral de los estudiantes',
+            'Mejorar la calidad de la enseñanza mediante capacitación docente'
+        ],
+        'Liderazgo': [
+            'Fortalecer el liderazgo pedagógico del equipo directivo',
+            'Mejorar la gestión institucional y administrativa',
+            'Promover el trabajo colaborativo y la mejora continua',
+            'Optimizar los procesos de planificación y evaluación'
+        ],
+        'Convivencia': [
+            'Promover un clima escolar positivo y seguro',
+            'Fortalecer la participación de la comunidad educativa',
+            'Desarrollar habilidades socioemocionales en los estudiantes',
+            'Mejorar la relación familia-escuela'
+        ],
+        'Recursos': [
+            'Optimizar el uso de recursos materiales y financieros',
+            'Mejorar la infraestructura y equipamiento educativo',
+            'Fortalecer la gestión de recursos humanos',
+            'Asegurar la sustentabilidad financiera del establecimiento'
+        ]
+    };
     
     const events = [];
     const docentes = Object.values(DEMO_USERS_EXTENDED).filter(u => u.schoolId === schoolId && u.role === 'docente');
     
     for (let i = 0; i < count; i++) {
         const area = areas[Math.floor(Math.random() * areas.length)];
-        const mes = meses[Math.floor(Math.random() * meses.length)];
+        const mesIndex = Math.floor(Math.random() * 12);
+        const mes = meses[mesIndex];
+        const actividades = actividadesPorArea[area];
         const actividad = actividades[Math.floor(Math.random() * actividades.length)];
         const docente = docentes[Math.floor(Math.random() * docentes.length)];
-        const exito = Math.random() > 0.2; // 80% de éxito
+        const exito = Math.random() > 0.15; // 85% de éxito
+        
+        const metaEsperada = Math.floor(Math.random() * 20) + 80;
+        const metaAlcanzada = exito 
+            ? Math.floor(Math.random() * 15) + 85 
+            : Math.floor(Math.random() * 25) + 55;
+        
+        const porcentajeLogro = Math.round((metaAlcanzada / metaEsperada) * 100);
+        const numeroEventos = Math.floor(Math.random() * 3) + 1;
         
         events.push({
             id: `event_${schoolId}_${i}`,
             schoolId: schoolId,
             area: area,
+            subdimension: subdimensiones[area][Math.floor(Math.random() * subdimensiones[area].length)],
+            objetivoEstrategico: objetivos[area][Math.floor(Math.random() * objetivos[area].length)],
+            estrategia: actividad,
             mes: mes,
             actividad: actividad,
+            descripcion: `${actividad} realizada con el objetivo de mejorar los procesos educativos en el área de ${area}. Participaron ${numeroEventos} grupos de trabajo.`,
             responsable: docente?.name || 'Docente',
-            metaEsperada: Math.floor(Math.random() * 20) + 80,
-            metaAlcanzada: exito ? Math.floor(Math.random() * 20) + 80 : Math.floor(Math.random() * 30) + 50,
-            observaciones: exito ? 'Actividad realizada exitosamente' : 'Requiere seguimiento',
-            fecha: new Date(2026, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString(),
+            numeroEventos: numeroEventos,
+            metaEsperada: metaEsperada,
+            metaAlcanzada: metaAlcanzada,
+            porcentajeLogro: porcentajeLogro,
+            porcentajeMeta: Math.round((metaAlcanzada / 100) * 100),
+            observaciones: exito 
+                ? `Actividad realizada exitosamente. Se cumplieron los objetivos propuestos con un ${porcentajeLogro}% de logro.`
+                : `Actividad realizada con dificultades. Se requiere seguimiento y apoyo adicional. Logro: ${porcentajeLogro}%.`,
+            fecha: new Date(2026, mesIndex, Math.floor(Math.random() * 28) + 1).toISOString(),
             createdBy: docente?.email || 'demo@edugest.cl',
-            createdAt: new Date().toISOString()
+            createdAt: new Date(2026, mesIndex, Math.floor(Math.random() * 28) + 1).toISOString()
         });
     }
     
@@ -273,28 +388,63 @@ function generateNotifications(userEmail, count = 5) {
  * Cargar todos los datos de prueba
  */
 function loadAllDemoData() {
-    console.log('🚀 Cargando datos de prueba...');
+    console.log('🚀 Cargando datos de prueba completos...');
     
-    // Cargar eventos PME para cada colegio
+    // Cargar eventos PME para cada colegio (50 eventos por colegio = 150 total)
     ['school_001', 'school_002', 'school_003'].forEach(schoolId => {
-        const events = generateDemoEvents(schoolId, 25);
+        const events = generateDemoEvents(schoolId, 50);
         localStorage.setItem(`edugest_events_${schoolId}`, JSON.stringify(events));
-        console.log(`✓ ${events.length} eventos cargados para ${schoolId}`);
+        
+        // También guardar en formato legacy para compatibilidad con informes
+        if (schoolId === 'school_001') {
+            localStorage.setItem('eventos', JSON.stringify(events));
+        }
+        
+        console.log(`✓ ${events.length} eventos PME cargados para ${schoolId}`);
         
         // Cargar eventos de calendario
-        const calendarEvents = generateCalendarEvents(schoolId, 12);
+        const calendarEvents = generateCalendarEvents(schoolId, 15);
         localStorage.setItem(`edugest_calendar_${schoolId}`, JSON.stringify(calendarEvents));
         console.log(`✓ ${calendarEvents.length} eventos de calendario para ${schoolId}`);
     });
     
-    // Cargar notificaciones para algunos usuarios
-    Object.keys(DEMO_USERS_EXTENDED).slice(0, 5).forEach(email => {
-        const notifications = generateNotifications(email, 8);
+    // Cargar notificaciones para usuarios clave
+    const keyUsers = [
+        'admin@edugest.cl',
+        'director.sanjose@edugest.cl',
+        'director.norte@edugest.cl',
+        'director.sur@edugest.cl',
+        'docente1.sanjose@edugest.cl'
+    ];
+    
+    keyUsers.forEach(email => {
+        const notifications = generateNotifications(email, 12);
         localStorage.setItem(`edugest_notifications_${email}`, JSON.stringify(notifications));
     });
-    console.log('✓ Notificaciones cargadas');
+    console.log('✓ Notificaciones cargadas para usuarios clave');
+    
+    // Cargar información general del colegio
+    const infoGeneral = {
+        nombreColegio: 'Colegio San José',
+        rbd: '12345-6',
+        director: 'Juan Pérez',
+        año: '2026',
+        region: 'Metropolitana',
+        comuna: 'Santiago',
+        direccion: 'Av. Principal 123',
+        telefono: '+56 2 2345 6789',
+        email: 'contacto@sanjose.cl'
+    };
+    localStorage.setItem('informacionesGenerales', JSON.stringify(infoGeneral));
+    console.log('✓ Información general del colegio cargada');
     
     console.log('✅ Datos de prueba cargados exitosamente');
+    console.log('\n📊 RESUMEN DE DATOS:');
+    console.log('- 150 eventos PME (50 por colegio)');
+    console.log('- 45 eventos de calendario');
+    console.log('- 60+ notificaciones');
+    console.log('- 16 usuarios activos');
+    console.log('- 3 colegios configurados');
     console.log('\n📋 USUARIOS DE PRUEBA:');
     console.log('Admin Global: admin@edugest.cl / admin123');
     console.log('\nColegio San José:');
@@ -307,6 +457,7 @@ function loadAllDemoData() {
     console.log('\nEscuela Básica Sur:');
     console.log('  Director: director.sur@edugest.cl / director123');
     console.log('  Docente: docente1.sur@edugest.cl / docente123');
+    console.log('\n💡 TIP: Inicia sesión y explora el sistema completo!');
 }
 
 /**

@@ -207,10 +207,34 @@
     </div>
 
     <script src="js/mobile-menu.js"></script>
+    <script src="js/roles-permissions.js"></script>
+    <script src="js/multi-school.js"></script>
     <script src="js/chat-firebase.js"></script>
     <script src="js/chat-ui.js"></script>
     <script src="js/chat.js"></script>
     <script src="js/informes.js"></script>
+    <script src="js/informes-advanced.js"></script>
     <script src="js/informes-ui.js"></script>
+    <script>
+        // Proteger página
+        if (EdugestRoles && !EdugestRoles.protectPage()) {
+            // Redirigir al login
+        }
+        
+        // Actualizar información del usuario
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = EdugestRoles.getCurrentUser();
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userRole').textContent = EdugestRoles.getRoleName(user.role);
+                
+                const school = EdugestSchools.getCurrentSchool();
+                if (school) {
+                    document.getElementById('colegioInfo').textContent = 
+                        `${school.name} - Generación de informes y análisis de datos`;
+                }
+            }
+        });
+    </script>
 </body>
 </html>

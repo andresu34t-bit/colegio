@@ -221,14 +221,19 @@ class ChatFirebase {
     canChatWith(targetRole) {
         const role = this.currentUser.role;
         
+        // Técnico puede responder a todos
+        if (role === 'tecnico') {
+            return true;
+        }
+        
         // Director y Administrador pueden hablar con todos
         if (role === 'director' || role === 'administrador') {
             return true;
         }
         
-        // Profesor puede hablar con director, administrador y otros profesores
+        // Profesor puede hablar con director, administrador, técnico y otros profesores
         if (role === 'profesor') {
-            return ['director', 'administrador', 'profesor'].includes(targetRole);
+            return ['director', 'administrador', 'profesor', 'tecnico'].includes(targetRole);
         }
         
         return false;

@@ -105,6 +105,7 @@ edugest/
 ├── admin-panel.html            # Panel Admin Global
 ├── calendario.html             # Calendario de eventos
 ├── notificaciones.html         # Centro de notificaciones
+├── informes.html               # Sistema de informes
 ├── INICIO-RAPIDO.html          # Página de inicio rápido
 │
 ├── css/
@@ -118,16 +119,69 @@ edugest/
 │   ├── notifications.js        # Notificaciones
 │   ├── documents.js            # Gestión documentos
 │   ├── calendar.js             # Calendario
-│   ├── demo-data.js            # Datos de prueba
+│   ├── demo-data.js            # Datos de prueba (150 eventos)
+│   ├── informes.js             # Sistema de informes
+│   ├── informes-advanced.js    # Informes avanzados
 │   ├── login-modern.js         # Login
 │   ├── app.js                  # App principal
 │   └── chat.js                 # Chat (existente)
 │
 └── docs/
     ├── GUIA-COMPLETA-SISTEMA-AVANZADO.md
+    ├── DATOS-PRUEBA-COMPLETOS.md
     ├── PLAN-DESARROLLO-AVANZADO.md
     └── RESUMEN-SISTEMA-COMPLETO.md
 ```
+
+---
+
+## 🧪 Datos de Prueba Completos
+
+El sistema incluye **datos realistas y completos** para demostración:
+
+### 📊 Contenido
+- **150 eventos PME** (50 por colegio)
+- **45 eventos de calendario** (15 por colegio)
+- **60+ notificaciones** distribuidas
+- **16 usuarios activos** (4 roles)
+- **3 colegios** completamente configurados
+
+### 📝 Eventos PME Detallados
+Cada evento incluye:
+- Área de gestión (Currículum, Liderazgo, Convivencia, Recursos)
+- Subdimensión específica
+- Objetivo estratégico
+- Estrategia/Actividad detallada
+- Descripción completa
+- Responsable asignado
+- Metas y porcentajes de logro
+- Observaciones
+- Fechas y timestamps
+
+### 📅 Eventos de Calendario
+- Distribuidos en próximos 60 días
+- Asociados a áreas PME
+- Con responsables asignados
+- Horarios definidos
+
+### 🔔 Notificaciones
+- 6 tipos diferentes
+- Estados leídas/no leídas
+- Distribuidas en últimos 7 días
+- Para usuarios clave
+
+### 🎯 Cargar Datos
+
+**Opción 1: Interfaz**
+1. Abrir `INICIO-RAPIDO.html`
+2. Clic en "Cargar Datos de Prueba"
+
+**Opción 2: Consola**
+```javascript
+EdugestDemoData.loadAllDemoData();
+```
+
+Ver documentación completa en: `DATOS-PRUEBA-COMPLETOS.md`
 
 ---
 

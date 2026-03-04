@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💬 Demo Chat Mejorado - EduGest</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .demo-container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        .demo-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .demo-header h1 {
+            font-size: 48px;
+            margin: 0 0 16px 0;
+            font-weight: 900;
+        }
+
+        .demo-header p {
+            font-size: 20px;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .demo-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .demo-card h3 {
+            font-size: 24px;
+            margin: 0 0 16px 0;
+            color: #1f2937;
+        }
+
+        .demo-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .demo-card li {
+            padding: 8px 0;
+            color: #4b5563;
+            font-size: 15px;
+        }
+
+        .demo-card li::before {
+            content: '✓ ';
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .demo-users {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-users h2 {
+            font-size: 28px;
+            margin: 0 0 24px 0;
+            color: #1f2937;
+            text-align: center;
+        }
+
+        .user-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .user-card {
+            background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .user-card:hover {
+            transform: scale(1.05);
+            border-color: #6366f1;
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+        }
+
+        .user-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .user-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 16px;
+            color: #1f2937;
+        }
+
+        .user-info p {
+            margin: 0;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .demo-footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .btn-demo {
+            background: white;
+            color: #6366f1;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            margin: 8px;
+        }
+
+        .btn-demo:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            color: white;
+            margin-bottom: 32px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .instructions h3 {
+            margin: 0 0 16px 0;
+            font-size: 20px;
+        }
+
+        .instructions ol {
+            margin: 0;
+            padding-left: 24px;
+        }
+
+        .instructions li {
+            margin: 8px 0;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>💬 Chat en Tiempo Real</h1>
+            <p>Sistema de comunicación interno mejorado tipo WhatsApp</p>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Instrucciones de Prueba</h3>
+            <ol>
+                <li>Haz clic en el botón flotante 💬 en la esquina inferior derecha</li>
+                <li>Selecciona un usuario de la lista para iniciar un chat privado</li>
+                <li>O usa la pestaña "Grupo Colegio" para el chat grupal</li>
+                <li>Escribe un mensaje y presiona Enter o el botón de enviar</li>
+                <li>Observa las notificaciones y el estado "en línea"</li>
+            </ol>
+        </div>
+
+        <div class="demo-cards">
+            <div class="demo-card">
+                <h3>✨ Características</h3>
+                <ul>
+                    <li>Chat privado uno a uno</li>
+                    <li>Chat grupal del colegio</li>
+                    <li>Búsqueda de usuarios</li>
+                    <li>Estado en línea</li>
+                    <li>Notificaciones instantáneas</li>
+                    <li>Historial de mensajes</li>
+                </ul>
+            </div>
+
+            <div class="demo-card">
+                <h3>👥 Usuarios</h3>
+                <ul>
+                    <li>Director</li>
+                    <li>Administrador</li>
+                    <li>Docentes</li>
+                    <li>Técnico de soporte</li>
+                </ul>
+            </div>
+
+            <div class="demo-card">
+                <h3>🎨 Interfaz</h3>
+                <ul>
+                    <li>Diseño tipo Messenger</li>
+                    <li>Botón flotante</li>
+                    <li>Animaciones suaves</li>
+                    <li>Responsive (móvil/tablet)</li>
+                    <li>Tema premium morado</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="demo-users">
+            <h2>👥 Usuarios de Demostración</h2>
+            <div class="user-grid">
+                <div class="user-card" onclick="loginAs('director')">
+                    <div class="user-avatar">👔</div>
+                    <div class="user-info">
+                        <h4>María González</h4>
+                        <p>Director</p>
+                    </div>
+                </div>
+
+                <div class="user-card" onclick="loginAs('administrador')">
+                    <div class="user-avatar">⚙️</div>
+                    <div class="user-info">
+                        <h4>Carlos Ruiz</h4>
+                        <p>Administrador</p>
+                    </div>
+                </div>
+
+                <div class="user-card" onclick="loginAs('profesor1')">
+                    <div class="user-avatar">👨‍🏫</div>
+                    <div class="user-info">
+                        <h4>Ana Martínez</h4>
+                        <p>Docente - Matemáticas</p>
+                    </div>
+                </div>
+
+                <div class="user-card" onclick="loginAs('profesor2')">
+                    <div class="user-avatar">👩‍🏫</div>
+                    <div class="user-info">
+                        <h4>Luis Fernández</h4>
+                        <p>Docente - Ciencias</p>
+                    </div>
+                </div>
+
+                <div class="user-card" onclick="loginAs('tecnico')">
+                    <div class="user-avatar">🔧</div>
+                    <div class="user-info">
+                        <h4>Pedro Sánchez</h4>
+                        <p>Técnico de Soporte</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-footer">
+            <p>Haz clic en cualquier usuario para iniciar sesión como ese rol</p>
+            <button class="btn-demo" onclick="openChat()">Abrir Chat Directamente</button>
+            <button class="btn-demo" onclick="location.href='dashboard.html'">Ir al Dashboard</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        
+        // Configuración de Firebase (usa tu propia configuración)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            authDomain: "tu-proyecto.firebaseapp.com",
+            databaseURL: "https://tu-proyecto.firebaseio.com",
+            projectId: "tu-proyecto",
+            storageBucket: "tu-proyecto.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:xxxxxxxxxxxxx"
+        };
+        
+        try {
+            const app = initializeApp(firebaseConfig);
+            window.realtimeDb = getDatabase(app);
+            console.log('✅ Firebase inicializado');
+        } catch (error) {
+            console.warn('⚠️ Firebase no configurado. Usando modo demo.');
+        }
+    </script>
+
+    <!-- Chat Scripts -->
+    <script type="module" src="js/chat-firebase.js"></script>
+    <script type="module" src="js/chat-ui.js"></script>
+    <script type="module" src="js/chat.js"></script>
+
+    <script>
+        // Usuarios de demostración
+        const demoUsers = {
+            director: {
+                userId: 'demo-director-001',
+                userName: 'María González',
+                userRole: 'director',
+                schoolId: 'colegio-demo-001'
+            },
+            administrador: {
+                userId: 'demo-admin-001',
+                userName: 'Carlos Ruiz',
+                userRole: 'administrador',
+                schoolId: 'colegio-demo-001'
+            },
+            profesor1: {
+                userId: 'demo-profesor-001',
+                userName: 'Ana Martínez',
+                userRole: 'profesor',
+                schoolId: 'colegio-demo-001'
+            },
+            profesor2: {
+                userId: 'demo-profesor-002',
+                userName: 'Luis Fernández',
+                userRole: 'profesor',
+                schoolId: 'colegio-demo-001'
+            },
+            tecnico: {
+                userId: 'demo-tecnico-001',
+                userName: 'Pedro Sánchez',
+                userRole: 'tecnico',
+                schoolId: 'colegio-demo-001'
+            }
+        };
+
+        // Función para iniciar sesión como un usuario
+        function loginAs(userType) {
+            const user = demoUsers[userType];
+            
+            // Guardar en localStorage
+            localStorage.setItem('userId', user.userId);
+            localStorage.setItem('userName', user.userName);
+            localStorage.setItem('userRole', user.userRole);
+            localStorage.setItem('schoolId', user.schoolId);
+            
+            // Mostrar mensaje
+            alert(`✅ Sesión iniciada como:\n${user.userName}\nRol: ${user.userRole}\n\nAhora puedes usar el chat 💬`);
+            
+            // Recargar para inicializar el chat
+            location.reload();
+        }
+
+        // Función para abrir el chat
+        function openChat() {
+            const chatBtn = document.getElementById('chatFloatingBtn');
+            if (chatBtn) {
+                chatBtn.click();
+            } else {
+                alert('⚠️ Primero selecciona un usuario para iniciar sesión');
+            }
+        }
+
+        // Verificar si hay usuario logueado
+        window.addEventListener('load', () => {
+            const userId = localStorage.getItem('userId');
+            const userName = localStorage.getItem('userName');
+            
+            if (userId && userName) {
+                console.log(`✅ Usuario logueado: ${userName}`);
+                
+                // Mostrar notificación
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: white;
+                    padding: 16px 24px;
+                    border-radius: 12px;
+                    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+                    z-index: 10000;
+                    animation: slideIn 0.3s ease-out;
+                `;
+                notification.innerHTML = `
+                    <strong>✅ Sesión activa</strong><br>
+                    <small>${userName}</small>
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease-out';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+        });
+    </script>
+
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+    </style>
+</body>
+</html>
