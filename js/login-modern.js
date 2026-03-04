@@ -5,22 +5,146 @@
 
 // Usuarios de demostración (en producción esto vendría de una base de datos)
 const DEMO_USERS = {
+    // Admin Global
+    'admin@edugest.cl': {
+        password: 'admin123',
+        role: 'admin_global',
+        name: 'Administrador Global',
+        schoolId: null,
+        school: 'Sistema EDUGEST'
+    },
+    
+    // Colegio San José
+    'director.sanjose@edugest.cl': {
+        password: 'director123',
+        role: 'director',
+        name: 'Juan Pérez',
+        schoolId: 'school_001',
+        school: 'Colegio San José'
+    },
+    'docente1.sanjose@edugest.cl': {
+        password: 'docente123',
+        role: 'docente',
+        name: 'María González',
+        schoolId: 'school_001',
+        school: 'Colegio San José'
+    },
+    'docente2.sanjose@edugest.cl': {
+        password: 'docente123',
+        role: 'docente',
+        name: 'Pedro Martínez',
+        schoolId: 'school_001',
+        school: 'Colegio San José'
+    },
+    'docente3.sanjose@edugest.cl': {
+        password: 'docente123',
+        role: 'docente',
+        name: 'Ana Silva',
+        schoolId: 'school_001',
+        school: 'Colegio San José'
+    },
+    'tecnico.sanjose@edugest.cl': {
+        password: 'tecnico123',
+        role: 'tecnico',
+        name: 'Carlos Ramírez',
+        schoolId: 'school_001',
+        school: 'Colegio San José'
+    },
+    
+    // Liceo Técnico Norte
+    'director.norte@edugest.cl': {
+        password: 'director123',
+        role: 'director',
+        name: 'Roberto Flores',
+        schoolId: 'school_002',
+        school: 'Liceo Técnico Norte'
+    },
+    'docente1.norte@edugest.cl': {
+        password: 'docente123',
+        role: 'docente',
+        name: 'Laura Díaz',
+        schoolId: 'school_002',
+        school: 'Liceo Técnico Norte'
+    },
+    'docente2.norte@edugest.cl': {
+        password: 'docente123',
+        role: 'docente',
+        name: 'Jorge Vargas',
+        schoolId: 'school_002',
+        school: 'Liceo Técnico Norte'
+    },
+    'docente3.norte@edugest.cl': {
+        password: 'docente123',
+        role: 'docente',
+        name: 'Patricia Rojas',
+        schoolId: 'school_002',
+        school: 'Liceo Técnico Norte'
+    },
+    'tecnico.norte@edugest.cl': {
+        password: 'tecnico123',
+        role: 'tecnico',
+        name: 'Miguel Torres',
+        schoolId: 'school_002',
+        school: 'Liceo Técnico Norte'
+    },
+    
+    // Escuela Básica Sur
+    'director.sur@edugest.cl': {
+        password: 'director123',
+        role: 'director',
+        name: 'Carmen Muñoz',
+        schoolId: 'school_003',
+        school: 'Escuela Básica Sur'
+    },
+    'docente1.sur@edugest.cl': {
+        password: 'docente123',
+        role: 'docente',
+        name: 'Felipe Castro',
+        schoolId: 'school_003',
+        school: 'Escuela Básica Sur'
+    },
+    'docente2.sur@edugest.cl': {
+        password: 'docente123',
+        role: 'docente',
+        name: 'Daniela Soto',
+        schoolId: 'school_003',
+        school: 'Escuela Básica Sur'
+    },
+    'docente3.sur@edugest.cl': {
+        password: 'docente123',
+        role: 'docente',
+        name: 'Ricardo Pinto',
+        schoolId: 'school_003',
+        school: 'Escuela Básica Sur'
+    },
+    'tecnico.sur@edugest.cl': {
+        password: 'tecnico123',
+        role: 'tecnico',
+        name: 'Valentina Herrera',
+        schoolId: 'school_003',
+        school: 'Escuela Básica Sur'
+    },
+    
+    // Usuarios legacy (compatibilidad)
     'director@edugest.cl': {
         password: 'director123',
         role: 'director',
         name: 'Juan Pérez',
+        schoolId: 'school_001',
         school: 'Colegio San José'
     },
     'docente@edugest.cl': {
         password: 'docente123',
         role: 'docente',
         name: 'María González',
+        schoolId: 'school_001',
         school: 'Colegio San José'
     },
     'tecnico@edugest.cl': {
         password: 'tecnico123',
         role: 'tecnico',
         name: 'Carlos Ramírez',
+        schoolId: 'school_001',
         school: 'Colegio San José'
     }
 };
@@ -157,6 +281,7 @@ async function handleLogin(email, password, remember) {
         role: user.role,
         name: user.name,
         school: user.school,
+        schoolId: user.schoolId,
         loginTime: new Date().toISOString()
     };
     

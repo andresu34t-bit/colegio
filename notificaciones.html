@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificaciones - EDUGEST</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/advanced-features.css">
+</head>
+<body>
+    <script src="js/roles-permissions.js"></script>
+    <script src="js/multi-school.js"></script>
+    <script src="js/notifications.js"></script>
+    
+    <script>
+        if (!EdugestRoles.protectPage()) {
+            // Protección de página
+        }
+    </script>
+    
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="LOGO EDUGEST.png" alt="EDUGEST" onerror="this.style.display='none'">
+                </div>
+                <h1 class="sidebar-brand">EDUGEST</h1>
+            </div>
+            
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div class="user-name" id="userName">Usuario</div>
+                <div class="user-role" id="userRole">Rol</div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Módulo PME</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard PME</span>
+                    </a>
+                    <a href="notificaciones.html" class="nav-item active">
+                        <span class="nav-icon">🔔</span>
+                        <span>Notificaciones</span>
+                    </a>
+                    <a href="areas-new.html" class="nav-item">
+                        <span class="nav-icon">📝</span>
+                        <span>Registrar Evento</span>
+                    </a>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <span>🚪</span>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <div class="page-header-content">
+                    <div>
+                        <h1 class="page-title">Centro de Notificaciones</h1>
+                        <p class="page-subtitle" id="notifCount">0 notificaciones</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-secondary" onclick="markAllRead()">
+                            ✓ Marcar todas como leídas
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="page-content">
+                <div class="card">
+                    <div class="card-body" style="padding: 0;">
+                        <div id="notifications-container"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/app.js"></script>
+    <script>
+        function logout() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                localStorage.removeItem('edugest_session');
+                sessionStorage.removeItem('edugest_session');
+                window.location.replace('login.html');
+            }
+        }
+        
+        function markAllRead() {
+            EdugestNotifications.markAllAsRead();
+            renderNotifications();
+        }
+        
+        function renderNotifications() {
+            EdugestNotifications.renderNotificationCenter('notifications-container');
+            
+            const count = EdugestNotifications.getUnreadCount();
+            const total = EdugestNotifications.getAllNotifications().length;
+            
+            document.getElementById('notifCount').textContent = 
+                count > 0 ? `${count} sin leer de ${total} total` : `${total} notificaciones`;
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = EdugestRoles.getCurrentUser();
+            if (user) {
+                document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userRole').textContent = EdugestRoles.getRoleName(user.role);
+            }
+            
+            renderNotifications();
+        });
+    </script>
+</body>
+</html>

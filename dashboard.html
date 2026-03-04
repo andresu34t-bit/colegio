@@ -5,51 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - EDUGEST</title>
     <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/advanced-features.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
+    <!-- Scripts del Sistema Avanzado -->
+    <script src="js/roles-permissions.js"></script>
+    <script src="js/multi-school.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/documents.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/demo-data.js"></script>
+    
     <!-- Protección de Sesión -->
     <script>
-        // Verificar sesión al cargar la página
+        // Verificar sesión y aplicar permisos
         (function() {
-            const session = localStorage.getItem('edugest_session') || sessionStorage.getItem('edugest_session');
-            
-            if (!session) {
-                // Si no hay sesión, redirigir al login
-                window.location.replace('login.html');
+            // Proteger página
+            if (!EdugestRoles.protectPage()) {
                 return;
             }
             
-            try {
-                const userData = JSON.parse(session);
-                
-                // Actualizar información del usuario en el sidebar
-                const userAvatar = document.getElementById('userAvatar');
-                const userName = document.getElementById('userName');
-                const userRole = document.getElementById('userRole');
-                
-                if (userAvatar && userData.name) {
-                    userAvatar.textContent = userData.name.charAt(0).toUpperCase();
-                }
-                
-                if (userName && userData.name) {
-                    userName.textContent = userData.name;
-                }
-                
-                if (userRole && userData.role) {
-                    const roleNames = {
-                        'director': 'Director',
-                        'docente': 'Docente',
-                        'tecnico': 'Técnico'
-                    };
-                    userRole.textContent = roleNames[userData.role] || userData.role;
-                }
-            } catch (e) {
-                // Sesión inválida, redirigir al login
-                localStorage.removeItem('edugest_session');
-                sessionStorage.removeItem('edugest_session');
-                window.location.replace('login.html');
+            const user = EdugestRoles.getCurrentUser();
+            
+            // Actualizar información del usuario
+            const userAvatar = document.getElementById('userAvatar');
+            const userName = document.getElementById('userName');
+            const userRole = document.getElementById('userRole');
+            const userSchool = document.getElementById('userSchool');
+            const schoolName = document.getElementById('schoolName');
+            
+            if (userAvatar && user.name) {
+                userAvatar.textContent = user.name.charAt(0).toUpperCase();
             }
+            
+            if (userName && user.name) {
+                userName.textContent = user.name;
+            }
+            
+            if (userRole && user.role) {
+                userRole.textContent = EdugestRoles.getRoleName(user.role);
+            }
+            
+            if (userSchool && user.school) {
+                userSchool.textContent = user.school;
+            }
+            
+            if (schoolName && user.school) {
+                schoolName.textContent = user.school;
+            }
+            
+            // Aplicar permisos a elementos del DOM
+            EdugestRoles.applyPermissions();
         })();
     </script>
     
@@ -67,12 +74,21 @@
                 <div class="user-avatar" id="userAvatar">D</div>
                 <div class="user-name" id="userName">Usuario Demo</div>
                 <div class="user-role" id="userRole">Director</div>
+                <div style="margin-top: 0.5rem; font-size: 0.75rem; color: #9ca3af;" id="userSchool">Colegio</div>
             </div>
             
             <nav class="sidebar-nav">
+                <div class="nav-section" data-module="admin-global" style="display: none;">
+                    <div class="nav-section-title">Administración</div>
+                    <a href="admin-panel.html" class="nav-item">
+                        <span class="nav-icon">🏢</span>
+                        <span>Panel Admin</span>
+                    </a>
+                </div>
+                
                 <div class="nav-section">
                     <div class="nav-section-title">Módulo PME</div>
-                    <a href="dashboard-new.html" class="nav-item active">
+                    <a href="dashboard.html" class="nav-item active">
                         <span class="nav-icon">📊</span>
                         <span>Dashboard PME</span>
                     </a>
@@ -121,9 +137,16 @@
                 <div class="page-header-content">
                     <div>
                         <h1 class="page-title">Dashboard PME 2026</h1>
-                        <p class="page-subtitle">Plan de Mejoramiento Educativo</p>
+                        <p class="page-subtitle" id="schoolName">Plan de Mejoramiento Educativo</p>
                     </div>
-                    <div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <button class="btn-icon" onclick="window.location.href='calendario.html'" title="Calendario" style="position: relative;">
+                            📅
+                        </button>
+                        <button class="btn-icon" onclick="window.location.href='notificaciones.html'" title="Notificaciones" style="position: relative;">
+                            🔔
+                            <span class="notification-badge" style="display: none;">0</span>
+                        </button>
                         <select id="mesFilter" class="form-select">
                             <option value="">Todos los meses</option>
                             <option value="ENERO">Enero</option>

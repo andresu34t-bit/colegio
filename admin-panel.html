@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin Global - EDUGEST</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Protección de Sesión -->
+    <script src="js/roles-permissions.js"></script>
+    <script src="js/multi-school.js"></script>
+    <script>
+        // Solo Admin Global puede acceder
+        if (!EdugestRoles.protectPage('admin_global')) {
+            // La función protectPage ya maneja la redirección
+        }
+    </script>
+    
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="LOGO EDUGEST.png" alt="EDUGEST" onerror="this.style.display='none'">
+                </div>
+                <h1 class="sidebar-brand">EDUGEST</h1>
+            </div>
+            
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <div class="user-name" id="userName">Admin Global</div>
+                <div class="user-role" id="userRole">Administrador</div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Administración</div>
+                    <a href="admin-panel.html" class="nav-item active">
+                        <span class="nav-icon">🏢</span>
+                        <span>Panel Global</span>
+                    </a>
+                    <a href="dashboard.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard PME</span>
+                    </a>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <span>🚪</span>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <div class="page-header-content">
+                    <div>
+                        <h1 class="page-title">Panel Administrador Global</h1>
+                        <p class="page-subtitle">Gestión de todos los colegios</p>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="page-content">
+                <!-- Stats Globales -->
+                <div class="stats-grid">
+                    <div class="stat-card curriculum">
+                        <div class="stat-label">Total Colegios</div>
+                        <div class="stat-value" id="totalSchools">3</div>
+                        <div class="stat-change">Todos activos</div>
+                    </div>
+                    
+                    <div class="stat-card liderazgo">
+                        <div class="stat-label">Total Usuarios</div>
+                        <div class="stat-value" id="totalUsers">15</div>
+                        <div class="stat-change">5 por colegio</div>
+                    </div>
+                    
+                    <div class="stat-card convivencia">
+                        <div class="stat-label">Total Eventos</div>
+                        <div class="stat-value" id="totalEvents">75</div>
+                        <div class="stat-change">Todos los colegios</div>
+                    </div>
+                    
+                    <div class="stat-card curriculum">
+                        <div class="stat-label">Promedio Éxito</div>
+                        <div class="stat-value" id="avgSuccess">85%</div>
+                        <div class="stat-change positive">+3% vs mes anterior</div>
+                    </div>
+                </div>
+                
+                <!-- Lista de Colegios -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Colegios Registrados</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="schoolsList"></div>
+                    </div>
+                </div>
+                
+                <!-- Gráficos Comparativos -->
+                <div class="modules-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Eventos por Colegio</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="chartSchoolEvents" height="250"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">% Éxito por Colegio</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="chartSchoolSuccess" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/app.js"></script>
+    <script>
+        // Función de logout
+        function logout() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                localStorage.removeItem('edugest_session');
+                sessionStorage.removeItem('edugest_session');
+                window.location.replace('login.html');
+            }
+        }
+        
+        // Actualizar información del usuario
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = EdugestRoles.getCurrentUser();
+            if (user) {
+                document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userRole').textContent = EdugestRoles.getRoleName(user.role);
+            }
+            
+            renderSchoolsList();
+            initCharts();
+        });
+        
+        // Renderizar lista de colegios
+        function renderSchoolsList() {
+            const schools = EdugestSchools.getAllSchools();
+            const container = document.getElementById('schoolsList');
+            
+            const html = schools.map(school => {
+                const stats = EdugestSchools.getSchoolStats(school.id);
+                
+                return `
+                    <div class="school-card" style="border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">${school.name}</h4>
+                                <div style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">
+                                    <div>RBD: ${school.rbd}</div>
+                                    <div>${school.address}</div>
+                                    <div>${school.phone} • ${school.email}</div>
+                                </div>
+                                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                                    <div>
+                                        <div style="font-size: 0.75rem; color: #6b7280;">Eventos</div>
+                                        <div style="font-size: 1.5rem; font-weight: 600;">${stats.totalEvents}</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 0.75rem; color: #6b7280;">Usuarios</div>
+                                        <div style="font-size: 1.5rem; font-weight: 600;">${stats.totalUsers}</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 0.75rem; color: #6b7280;">% Éxito</div>
+                                        <div style="font-size: 1.5rem; font-weight: 600;">${stats.avgSuccess}%</div>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 0.75rem; color: #6b7280;">Áreas</div>
+                                        <div style="font-size: 1.5rem; font-weight: 600;">${stats.activeAreas}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" onclick="accessSchool('${school.id}')">
+                                    Acceder
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = html;
+        }
+        
+        // Acceder a un colegio específico
+        function accessSchool(schoolId) {
+            if (EdugestSchools.switchSchool(schoolId)) {
+                window.location.href = 'dashboard.html';
+            }
+        }
+        
+        // Inicializar gráficos
+        function initCharts() {
+            const schools = EdugestSchools.getAllSchools();
+            const schoolNames = schools.map(s => s.name.split(' ').slice(0, 2).join(' '));
+            const schoolStats = schools.map(s => EdugestSchools.getSchoolStats(s.id));
+            
+            // Gráfico de eventos
+            const ctxEvents = document.getElementById('chartSchoolEvents');
+            if (ctxEvents) {
+                new Chart(ctxEvents, {
+                    type: 'bar',
+                    data: {
+                        labels: schoolNames,
+                        datasets: [{
+                            label: 'Eventos',
+                            data: schoolStats.map(s => s.totalEvents),
+                            backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de éxito
+            const ctxSuccess = document.getElementById('chartSchoolSuccess');
+            if (ctxSuccess) {
+                new Chart(ctxSuccess, {
+                    type: 'doughnut',
+                    data: {
+                        labels: schoolNames,
+                        datasets: [{
+                            data: schoolStats.map(s => s.avgSuccess),
+                            backgroundColor: [
+                                'rgba(59, 130, 246, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(34, 197, 94, 0.8)'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

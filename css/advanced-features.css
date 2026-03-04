@@ -1,0 +1,532 @@
+/**
+ * EDUGEST - Estilos para Funcionalidades Avanzadas
+ * Notificaciones, Calendario, Documentos, etc.
+ */
+
+/* ========================================
+   NOTIFICACIONES
+   ======================================== */
+
+.notification-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ef4444;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.125rem 0.375rem;
+    border-radius: 9999px;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-toast {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    padding: 1rem;
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+    max-width: 400px;
+    z-index: 10000;
+    animation: slideInRight 0.3s ease-out;
+}
+
+.notification-toast-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.notification-toast-content {
+    flex: 1;
+}
+
+.notification-toast-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.notification-toast-message {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.notification-toast-close {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    font-size: 1.25rem;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.notification-toast-close:hover {
+    color: #374151;
+}
+
+.notification-item {
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    transition: background 0.2s;
+}
+
+.notification-item:hover {
+    background: #f9fafb;
+}
+
+.notification-item.unread {
+    background: #eff6ff;
+}
+
+.notification-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.notification-message {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.notification-time {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+.notification-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.notification-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.notification-empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.notification-empty-text {
+    color: #6b7280;
+}
+
+/* ========================================
+   CALENDARIO
+   ======================================== */
+
+.calendar {
+    background: white;
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+}
+
+.calendar-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.calendar-day-name {
+    text-align: center;
+    padding: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: #e5e7eb;
+}
+
+.calendar-cell {
+    background: white;
+    min-height: 80px;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+}
+
+.calendar-cell:hover {
+    background: #f9fafb;
+}
+
+.calendar-cell.other-month {
+    background: #f9fafb;
+    color: #9ca3af;
+}
+
+.calendar-cell.today {
+    background: #eff6ff;
+}
+
+.calendar-cell.today .calendar-cell-day {
+    background: #3b82f6;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-cell.has-events {
+    font-weight: 600;
+}
+
+.calendar-cell-day {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.calendar-cell-indicator {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    background: #3b82f6;
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.125rem 0.375rem;
+    border-radius: 9999px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.upcoming-event-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+    transition: all 0.2s;
+}
+
+.upcoming-event-item:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
+}
+
+.upcoming-event-date {
+    text-align: center;
+    padding: 0.5rem;
+    background: #eff6ff;
+    border-radius: 0.5rem;
+    min-width: 60px;
+}
+
+.upcoming-event-day {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #3b82f6;
+}
+
+.upcoming-event-month {
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-transform: uppercase;
+}
+
+.upcoming-event-details {
+    flex: 1;
+}
+
+.upcoming-event-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.upcoming-event-meta {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+}
+
+.upcoming-event-area {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background: #f3f4f6;
+    border-radius: 0.25rem;
+    color: #374151;
+}
+
+.upcoming-events-empty {
+    text-align: center;
+    padding: 2rem;
+}
+
+.upcoming-events-empty-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.5;
+}
+
+.upcoming-events-empty-text {
+    color: #6b7280;
+}
+
+/* ========================================
+   DOCUMENTOS
+   ======================================== */
+
+.file-upload-area {
+    position: relative;
+}
+
+.file-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.file-upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    border: 2px dashed #d1d5db;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.file-upload-label:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.file-upload-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.file-upload-text {
+    text-align: center;
+}
+
+.file-upload-hint {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+}
+
+.file-list {
+    margin-top: 1rem;
+}
+
+.document-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+    transition: all 0.2s;
+}
+
+.document-item:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
+}
+
+.document-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.document-info {
+    flex: 1;
+}
+
+.document-name {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.document-meta {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.document-description {
+    font-size: 0.875rem;
+    color: #374151;
+    margin-top: 0.5rem;
+}
+
+.document-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.document-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.document-empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.document-empty-text {
+    color: #6b7280;
+}
+
+/* ========================================
+   UTILIDADES
+   ======================================== */
+
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    transition: background 0.2s;
+    font-size: 1.25rem;
+}
+
+.btn-icon:hover {
+    background: #f3f4f6;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #6b7280;
+}
+
+.success {
+    text-align: center;
+    padding: 1rem;
+    background: #f0fdf4;
+    color: #15803d;
+    border-radius: 0.5rem;
+    border: 1px solid #bbf7d0;
+}
+
+.error {
+    text-align: center;
+    padding: 1rem;
+    background: #fef2f2;
+    color: #dc2626;
+    border-radius: 0.5rem;
+    border: 1px solid #fecaca;
+}
+
+/* ========================================
+   ANIMACIONES
+   ======================================== */
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .notification-toast {
+        left: 1rem;
+        right: 1rem;
+        max-width: none;
+    }
+    
+    .calendar-cell {
+        min-height: 60px;
+        padding: 0.25rem;
+    }
+    
+    .calendar-cell-day {
+        font-size: 0.75rem;
+    }
+    
+    .upcoming-event-item {
+        flex-direction: column;
+    }
+    
+    .upcoming-event-date {
+        width: 100%;
+    }
+}

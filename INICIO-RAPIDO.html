@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio Rápido - EDUGEST Sistema Avanzado</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            background: white;
+            border-radius: 1rem;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            font-size: 1.25rem;
+            color: #6b7280;
+        }
+        .section {
+            margin-bottom: 2rem;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        .card {
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        .card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+        .card-text {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+        .credentials {
+            background: #f9fafb;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #3b82f6;
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        .btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        .btn-secondary {
+            background: #6b7280;
+        }
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        .btn-success {
+            background: #10b981;
+        }
+        .btn-success:hover {
+            background: #059669;
+        }
+        .alert {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .alert-info {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+        }
+        .alert-success {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #15803d;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .feature {
+            text-align: center;
+            padding: 1rem;
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .feature-text {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🚀</div>
+            <h1 class="title">EDUGEST Sistema Avanzado</h1>
+            <p class="subtitle">Sistema SaaS Multi-Colegio con Funcionalidades Empresariales</p>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>⚡ Inicio Rápido:</strong> Haz clic en "Cargar Datos de Prueba" para comenzar a explorar el sistema con datos de ejemplo.
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🎯 Paso 1: Cargar Datos de Prueba</h2>
+            <div class="card">
+                <p class="card-text">Carga automáticamente 3 colegios, 15 usuarios, 75 eventos, calendario y notificaciones.</p>
+                <button class="btn btn-success" onclick="loadDemoData()">📦 Cargar Datos de Prueba</button>
+                <div id="loadStatus" style="margin-top: 1rem;"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">👥 Paso 2: Probar con Diferentes Roles</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-title">🔑 Admin Global</div>
+                    <p class="card-text">Acceso completo a todos los colegios</p>
+                    <div class="credentials">admin@edugest.cl</div>
+                    <div class="credentials">admin123</div>
+                    <a href="login.html" class="btn">Iniciar Sesión</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">👔 Director</div>
+                    <p class="card-text">Gestión completa de su colegio</p>
+                    <div class="credentials">director.sanjose@edugest.cl</div>
+                    <div class="credentials">director123</div>
+                    <a href="login.html" class="btn">Iniciar Sesión</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">👨‍🏫 Docente</div>
+                    <p class="card-text">Registro de eventos y evidencias</p>
+                    <div class="credentials">docente1.sanjose@edugest.cl</div>
+                    <div class="credentials">docente123</div>
+                    <a href="login.html" class="btn">Iniciar Sesión</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">🔧 Técnico</div>
+                    <p class="card-text">Soporte y estadísticas</p>
+                    <div class="credentials">tecnico.sanjose@edugest.cl</div>
+                    <div class="credentials">tecnico123</div>
+                    <a href="login.html" class="btn">Iniciar Sesión</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🏫 Colegios Disponibles</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-title">Colegio San José</div>
+                    <p class="card-text">Santiago • RBD: 12345-6</p>
+                    <div class="credentials">*.sanjose@edugest.cl</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Liceo Técnico Norte</div>
+                    <p class="card-text">Antofagasta • RBD: 23456-7</p>
+                    <div class="credentials">*.norte@edugest.cl</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Escuela Básica Sur</div>
+                    <p class="card-text">Temuco • RBD: 34567-8</p>
+                    <div class="credentials">*.sur@edugest.cl</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">✨ Funcionalidades Implementadas</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🔐</div>
+                    <div class="feature-text">Roles y Permisos</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🏫</div>
+                    <div class="feature-text">Multi-Colegio</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-text">Dashboard KPIs</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔔</div>
+                    <div class="feature-text">Notificaciones</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📅</div>
+                    <div class="feature-text">Calendario</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📁</div>
+                    <div class="feature-text">Documentos</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-text">Chat Real-Time</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <div class="feature-text">100% Responsive</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">📚 Documentación</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-title">Guía Completa</div>
+                    <p class="card-text">Documentación detallada de todas las funcionalidades</p>
+                    <a href="GUIA-COMPLETA-SISTEMA-AVANZADO.md" class="btn btn-secondary">Ver Guía</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Plan de Desarrollo</div>
+                    <p class="card-text">Arquitectura y fases de implementación</p>
+                    <a href="PLAN-DESARROLLO-AVANZADO.md" class="btn btn-secondary">Ver Plan</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🛠️ Utilidades</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-title">Limpiar Datos</div>
+                    <p class="card-text">Eliminar todos los datos de prueba</p>
+                    <button class="btn btn-secondary" onclick="clearData()">🗑️ Limpiar Datos</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Consola de Desarrollo</div>
+                    <p class="card-text">Abre la consola del navegador (F12) para ver logs y usar comandos</p>
+                    <button class="btn btn-secondary" onclick="showConsoleHelp()">💻 Ver Comandos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/roles-permissions.js"></script>
+    <script src="js/multi-school.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/documents.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/demo-data.js"></script>
+
+    <script>
+        function loadDemoData() {
+            const statusDiv = document.getElementById('loadStatus');
+            statusDiv.innerHTML = '<div style="text-align: center; padding: 1rem; color: #3b82f6;">⏳ Cargando datos...</div>';
+            
+            setTimeout(() => {
+                try {
+                    EdugestDemoData.loadAllDemoData();
+                    statusDiv.innerHTML = '<div class="alert alert-success">✅ Datos cargados exitosamente. Ahora puedes iniciar sesión con cualquier usuario.</div>';
+                } catch (error) {
+                    statusDiv.innerHTML = '<div style="padding: 1rem; background: #fef2f2; border: 1px solid #fecaca; border-radius: 0.5rem; color: #dc2626;">❌ Error al cargar datos: ' + error.message + '</div>';
+                }
+            }, 500);
+        }
+
+        function clearData() {
+            if (confirm('¿Estás seguro de que deseas eliminar todos los datos de prueba?')) {
+                EdugestDemoData.clearAllDemoData();
+                alert('✅ Datos eliminados correctamente');
+            }
+        }
+
+        function showConsoleHelp() {
+            console.log('%c🚀 EDUGEST - Comandos de Consola', 'font-size: 20px; font-weight: bold; color: #3b82f6;');
+            console.log('%cCargar datos:', 'font-weight: bold;');
+            console.log('  EdugestDemoData.loadAllDemoData()');
+            console.log('%cLimpiar datos:', 'font-weight: bold;');
+            console.log('  EdugestDemoData.clearAllDemoData()');
+            console.log('%cVer usuario actual:', 'font-weight: bold;');
+            console.log('  EdugestRoles.getCurrentUser()');
+            console.log('%cVer colegios:', 'font-weight: bold;');
+            console.log('  EdugestSchools.getAllSchools()');
+            console.log('%cVer notificaciones:', 'font-weight: bold;');
+            console.log('  EdugestNotifications.getAllNotifications()');
+            alert('✅ Comandos mostrados en la consola (F12)');
+        }
+
+        // Verificar si hay datos cargados
+        window.addEventListener('DOMContentLoaded', () => {
+            if (EdugestDemoData.hasDemoData()) {
+                const statusDiv = document.getElementById('loadStatus');
+                statusDiv.innerHTML = '<div class="alert alert-success">✅ Los datos de prueba ya están cargados</div>';
+            }
+        });
+    </script>
+</body>
+</html>
