@@ -209,23 +209,25 @@
     </div>
     
     <script>
-        // Inicializar sesión demo automática
+        // Sesión demo automática DESACTIVADA
+        // Esta función interfería con el login normal
         function initDemoSession() {
-            const demoSession = {
-                email: 'demo@edugest.cl',
-                nombre: 'Usuario Demo',
-                rol: 'director',
-                colegioId: 'colegio_001',
-                colegioNombre: 'Liceo Gabriela Mistral',
-                permisoFinanzas: true,
-                verTodosColegios: false
-            };
-            localStorage.setItem('demoUser', JSON.stringify(demoSession));
-            console.log('✅ Sesión demo inicializada');
+            // Comentado para permitir login normal
+            // const demoSession = {
+            //     email: 'demo@edugest.cl',
+            //     nombre: 'Usuario Demo',
+            //     rol: 'director',
+            //     colegioId: 'colegio_001',
+            //     colegioNombre: 'Liceo Gabriela Mistral',
+            //     permisoFinanzas: true,
+            //     verTodosColegios: false
+            // };
+            // localStorage.setItem('demoUser', JSON.stringify(demoSession));
+            // console.log('✅ Sesión demo inicializada');
         }
         
-        // Inicializar al cargar
-        initDemoSession();
+        // NO inicializar sesión automática - permitir login normal
+        // initDemoSession();
     </script>
 </body>
 </html>
