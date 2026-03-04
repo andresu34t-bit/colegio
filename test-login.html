@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Login - EDUGEST</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .user-card {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #3b82f6;
+        }
+        .user-card strong {
+            color: #3b82f6;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        .success {
+            color: #10b981;
+            font-weight: bold;
+        }
+        .error {
+            color: #ef4444;
+            font-weight: bold;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🔧 Test de Login - EDUGEST</h1>
+        <p>Esta página te ayuda a verificar que el sistema de login funciona correctamente.</p>
+    </div>
+
+    <div class="card">
+        <h2>📋 Usuarios de Prueba</h2>
+        <p>Haz clic en cualquier usuario para probar el login:</p>
+        
+        <div class="user-card">
+            <strong>Director</strong><br>
+            Email: director@edugest.cl<br>
+            Password: EduGest2026<br>
+            <button onclick="testLogin('director@edugest.cl', 'EduGest2026')">Probar Login</button>
+        </div>
+        
+        <div class="user-card">
+            <strong>Docente</strong><br>
+            Email: docente@edugest.cl<br>
+            Password: Docente2026<br>
+            <button onclick="testLogin('docente@edugest.cl', 'Docente2026')">Probar Login</button>
+        </div>
+        
+        <div class="user-card">
+            <strong>UTP</strong><br>
+            Email: utp@mistral.cl<br>
+            Password: UTP2026<br>
+            <button onclick="testLogin('utp@mistral.cl', 'UTP2026')">Probar Login</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🔍 Resultado del Test</h2>
+        <div id="result"></div>
+        <button onclick="clearSession()">Limpiar Sesión</button>
+        <button onclick="checkSession()">Verificar Sesión Actual</button>
+        <button onclick="window.location.href='index.html'">Ir al Login Real</button>
+    </div>
+
+    <script>
+        // Inicializar datos demo
+        function initDemoData() {
+            const usuarios = {
+                'director@edugest.cl': {
+                    email: 'director@edugest.cl',
+                    password: 'EduGest2026',
+                    nombre: 'Director Demo',
+                    rol: 'director',
+                    colegioId: 'colegio_001',
+                    permisoFinanzas: true,
+                    activo: true
+                },
+                'docente@edugest.cl': {
+                    email: 'docente@edugest.cl',
+                    password: 'Docente2026',
+                    nombre: 'Docente Demo',
+                    rol: 'docente',
+                    colegioId: 'colegio_001',
+                    permisoFinanzas: false,
+                    activo: true
+                },
+                'utp@mistral.cl': {
+                    email: 'utp@mistral.cl',
+                    password: 'UTP2026',
+                    nombre: 'María Silva',
+                    rol: 'utp',
+                    colegioId: 'colegio_001',
+                    permisoFinanzas: true,
+                    activo: true
+                }
+            };
+            
+            const colegios = {
+                'colegio_001': {
+                    id: 'colegio_001',
+                    nombre: 'Liceo Gabriela Mistral',
+                    rbd: '12345-6',
+                    activo: true
+                }
+            };
+            
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+            localStorage.setItem('colegios', JSON.stringify(colegios));
+        }
+        
+        function testLogin(email, password) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>⏳ Probando login...</p>';
+            
+            // Inicializar datos
+            initDemoData();
+            
+            // Cargar usuarios
+            const usuariosStr = localStorage.getItem('usuarios');
+            const usuarios = JSON.parse(usuariosStr);
+            
+            // Verificar credenciales
+            const usuario = usuarios[email];
+            
+            if (usuario && usuario.password === password && usuario.activo) {
+                // Cargar colegio
+                const colegiosStr = localStorage.getItem('colegios');
+                const colegios = JSON.parse(colegiosStr);
+                const colegio = colegios[usuario.colegioId];
+                
+                // Guardar sesión
+                localStorage.setItem('demoUser', JSON.stringify({
+                    email: usuario.email,
+                    nombre: usuario.nombre,
+                    rol: usuario.rol,
+                    colegioId: usuario.colegioId,
+                    colegioNombre: colegio.nombre,
+                    permisoFinanzas: usuario.permisoFinanzas
+                }));
+                
+                resultDiv.innerHTML = `
+                    <p class="success">✅ Login exitoso!</p>
+                    <p><strong>Usuario:</strong> ${usuario.nombre}</p>
+                    <p><strong>Rol:</strong> ${usuario.rol}</p>
+                    <p><strong>Colegio:</strong> ${colegio.nombre}</p>
+                    <p><button onclick="window.location.href='dashboard.html'">Ir al Dashboard</button></p>
+                `;
+            } else {
+                resultDiv.innerHTML = '<p class="error">❌ Credenciales incorrectas</p>';
+            }
+        }
+        
+        function clearSession() {
+            localStorage.removeItem('demoUser');
+            document.getElementById('result').innerHTML = '<p class="success">✅ Sesión limpiada</p>';
+        }
+        
+        function checkSession() {
+            const userStr = localStorage.getItem('demoUser');
+            const resultDiv = document.getElementById('result');
+            
+            if (userStr) {
+                const user = JSON.parse(userStr);
+                resultDiv.innerHTML = `
+                    <p class="success">✅ Sesión activa</p>
+                    <p><strong>Usuario:</strong> ${user.nombre}</p>
+                    <p><strong>Rol:</strong> ${user.rol}</p>
+                    <p><strong>Colegio:</strong> ${user.colegioNombre}</p>
+                    <p><button onclick="window.location.href='dashboard.html'">Ir al Dashboard</button></p>
+                `;
+            } else {
+                resultDiv.innerHTML = '<p class="error">❌ No hay sesión activa</p>';
+            }
+        }
+        
+        // Verificar sesión al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            checkSession();
+        });
+    </script>
+</body>
+</html>

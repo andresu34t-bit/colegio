@@ -16,22 +16,25 @@ function checkAuth() {
 
 currentUser = checkAuth();
 if (currentUser) {
-    // Redirigir superadmin al panel global
-    if (currentUser.rol === 'superadmin' && currentUser.verTodosColegios) {
-        window.location.href = 'admin-global.html';
-        return;
+    // Actualizar información del usuario en el sidebar
+    const userNameEl = document.getElementById('userName');
+    const userRoleEl = document.getElementById('userRole');
+    const userAvatarEl = document.getElementById('userAvatar');
+    
+    if (userNameEl) userNameEl.textContent = currentUser.nombre;
+    if (userRoleEl) userRoleEl.textContent = getRoleName(currentUser.rol);
+    if (userAvatarEl) userAvatarEl.textContent = currentUser.nombre.charAt(0).toUpperCase();
+    
+    // Actualizar título del dashboard con nombre del colegio
+    const pageTitle = document.querySelector('.page-title');
+    if (pageTitle && currentUser.colegioNombre) {
+        pageTitle.textContent = `Dashboard PME 2026 - ${currentUser.colegioNombre}`;
     }
     
-    document.getElementById('userName').textContent = currentUser.nombre;
-    document.getElementById('userRole').textContent = getRoleName(currentUser.rol);
-    
-    // Mostrar nombre del colegio en el header
-    const dashboardHeader = document.querySelector('.dashboard-header h1');
-    dashboardHeader.textContent = `Dashboard PME 2026 - ${currentUser.colegioNombre}`;
-    
     // Mostrar finanzas solo si tiene permiso
-    if (currentUser.permisoFinanzas) {
-        document.getElementById('navFinanzas').style.display = 'block';
+    const navFinanzas = document.getElementById('navFinanzas');
+    if (navFinanzas && currentUser.permisoFinanzas) {
+        navFinanzas.style.display = 'block';
     }
 }
 
@@ -40,14 +43,17 @@ function getRoleName(rol) {
         'director': 'Director',
         'utp': 'UTP',
         'docente': 'Docente',
-        'administrador': 'Administrador'
+        'administrador': 'Administrador',
+        'superadmin': 'Super Administrador'
     };
     return roles[rol] || rol;
 }
 
 // Logout
-document.getElementById('logoutBtn').addEventListener('click', () => {
-    localStorage.removeItem('demoUser');
+const logoutBtn = document.getElementById('logoutBtn');
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('demoUser');
     window.location.href = 'index.html';
 });
 
