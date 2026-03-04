@@ -31,30 +31,107 @@ El módulo de chat está **100% implementado** y listo para usar.
 
 ## 👤 Usuarios de Prueba
 
-### Director (Acceso Completo)
+### 🌟 Administrador Global
+```
+Email:    admin@edugest.cl
+Password: admin123
+```
+**Permisos:** Acceso total a todos los colegios
+
+---
+
+### 🏫 Colegio San José
+
+**Director:**
+```
+Email:    director.sanjose@edugest.cl
+Password: director123
+```
+
+**Docentes:**
+```
+Email:    docente1.sanjose@edugest.cl
+Password: docente123
+```
+
+---
+
+### 🏫 Liceo Técnico Norte
+
+**Director:**
+```
+Email:    director.norte@edugest.cl
+Password: director123
+```
+
+**Docentes:**
+```
+Email:    docente1.norte@edugest.cl
+Password: docente123
+```
+
+---
+
+### 🏫 Escuela Básica Sur
+
+**Director:**
+```
+Email:    director.sur@edugest.cl
+Password: director123
+```
+
+**Docentes:**
+```
+Email:    docente1.sur@edugest.cl
+Password: docente123
+```
+
+---
+
+### 🏫 Liceo Técnico Profesional Gabriela Mistral (NUEVO)
+
+**Directora:**
+```
+Email:    director.mistral@edugest.cl
+Password: mistral2024
+Nombre:   Ana Martínez Rojas
+```
+
+**Docentes:**
+```
+Email:    docente1.mistral@edugest.cl
+Password: docente123
+Nombre:   Claudia Fernández
+```
+
+```
+Email:    docente2.mistral@edugest.cl
+Password: docente123
+Nombre:   Rodrigo Valenzuela
+```
+
+**Técnico:**
+```
+Email:    tecnico.mistral@edugest.cl
+Password: tecnico123
+Nombre:   Sebastián Morales
+```
+
+---
+
+### 👥 Usuarios Legacy (Compatibilidad)
+
+**Director:**
 ```
 Email:    director@edugest.cl
 Password: EduGest2026
 ```
 
-**Permisos:**
-- ✅ Ver Dashboard
-- ✅ Registrar Eventos
-- ✅ Ver Finanzas
-- ✅ Registrar Gastos
-
----
-
-### Docente (Acceso Limitado)
+**Docente:**
 ```
 Email:    docente@edugest.cl
 Password: Docente2026
 ```
-
-**Permisos:**
-- ✅ Ver Dashboard
-- ✅ Registrar Eventos
-- ❌ NO puede ver Finanzas
 
 ---
 

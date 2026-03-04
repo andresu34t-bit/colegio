@@ -125,6 +125,36 @@ const DEMO_USERS = {
         school: 'Escuela Básica Sur'
     },
     
+    // Liceo Gabriela Mistral
+    'director.mistral@edugest.cl': {
+        password: 'mistral2024',
+        role: 'director',
+        name: 'Ana Martínez Rojas',
+        schoolId: 'school_004',
+        school: 'Liceo Técnico Profesional Gabriela Mistral'
+    },
+    'docente1.mistral@edugest.cl': {
+        password: 'docente123',
+        role: 'docente',
+        name: 'Claudia Fernández',
+        schoolId: 'school_004',
+        school: 'Liceo Técnico Profesional Gabriela Mistral'
+    },
+    'docente2.mistral@edugest.cl': {
+        password: 'docente123',
+        role: 'docente',
+        name: 'Rodrigo Valenzuela',
+        schoolId: 'school_004',
+        school: 'Liceo Técnico Profesional Gabriela Mistral'
+    },
+    'tecnico.mistral@edugest.cl': {
+        password: 'tecnico123',
+        role: 'tecnico',
+        name: 'Sebastián Morales',
+        schoolId: 'school_004',
+        school: 'Liceo Técnico Profesional Gabriela Mistral'
+    },
+    
     // Usuarios legacy (compatibilidad)
     'director@edugest.cl': {
         password: 'director123',
