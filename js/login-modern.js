@@ -129,116 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     // SUBMIT DEL FORMULARIO
     // ============================================
-    loginForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        // Limpiar errores previos
-        hideGlobalError();
-        
-        // Obtener valores
-        const email = emailInput.value.trim().toLowerCase();
-        const password = passwordInput.value;
-        const rememberMe = rememberMeCheckbox.checked;
-        
-        // Validar campos
-        const isEmailValid = validateEmail(email);
-        const isPasswordValid = validatePassword(password);
-        
-        if (!isEmailValid || !isPasswordValid) {
-            showGlobalError('Por favor, corrige los errores en el formulario');
-            return;
-        }
-        
-        // Mostrar loader
-        showLoader();
-        
-        // Deshabilitar botón
-        const submitBtn = loginForm.querySelector('.btn-login');
-        submitBtn.disabled = true;
-        submitBtn.querySelector('.btn-text').textContent = 'Iniciando...';
-        
-        try {
-            // Simular delay de red para mejor UX
-            await new Promise(resolve => setTimeout(resolve, 800));
-            
-            // Cargar usuarios del sistema
-            const usuariosStr = localStorage.getItem('usuarios');
-            const usuarios = usuariosStr ? JSON.parse(usuariosStr) : {};
-            
-            // Verificar credenciales
-            const usuario = usuarios[email];
-            
-            if (usuario && usuario.password === password && usuario.activo) {
-                // Cargar datos del colegio (si no es superadmin)
-                let colegio = null;
-                let colegioNombre = 'Todos los Colegios';
-                
-                if (usuario.colegioId) {
-                    const colegiosStr = localStorage.getItem('colegios');
-                    const colegios = colegiosStr ? JSON.parse(colegiosStr) : {};
-                    colegio = colegios[usuario.colegioId];
-                    
-                    if (!colegio || !colegio.activo) {
-                        throw new Error('Colegio no encontrado o inactivo');
-                    }
-                    
-                    colegioNombre = colegio.nombre;
-                }
-                
-                // Login exitoso
-                console.log('✅ Login exitoso:', email);
-                console.log('📚 Colegio:', colegioNombre);
-                console.log('👤 Rol:', usuario.rol);
-                
-                // Guardar "recordarme" si está marcado
-                if (rememberMe) {
-                    localStorage.setItem('edugest_remember', 'true');
-                    localStorage.setItem('edugest_email', email);
-                } else {
-                    localStorage.removeItem('edugest_remember');
-                    localStorage.removeItem('edugest_email');
-                }
-                
-                // Guardar sesión en localStorage
-                localStorage.setItem('demoUser', JSON.stringify({
-                    email: usuario.email,
-                    nombre: usuario.nombre,
-                    rol: usuario.rol,
-                    colegioId: usuario.colegioId,
-                    colegioNombre: colegioNombre,
-                    permisoFinanzas: usuario.permisoFinanzas,
-                    verTodosColegios: usuario.verTodosColegios || false
-                }));
-                
-                // Redireccionar al dashboard
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 500);
-                
-            } else {
-                throw new Error('Email o contraseña incorrectos');
-            }
-            
-        } catch (error) {
-            // Ocultar loader
-            hideLoader();
-            
-            // Habilitar botón
-            submitBtn.disabled = false;
-            submitBtn.querySelector('.btn-text').textContent = 'Iniciar sesión';
-            
-            // Mostrar error
-            showGlobalError(error.message || 'Error al iniciar sesión. Intenta nuevamente.');
-            
-            // Marcar campos como error
-            emailInput.classList.add('error');
-            passwordInput.classList.add('error');
-            
-            // Shake animation en el formulario
-            loginForm.classList.add('shake');
-            setTimeout(() => loginForm.classList.remove('shake'), 500);
-        }
-    });
+    // NOTA: El submit es manejado por auth-demo.js
+    // Este código solo maneja validaciones visuales
 
     // ============================================
     // FUNCIONES DE LOADER
@@ -290,40 +182,11 @@ document.addEventListener('DOMContentLoaded', function() {
     loadRememberedEmail();
 
     // ============================================
-    // PREVENIR DOBLE SUBMIT
-    // ============================================
-    let isSubmitting = false;
-    
-    loginForm.addEventListener('submit', function(e) {
-        if (isSubmitting) {
-            e.preventDefault();
-            return false;
-        }
-    });
-
-    // ============================================
     // ANIMACIÓN DE ENTRADA
     // ============================================
     setTimeout(() => {
         document.body.classList.add('loaded');
     }, 100);
-
-    // ============================================
-    // DETECTAR ENTER EN CAMPOS
-    // ============================================
-    emailInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            passwordInput.focus();
-        }
-    });
-
-    passwordInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            loginForm.dispatchEvent(new Event('submit'));
-        }
-    });
 
     // ============================================
     // CONSOLE INFO
