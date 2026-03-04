@@ -1,0 +1,275 @@
+/**
+ * EDUGEST - Compatibility Layer
+ * Asegura compatibilidad con código existente
+ */
+
+/* Importar el sistema de diseño principal */
+@import url('design-system.css');
+
+/* Aliases para compatibilidad con código antiguo */
+:root {
+    /* Aliases de colores antiguos */
+    --primary-600: var(--curriculum-600);
+    --primary-700: var(--curriculum-700);
+    --primary-500: var(--curriculum-500);
+    --primary-400: var(--curriculum-400);
+    --primary-100: var(--curriculum-100);
+    --primary-50: var(--curriculum-50);
+    
+    --success-600: var(--convivencia-600);
+    --success-700: var(--convivencia-700);
+    --success-500: var(--convivencia-500);
+    --success-100: var(--convivencia-100);
+    
+    --warning-600: var(--warning-600);
+    --warning-700: var(--warning-700);
+    --warning-500: var(--warning-500);
+    --warning-100: var(--warning-100);
+    
+    --danger-600: var(--error-600);
+    --danger-700: var(--error-700);
+    --danger-500: var(--error-500);
+    --danger-100: var(--error-100);
+    
+    --info-600: var(--curriculum-600);
+    --info-700: var(--curriculum-700);
+    --info-500: var(--curriculum-500);
+    --info-100: var(--curriculum-100);
+    
+    /* Aliases de espaciado */
+    --space-xs: var(--space-1);
+    --space-sm: var(--space-2);
+    --space-md: var(--space-4);
+    --space-lg: var(--space-6);
+    --space-xl: var(--space-8);
+    --space-2xl: var(--space-12);
+    
+    /* Aliases de radius */
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-xl: var(--radius-xl);
+    --radius-2xl: var(--radius-2xl);
+    --radius-full: var(--radius-full);
+    
+    /* Aliases de sombras */
+    --shadow-sm: var(--shadow-sm);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: var(--shadow-lg);
+    --shadow-xl: var(--shadow-xl);
+    --shadow-2xl: var(--shadow-2xl);
+    
+    /* Aliases de transiciones */
+    --transition-fast: var(--transition-fast);
+    --transition-base: var(--transition-base);
+    --transition-slow: var(--transition-slow);
+    
+    /* Gradientes legacy */
+    --gradient-primary: linear-gradient(135deg, var(--curriculum-600) 0%, var(--curriculum-700) 100%);
+    --gradient-success: linear-gradient(135deg, var(--convivencia-600) 0%, var(--convivencia-700) 100%);
+    --gradient-warning: linear-gradient(135deg, var(--warning-600) 0%, var(--warning-700) 100%);
+    --gradient-danger: linear-gradient(135deg, var(--error-600) 0%, var(--error-700) 100%);
+    --gradient-info: linear-gradient(135deg, var(--curriculum-600) 0%, var(--curriculum-700) 100%);
+    --gradient-dark: linear-gradient(135deg, var(--gray-800) 0%, var(--gray-900) 100%);
+}
+
+/* Clases legacy para compatibilidad */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-8);
+}
+
+.dashboard-header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--gray-900) 0%, var(--curriculum-600) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.filter-select {
+    padding: var(--space-3) var(--space-4);
+    border: 2px solid var(--gray-300);
+    border-radius: var(--radius-lg);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    background: var(--white);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--curriculum-500);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Charts */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+}
+
+.chart-card {
+    background: var(--white);
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-100);
+}
+
+.chart-card h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: var(--space-4);
+}
+
+/* Actions bar */
+.actions-bar {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: flex-end;
+    margin-top: var(--space-8);
+}
+
+/* Sidebar legacy */
+.sidebar-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: var(--space-4);
+}
+
+.sidebar-logo-img {
+    max-width: 80px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* User info legacy */
+.user-info {
+    padding: var(--space-6);
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.user-school {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: var(--space-1);
+}
+
+/* Form card legacy */
+.form-card {
+    background: var(--white);
+    padding: var(--space-8);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: var(--space-8);
+    border: 1px solid var(--gray-100);
+}
+
+.form-card h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--gray-900);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 3px solid var(--curriculum-100);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+    margin-bottom: var(--space-4);
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: flex-end;
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 2px solid var(--gray-200);
+}
+
+/* Areas grid legacy */
+.areas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-8);
+    margin-top: var(--space-8);
+}
+
+.area-card {
+    background: var(--white);
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    border: 2px solid transparent;
+    box-shadow: var(--shadow-md);
+}
+
+.area-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-2xl);
+}
+
+.area-icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .areas-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animaciones legacy */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
+}

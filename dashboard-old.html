@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - EduGest PME</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo-container">
+                <img src="LOGO EDUGEST.png" alt="Logo EduGest PME" class="sidebar-logo-img">
+            </div>
+            <h2>EduGest PME</h2>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar">D</div>
+            <p class="user-name" id="userName">Usuario</p>
+            <p class="user-role" id="userRole">Rol</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div style="padding: var(--space-sm) var(--space-lg); color: var(--gray-500); font-size: 12px; font-weight: 600; text-transform: uppercase;">
+                Módulo PME
+            </div>
+            <a href="dashboard.html" class="nav-item active">📊 Dashboard PME</a>
+            <a href="informaciones-generales.html" class="nav-item">⚙️ Informaciones Generales</a>
+            <a href="areas.html" class="nav-item">📝 Registrar Evento</a>
+            <a href="informes.html" class="nav-item">📄 Informes PME</a>
+            <a href="finanzas.html" class="nav-item" id="navFinanzas" style="display: none;">💰 Finanzas</a>
+            
+            <div style="padding: var(--space-lg) var(--space-lg) var(--space-sm) var(--space-lg); color: var(--gray-500); font-size: 12px; font-weight: 600; text-transform: uppercase; border-top: 1px solid var(--gray-200); margin-top: var(--space-md);">
+                Observación Clases
+            </div>
+            <a href="seo-dashboard.html" class="nav-item">👨‍🏫 Dashboard Observaciones</a>
+            <a href="seo-observacion.html" class="nav-item" id="navNuevaObservacion">➕ Nueva Observación</a>
+            <a href="seo-lista.html" class="nav-item">📋 Mis Observaciones</a>
+            <a href="seo-informes.html" class="nav-item">📊 Informes Observaciones</a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">🚪 Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-header">
+            <div>
+                <h1>Tablero Central Dashboard</h1>
+                <p style="color: var(--gray-600); font-size: 18px; font-weight: 600; margin-top: var(--space-sm);">
+                    Plan de Mejoramiento Educativo PME 2026
+                </p>
+            </div>
+            <select id="mesFilter" class="filter-select">
+                <option value="">Todos los meses</option>
+                <option value="ENERO">Enero</option>
+                <option value="FEBRERO">Febrero</option>
+                <option value="MARZO">Marzo</option>
+                <option value="ABRIL">Abril</option>
+                <option value="MAYO">Mayo</option>
+                <option value="JUNIO">Junio</option>
+                <option value="JULIO">Julio</option>
+                <option value="AGOSTO">Agosto</option>
+                <option value="SEPTIEMBRE">Septiembre</option>
+                <option value="OCTUBRE">Octubre</option>
+                <option value="NOVIEMBRE">Noviembre</option>
+                <option value="DICIEMBRE">Diciembre</option>
+            </select>
+        </div>
+
+        <!-- Tarjetas de Módulos -->
+        <div class="modules-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-xl); margin-bottom: var(--space-2xl);">
+            <div class="module-card" onclick="window.location.href='areas.html'" style="background: white; padding: var(--space-xl); border-radius: var(--radius-xl); box-shadow: var(--shadow-md); cursor: pointer; transition: all var(--transition-base); border-left: 6px solid var(--primary-600);">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-lg);">
+                    <div style="font-size: 48px;">📋</div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 32px; font-weight: 900; color: var(--primary-600);" id="avancePME">0%</div>
+                        <div style="font-size: 12px; color: var(--gray-500); font-weight: 600;">Avance General</div>
+                    </div>
+                </div>
+                <h3 style="font-size: 20px; font-weight: 800; color: var(--gray-900); margin-bottom: var(--space-sm);">
+                    Plan de Mejoramiento Educativo PME 2026
+                </h3>
+                <button style="width: 100%; padding: 12px; background: var(--gradient-primary); color: white; border: none; border-radius: var(--radius-md); font-weight: 700; margin-top: var(--space-md); cursor: pointer;">
+                    Ingreso
+                </button>
+            </div>
+
+            <div class="module-card" onclick="window.location.href='seo-dashboard.html'" style="background: white; padding: var(--space-xl); border-radius: var(--radius-xl); box-shadow: var(--shadow-md); cursor: pointer; transition: all var(--transition-base); border-left: 6px solid var(--success-600);">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-lg);">
+                    <div style="font-size: 48px;">👨‍🏫</div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 32px; font-weight: 900; color: var(--success-600);" id="avanceOBS">0%</div>
+                        <div style="font-size: 12px; color: var(--gray-500); font-weight: 600;">Avance General</div>
+                    </div>
+                </div>
+                <h3 style="font-size: 20px; font-weight: 800; color: var(--gray-900); margin-bottom: var(--space-sm);">
+                    Observación de Clases 2026
+                </h3>
+                <button style="width: 100%; padding: 12px; background: var(--gradient-success); color: white; border: none; border-radius: var(--radius-md); font-weight: 700; margin-top: var(--space-md); cursor: pointer;">
+                    Ingreso
+                </button>
+            </div>
+
+            <div class="module-card" onclick="alert('Módulo en desarrollo')" style="background: white; padding: var(--space-xl); border-radius: var(--radius-xl); box-shadow: var(--shadow-md); cursor: pointer; transition: all var(--transition-base); border-left: 6px solid var(--info-600);">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-lg);">
+                    <div style="font-size: 48px;">📚</div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 32px; font-weight: 900; color: var(--info-600);" id="avanceCC">0%</div>
+                        <div style="font-size: 12px; color: var(--gray-500); font-weight: 600;">Avance General</div>
+                    </div>
+                </div>
+                <h3 style="font-size: 20px; font-weight: 800; color: var(--gray-900); margin-bottom: var(--space-sm);">
+                    Cobertura Curricular 2026
+                </h3>
+                <button style="width: 100%; padding: 12px; background: var(--gradient-info); color: white; border: none; border-radius: var(--radius-md); font-weight: 700; margin-top: var(--space-md); cursor: pointer;">
+                    Ingreso
+                </button>
+            </div>
+
+            <div class="module-card" onclick="alert('Módulo en desarrollo')" style="background: white; padding: var(--space-xl); border-radius: var(--radius-xl); box-shadow: var(--shadow-md); cursor: pointer; transition: all var(--transition-base); border-left: 6px solid var(--warning-600);">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-lg);">
+                    <div style="font-size: 48px;">🤝</div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 32px; font-weight: 900; color: var(--warning-600);" id="avancePIE">0%</div>
+                        <div style="font-size: 12px; color: var(--gray-500); font-weight: 600;">Avance General</div>
+                    </div>
+                </div>
+                <h3 style="font-size: 20px; font-weight: 800; color: var(--gray-900); margin-bottom: var(--space-sm);">
+                    Programa de Integración Escolar PIE 2026
+                </h3>
+                <button style="width: 100%; padding: 12px; background: var(--gradient-warning); color: white; border: none; border-radius: var(--radius-md); font-weight: 700; margin-top: var(--space-md); cursor: pointer;">
+                    Ingreso
+                </button>
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats-grid">
+            <div class="stat-card" style="background: white; border: 3px solid var(--primary-600);">
+                <h3 style="color: var(--primary-700);">Total Eventos</h3>
+                <p class="stat-number" id="totalEventos" style="color: var(--gray-900);">0</p>
+            </div>
+            <div class="stat-card" style="background: white; border: 3px solid var(--success-600);">
+                <h3 style="color: var(--success-700);">Promedio Éxito</h3>
+                <p class="stat-number" id="promedioExito" style="color: var(--gray-900);">0%</p>
+            </div>
+            <div class="stat-card" style="background: white; border: 3px solid var(--warning-600);">
+                <h3 style="color: var(--warning-700);">Áreas Activas</h3>
+                <p class="stat-number" id="areasActivas" style="color: var(--gray-900);">0</p>
+            </div>
+            <div class="stat-card" style="background: white; border: 3px solid var(--info-600);">
+                <h3 style="color: var(--info-700);">Docentes</h3>
+                <p class="stat-number" id="totalDocentes" style="color: var(--gray-900);">0</p>
+            </div>
+        </div>
+
+        <!-- Chat del Colegio - Siempre Visible -->
+        <div class="dashboard-chat-section" style="background: white; border-radius: var(--radius-xl); box-shadow: var(--shadow-md); margin-bottom: var(--space-2xl); overflow: hidden;">
+            <div class="chat-section-header" style="padding: var(--space-xl); border-bottom: 2px solid var(--gray-200); background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%);">
+                <h2 style="margin: 0; font-size: 24px; font-weight: 900; color: white; display: flex; align-items: center; gap: var(--space-md);">
+                    💬 Chat del Colegio
+                </h2>
+                <p style="margin: var(--space-sm) 0 0 0; color: rgba(255,255,255,0.9); font-size: 14px;">Comunícate en tiempo real con tu equipo</p>
+            </div>
+            
+            <div class="dashboard-chat-container" style="display: flex; height: 600px;">
+                <!-- Lista de Conversaciones -->
+                <div class="chat-sidebar" style="width: 320px; border-right: 2px solid var(--gray-200); display: flex; flex-direction: column; background: var(--gray-50);">
+                    <div class="chat-sidebar-header" style="padding: var(--space-lg); border-bottom: 2px solid var(--gray-200); background: white;">
+                        <h3 style="margin: 0 0 var(--space-md) 0; font-size: 18px; font-weight: 800; color: var(--gray-900);">Mensajes</h3>
+                        <div class="chat-tabs-mini" style="display: flex; gap: var(--space-sm);">
+                            <button class="chat-tab-mini active" data-chat-tab="users" style="flex: 1; padding: var(--space-sm); border: 2px solid var(--primary-600); background: var(--primary-600); color: white; border-radius: var(--radius-md); font-weight: 700; font-size: 14px; cursor: pointer; transition: all var(--transition-base);">
+                                👥 Usuarios
+                            </button>
+                            <button class="chat-tab-mini" data-chat-tab="group" style="flex: 1; padding: var(--space-sm); border: 2px solid var(--gray-300); background: white; color: var(--gray-700); border-radius: var(--radius-md); font-weight: 700; font-size: 14px; cursor: pointer; transition: all var(--transition-base);">
+                                🏫 Grupo
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chat-search" style="padding: var(--space-md); background: white; border-bottom: 2px solid var(--gray-200);">
+                        <input type="text" id="dashboardChatSearch" placeholder="🔍 Buscar usuario..." style="width: 100%; padding: var(--space-sm) var(--space-md); border: 2px solid var(--gray-300); border-radius: var(--radius-md); font-size: 14px;">
+                    </div>
+                    <div id="dashboardChatUsersList" class="chat-users-list" style="flex: 1; overflow-y: auto; padding: var(--space-sm);">
+                        <!-- Se llenará dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Área de Conversación -->
+                <div class="chat-main" style="flex: 1; display: flex; flex-direction: column; background: white;">
+                    <div id="dashboardChatWelcome" style="flex: 1; display: flex; align-items: center; justify-content: center; flex-direction: column; color: var(--gray-500); padding: var(--space-2xl);">
+                        <div style="font-size: 64px; margin-bottom: var(--space-lg);">💬</div>
+                        <h3 style="font-size: 24px; font-weight: 800; color: var(--gray-700); margin-bottom: var(--space-sm);">Chat del Colegio</h3>
+                        <p style="text-align: center; max-width: 400px; line-height: 1.6;">Selecciona un usuario de la lista para iniciar una conversación o usa el chat grupal para comunicarte con todo el colegio.</p>
+                    </div>
+
+                    <div id="dashboardChatConversation" style="flex: 1; display: none; flex-direction: column;">
+                        <div class="chat-conversation-header" style="padding: var(--space-lg); border-bottom: 2px solid var(--gray-200); display: flex; align-items: center; justify-content: space-between; background: var(--gray-50);">
+                            <div style="display: flex; align-items: center; gap: var(--space-md);">
+                                <div id="dashboardChatAvatar" style="width: 48px; height: 48px; border-radius: 50%; background: var(--primary-600); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px;">U</div>
+                                <div>
+                                    <h4 id="dashboardChatUserName" style="margin: 0; font-size: 16px; font-weight: 800; color: var(--gray-900);">Usuario</h4>
+                                    <p id="dashboardChatUserRole" style="margin: 0; font-size: 12px; color: var(--gray-600);">Rol</p>
+                                </div>
+                            </div>
+                            <button id="dashboardChatClose" style="padding: var(--space-sm) var(--space-md); border: 2px solid var(--gray-300); background: white; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; transition: all var(--transition-base);">
+                                ← Volver
+                            </button>
+                        </div>
+
+                        <div id="dashboardChatMessages" class="chat-messages" style="flex: 1; overflow-y: auto; padding: var(--space-lg); background: var(--gray-50);">
+                            <!-- Mensajes se cargarán aquí -->
+                        </div>
+
+                        <div class="chat-input-container" style="padding: var(--space-lg); border-top: 2px solid var(--gray-200); background: white;">
+                            <div style="display: flex; gap: var(--space-md);">
+                                <input type="text" id="dashboardChatInput" placeholder="Escribe un mensaje..." style="flex: 1; padding: var(--space-md); border: 2px solid var(--gray-300); border-radius: var(--radius-md); font-size: 14px;">
+                                <button id="dashboardChatSend" style="padding: var(--space-md) var(--space-xl); background: var(--gradient-primary); color: white; border: none; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; transition: all var(--transition-base);">
+                                    Enviar 📤
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>% Éxito por Acción</h3>
+                <canvas id="chartAcciones"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <h3>Eventos por Mes</h3>
+                <canvas id="chartMeses"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <h3>Promedio Metas por Área</h3>
+                <canvas id="chartAreas"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <h3>Eventos por Docente</h3>
+                <canvas id="chartDocentes"></canvas>
+            </div>
+        </div>
+
+        <div class="actions-bar">
+            <button class="btn btn-primary" id="btnGenerarPDF">📄 Generar Informe PDF</button>
+        </div>
+    </div>
+
+    <script src="js/mobile-menu.js"></script>
+    <script src="js/chat-firebase.js"></script>
+    <script src="js/chat-ui.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/dashboard-demo.js"></script>
+    
+    <!-- Script para chat integrado -->
+    <script type="module">
+        import { chatFirebase } from './js/chat-firebase.js';
+        
+        // Cargar usuarios al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                cargarUsuariosChat();
+            }, 1000);
+        });
+        
+        // Manejo de pestañas del chat (Usuarios/Grupo)
+        document.querySelectorAll('.chat-tab-mini').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const chatTab = btn.dataset.chatTab;
+                
+                // Actualizar botones
+                document.querySelectorAll('.chat-tab-mini').forEach(b => {
+                    b.classList.remove('active');
+                    b.style.background = 'white';
+                    b.style.color = 'var(--gray-700)';
+                    b.style.borderColor = 'var(--gray-300)';
+                });
+                btn.classList.add('active');
+                btn.style.background = 'var(--primary-600)';
+                btn.style.color = 'white';
+                btn.style.borderColor = 'var(--primary-600)';
+                
+                if (chatTab === 'group') {
+                    abrirChatGrupal();
+                } else {
+                    cerrarConversacion();
+                    cargarUsuariosChat();
+                }
+            });
+        });
+        
+        // Búsqueda de usuarios
+        document.getElementById('dashboardChatSearch').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const userItems = document.querySelectorAll('.dashboard-chat-user-item');
+            
+            userItems.forEach(item => {
+                const userName = item.dataset.userName.toLowerCase();
+                item.style.display = userName.includes(searchTerm) ? 'flex' : 'none';
+            });
+        });
+        
+        // Cerrar conversación
+        document.getElementById('dashboardChatClose').addEventListener('click', () => {
+            cerrarConversacion();
+        });
+        
+        // Enviar mensaje con Enter
+        document.getElementById('dashboardChatInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                enviarMensajeDashboard();
+            }
+        });
+        
+        // Enviar mensaje con botón
+        document.getElementById('dashboardChatSend').addEventListener('click', () => {
+            enviarMensajeDashboard();
+        });
+        
+        // Variables globales del chat
+        let currentConversationId = null;
+        let currentConversationType = 'private';
+        let chatListener = null;
+        
+        // Cargar usuarios del chat
+        function cargarUsuariosChat() {
+            const usersList = document.getElementById('dashboardChatUsersList');
+            
+            if (!chatFirebase.currentUser) {
+                // Mostrar usuarios de demostración
+                const usuariosDemo = [
+                    { id: 'demo-1', name: 'María González', role: 'director', online: true },
+                    { id: 'demo-2', name: 'Juan Pérez', role: 'profesor', online: true },
+                    { id: 'demo-3', name: 'Ana Martínez', role: 'administrador', online: false },
+                    { id: 'demo-4', name: 'Carlos López', role: 'profesor', online: true },
+                    { id: 'demo-5', name: 'Laura Rodríguez', role: 'profesor', online: false },
+                    { id: 'demo-6', name: 'Pedro Sánchez', role: 'profesor', online: true },
+                    { id: 'demo-7', name: 'Carmen Díaz', role: 'administrador', online: true },
+                    { id: 'demo-8', name: 'Roberto Torres', role: 'profesor', online: false }
+                ];
+                
+                renderizarListaUsuarios(usuariosDemo);
+                return;
+            }
+            
+            chatFirebase.getUsersBySchool((users) => {
+                if (users.length === 0) {
+                    // Si no hay usuarios en Firebase, mostrar demo
+                    const usuariosDemo = [
+                        { id: 'demo-1', name: 'María González', role: 'director', online: true },
+                        { id: 'demo-2', name: 'Juan Pérez', role: 'profesor', online: true },
+                        { id: 'demo-3', name: 'Ana Martínez', role: 'administrador', online: false },
+                        { id: 'demo-4', name: 'Carlos López', role: 'profesor', online: true },
+                        { id: 'demo-5', name: 'Laura Rodríguez', role: 'profesor', online: false },
+                        { id: 'demo-6', name: 'Pedro Sánchez', role: 'profesor', online: true },
+                        { id: 'demo-7', name: 'Carmen Díaz', role: 'administrador', online: true },
+                        { id: 'demo-8', name: 'Roberto Torres', role: 'profesor', online: false }
+                    ];
+                    renderizarListaUsuarios(usuariosDemo);
+                    return;
+                }
+                
+                renderizarListaUsuarios(users);
+            });
+        }
+        
+        // Renderizar lista de usuarios
+        function renderizarListaUsuarios(users) {
+            const usersList = document.getElementById('dashboardChatUsersList');
+            
+            usersList.innerHTML = users.map(user => `
+                <div class="dashboard-chat-user-item" data-user-id="${user.id}" data-user-name="${user.name}" data-user-role="${user.role}" style="display: flex; align-items: center; gap: var(--space-md); padding: var(--space-md); border-radius: var(--radius-md); cursor: pointer; transition: all var(--transition-base); margin-bottom: var(--space-xs);">
+                    <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--primary-600); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; position: relative;">
+                        ${user.name.charAt(0).toUpperCase()}
+                        ${user.online ? '<span style="position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: var(--success-500); border: 2px solid white; border-radius: 50%;"></span>' : ''}
+                    </div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="font-weight: 700; color: var(--gray-900); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.name}</div>
+                        <div style="font-size: 12px; color: var(--gray-600);">${getRoleLabel(user.role)}</div>
+                    </div>
+                    <div style="font-size: 10px; color: ${user.online ? 'var(--success-600)' : 'var(--gray-400)'}; font-weight: 700;">
+                        ${user.online ? '● Online' : '○ Offline'}
+                    </div>
+                </div>
+            `).join('');
+            
+            // Agregar event listeners
+            document.querySelectorAll('.dashboard-chat-user-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const userId = item.dataset.userId;
+                    const userName = item.dataset.userName;
+                    const userRole = item.dataset.userRole;
+                    abrirConversacionPrivada(userId, userName, userRole);
+                });
+                
+                item.addEventListener('mouseenter', (e) => {
+                    e.currentTarget.style.background = 'var(--gray-100)';
+                });
+                
+                item.addEventListener('mouseleave', (e) => {
+                    e.currentTarget.style.background = 'transparent';
+                });
+            });
+        }
+        
+        // Abrir conversación privada
+        function abrirConversacionPrivada(userId, userName, userRole) {
+            currentConversationId = userId;
+            currentConversationType = 'private';
+            
+            // Actualizar UI
+            document.getElementById('dashboardChatWelcome').style.display = 'none';
+            document.getElementById('dashboardChatConversation').style.display = 'flex';
+            
+            document.getElementById('dashboardChatAvatar').textContent = userName.charAt(0).toUpperCase();
+            document.getElementById('dashboardChatUserName').textContent = userName;
+            document.getElementById('dashboardChatUserRole').textContent = getRoleLabel(userRole);
+            
+            // Limpiar mensajes anteriores
+            document.getElementById('dashboardChatMessages').innerHTML = '';
+            
+            // Limpiar listener anterior
+            if (chatListener) {
+                chatListener();
+            }
+            
+            // Si es usuario demo, mostrar mensajes de ejemplo
+            if (userId.startsWith('demo-')) {
+                const mensajesDemo = generarMensajesDemo(userId, userName);
+                renderizarMensajes(mensajesDemo);
+            } else {
+                // Escuchar mensajes reales de Firebase
+                chatFirebase.listenPrivateMessages(userId, (messages) => {
+                    renderizarMensajes(messages);
+                });
+            }
+        }
+        
+        // Generar mensajes de demostración
+        function generarMensajesDemo(userId, userName) {
+            const currentUserId = localStorage.getItem('userId') || 'current-user';
+            const now = Date.now();
+            
+            const mensajesPorUsuario = {
+                'demo-1': [
+                    { id: '1', senderId: userId, senderName: userName, message: '¡Hola! ¿Cómo va el proyecto PME?', timestamp: now - 3600000 },
+                    { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Muy bien, estamos avanzando según lo planificado', timestamp: now - 3500000 },
+                    { id: '3', senderId: userId, senderName: userName, message: 'Excelente, necesito que me envíes el informe de esta semana', timestamp: now - 3400000 },
+                    { id: '4', senderId: currentUserId, senderName: 'Tú', message: 'Claro, te lo envío en la tarde', timestamp: now - 3300000 }
+                ],
+                'demo-2': [
+                    { id: '1', senderId: userId, senderName: userName, message: 'Hola, ¿tienes los materiales para la clase de mañana?', timestamp: now - 7200000 },
+                    { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Sí, ya están listos en la sala de profesores', timestamp: now - 7100000 },
+                    { id: '3', senderId: userId, senderName: userName, message: 'Perfecto, gracias!', timestamp: now - 7000000 }
+                ],
+                'demo-3': [
+                    { id: '1', senderId: currentUserId, senderName: 'Tú', message: 'Ana, necesito ayuda con el sistema de registro', timestamp: now - 5400000 },
+                    { id: '2', senderId: userId, senderName: userName, message: 'Claro, ¿qué necesitas?', timestamp: now - 5300000 },
+                    { id: '3', senderId: currentUserId, senderName: 'Tú', message: 'No puedo acceder al módulo de finanzas', timestamp: now - 5200000 },
+                    { id: '4', senderId: userId, senderName: userName, message: 'Déjame revisar tus permisos', timestamp: now - 5100000 }
+                ],
+                'demo-4': [
+                    { id: '1', senderId: userId, senderName: userName, message: '¿Vamos a tener reunión esta semana?', timestamp: now - 1800000 },
+                    { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Sí, el miércoles a las 15:00', timestamp: now - 1700000 }
+                ],
+                'demo-5': [
+                    { id: '1', senderId: userId, senderName: userName, message: 'Hola! ¿Cómo estás?', timestamp: now - 86400000 },
+                    { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Bien, gracias. ¿Y tú?', timestamp: now - 86300000 }
+                ],
+                'demo-6': [
+                    { id: '1', senderId: currentUserId, senderName: 'Tú', message: 'Pedro, ¿tienes las notas del trimestre?', timestamp: now - 10800000 },
+                    { id: '2', senderId: userId, senderName: userName, message: 'Sí, las subo al sistema ahora', timestamp: now - 10700000 },
+                    { id: '3', senderId: currentUserId, senderName: 'Tú', message: 'Perfecto, gracias!', timestamp: now - 10600000 }
+                ],
+                'demo-7': [
+                    { id: '1', senderId: userId, senderName: userName, message: 'Recordatorio: Reunión de coordinación mañana a las 10:00', timestamp: now - 43200000 },
+                    { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Anotado, ahí estaré', timestamp: now - 43100000 }
+                ],
+                'demo-8': [
+                    { id: '1', senderId: userId, senderName: userName, message: '¿Tienes tiempo para revisar mi planificación?', timestamp: now - 21600000 },
+                    { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Claro, envíamela por correo', timestamp: now - 21500000 },
+                    { id: '3', senderId: userId, senderName: userName, message: 'Ya te la envié', timestamp: now - 21400000 }
+                ]
+            };
+            
+            return mensajesPorUsuario[userId] || [
+                { id: '1', senderId: userId, senderName: userName, message: '¡Hola! Este es un mensaje de demostración', timestamp: now - 3600000 },
+                { id: '2', senderId: currentUserId, senderName: 'Tú', message: 'Hola, ¿cómo estás?', timestamp: now - 3500000 }
+            ];
+        }
+        
+        // Abrir chat grupal
+        function abrirChatGrupal() {
+            currentConversationId = 'group';
+            currentConversationType = 'group';
+            
+            // Actualizar UI
+            document.getElementById('dashboardChatWelcome').style.display = 'none';
+            document.getElementById('dashboardChatConversation').style.display = 'flex';
+            
+            document.getElementById('dashboardChatAvatar').textContent = '🏫';
+            document.getElementById('dashboardChatUserName').textContent = 'Grupo del Colegio';
+            document.getElementById('dashboardChatUserRole').textContent = 'Chat grupal';
+            
+            // Limpiar mensajes anteriores
+            document.getElementById('dashboardChatMessages').innerHTML = '';
+            
+            // Limpiar listener anterior
+            if (chatListener) {
+                chatListener();
+            }
+            
+            // Si no hay Firebase, mostrar mensajes demo
+            if (!chatFirebase.currentUser) {
+                const mensajesGrupoDemo = generarMensajesGrupoDemo();
+                renderizarMensajes(mensajesGrupoDemo);
+            } else {
+                // Escuchar mensajes grupales reales
+                chatFirebase.listenGroupMessages((messages) => {
+                    renderizarMensajes(messages);
+                });
+            }
+        }
+        
+        // Generar mensajes de grupo de demostración
+        function generarMensajesGrupoDemo() {
+            const currentUserId = localStorage.getItem('userId') || 'current-user';
+            const now = Date.now();
+            
+            return [
+                { id: '1', senderId: 'demo-1', senderName: 'María González', message: 'Buenos días a todos! Recordatorio de la reunión de hoy a las 15:00', timestamp: now - 7200000 },
+                { id: '2', senderId: 'demo-2', senderName: 'Juan Pérez', message: 'Gracias María, ahí estaré', timestamp: now - 7100000 },
+                { id: '3', senderId: 'demo-4', senderName: 'Carlos López', message: 'Confirmado!', timestamp: now - 7000000 },
+                { id: '4', senderId: 'demo-7', senderName: 'Carmen Díaz', message: 'Les recuerdo que deben subir las planificaciones antes del viernes', timestamp: now - 3600000 },
+                { id: '5', senderId: 'demo-6', senderName: 'Pedro Sánchez', message: 'Ya subí la mía', timestamp: now - 3500000 },
+                { id: '6', senderId: currentUserId, senderName: 'Tú', message: 'Yo también ya la subí', timestamp: now - 3400000 },
+                { id: '7', senderId: 'demo-1', senderName: 'María González', message: 'Excelente trabajo equipo! 👏', timestamp: now - 3300000 },
+                { id: '8', senderId: 'demo-3', senderName: 'Ana Martínez', message: '¿Alguien necesita ayuda con el sistema?', timestamp: now - 1800000 },
+                { id: '9', senderId: 'demo-2', senderName: 'Juan Pérez', message: 'Todo bien por aquí, gracias Ana', timestamp: now - 1700000 },
+                { id: '10', senderId: 'demo-4', senderName: 'Carlos López', message: 'Yo tengo una duda sobre el módulo de observaciones', timestamp: now - 1600000 },
+                { id: '11', senderId: 'demo-3', senderName: 'Ana Martínez', message: 'Claro Carlos, te escribo por privado', timestamp: now - 1500000 }
+            ];
+        }
+        
+        // Cerrar conversación
+        function cerrarConversacion() {
+            currentConversationId = null;
+            
+            document.getElementById('dashboardChatWelcome').style.display = 'flex';
+            document.getElementById('dashboardChatConversation').style.display = 'none';
+            
+            if (chatListener) {
+                chatListener();
+                chatListener = null;
+            }
+        }
+        
+        // Renderizar mensajes
+        function renderizarMensajes(messages) {
+            const container = document.getElementById('dashboardChatMessages');
+            const currentUserId = localStorage.getItem('userId');
+            
+            container.innerHTML = messages.map(msg => {
+                const isOwn = msg.senderId === currentUserId;
+                const time = formatTime(msg.timestamp);
+                
+                return `
+                    <div style="display: flex; justify-content: ${isOwn ? 'flex-end' : 'flex-start'}; margin-bottom: var(--space-md);">
+                        <div style="max-width: 70%; ${isOwn ? 'background: var(--primary-600); color: white;' : 'background: white; color: var(--gray-900); border: 2px solid var(--gray-200);'} padding: var(--space-md); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+                            ${!isOwn && currentConversationType === 'group' ? `<div style="font-weight: 700; font-size: 12px; margin-bottom: var(--space-xs); ${isOwn ? 'color: rgba(255,255,255,0.9);' : 'color: var(--primary-600);'}">${msg.senderName}</div>` : ''}
+                            <div style="word-wrap: break-word; line-height: 1.5;">${escapeHtml(msg.message)}</div>
+                            <div style="font-size: 11px; margin-top: var(--space-xs); ${isOwn ? 'color: rgba(255,255,255,0.7);' : 'color: var(--gray-500);'} text-align: right;">${time}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Scroll al final
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        // Enviar mensaje
+        async function enviarMensajeDashboard() {
+            const input = document.getElementById('dashboardChatInput');
+            const message = input.value.trim();
+            
+            if (!message || !currentConversationId) return;
+            
+            try {
+                // Si es usuario demo, simular envío
+                if (currentConversationId.startsWith('demo-') || currentConversationId === 'group') {
+                    const currentUserId = localStorage.getItem('userId') || 'current-user';
+                    const currentUserName = localStorage.getItem('userName') || 'Tú';
+                    
+                    // Obtener mensajes actuales
+                    const container = document.getElementById('dashboardChatMessages');
+                    const mensajesActuales = Array.from(container.children);
+                    
+                    // Crear nuevo mensaje
+                    const nuevoMensaje = {
+                        id: Date.now().toString(),
+                        senderId: currentUserId,
+                        senderName: currentUserName,
+                        message: message,
+                        timestamp: Date.now()
+                    };
+                    
+                    // Agregar a la lista actual
+                    const mensajes = [];
+                    mensajesActuales.forEach((elem, index) => {
+                        mensajes.push({
+                            id: index.toString(),
+                            senderId: elem.querySelector('[style*="flex-end"]') ? currentUserId : currentConversationId,
+                            senderName: 'Usuario',
+                            message: elem.textContent.trim(),
+                            timestamp: Date.now() - (mensajesActuales.length - index) * 60000
+                        });
+                    });
+                    mensajes.push(nuevoMensaje);
+                    
+                    // Renderizar todos los mensajes
+                    renderizarMensajes(mensajes);
+                    
+                    // Simular respuesta automática después de 2 segundos
+                    if (currentConversationType === 'private') {
+                        setTimeout(() => {
+                            const respuestas = [
+                                '¡Perfecto! Gracias por la información',
+                                'Entendido, lo revisaré',
+                                'Excelente, nos vemos entonces',
+                                'De acuerdo, cualquier cosa te aviso',
+                                'Gracias! 👍'
+                            ];
+                            const respuestaAleatoria = respuestas[Math.floor(Math.random() * respuestas.length)];
+                            
+                            mensajes.push({
+                                id: (Date.now() + 1).toString(),
+                                senderId: currentConversationId,
+                                senderName: document.getElementById('dashboardChatUserName').textContent,
+                                message: respuestaAleatoria,
+                                timestamp: Date.now()
+                            });
+                            
+                            renderizarMensajes(mensajes);
+                        }, 2000);
+                    }
+                } else {
+                    // Envío real con Firebase
+                    if (currentConversationType === 'private') {
+                        await chatFirebase.sendPrivateMessage(currentConversationId, message);
+                    } else {
+                        await chatFirebase.sendGroupMessage(message);
+                    }
+                }
+                
+                input.value = '';
+            } catch (error) {
+                console.error('Error al enviar mensaje:', error);
+                alert('Error al enviar el mensaje. Intenta nuevamente.');
+            }
+        }
+        
+        // Utilidades
+        function getRoleLabel(role) {
+            const labels = {
+                'director': 'Director',
+                'administrador': 'Administrador',
+                'profesor': 'Profesor'
+            };
+            return labels[role] || role;
+        }
+        
+        function formatTime(timestamp) {
+            if (!timestamp) return '';
+            const date = new Date(timestamp);
+            return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
