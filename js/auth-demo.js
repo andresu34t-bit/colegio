@@ -1,5 +1,27 @@
 // Sistema de autenticación multi-colegio
 
+// Función para inicializar sesión demo automática
+function initAutoSession() {
+    const userStr = localStorage.getItem('demoUser');
+    if (!userStr) {
+        // Crear sesión demo automática
+        const demoSession = {
+            email: 'demo@edugest.cl',
+            nombre: 'Usuario Demo',
+            rol: 'director',
+            colegioId: 'colegio_001',
+            colegioNombre: 'Liceo Gabriela Mistral',
+            permisoFinanzas: true,
+            verTodosColegios: false
+        };
+        localStorage.setItem('demoUser', JSON.stringify(demoSession));
+        console.log('✅ Sesión demo automática creada');
+    }
+}
+
+// Inicializar sesión demo al cargar
+initAutoSession();
+
 const loginForm = document.getElementById('loginForm');
 const errorMessage = document.getElementById('errorMessage');
 
