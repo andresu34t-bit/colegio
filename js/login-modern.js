@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
         hideGlobalError();
         
         // Obtener valores
-        const email = emailInput.value.trim();
+        const email = emailInput.value.trim().toLowerCase();
         const password = passwordInput.value;
         const rememberMe = rememberMeCheckbox.checked;
         
@@ -158,60 +158,67 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.querySelector('.btn-text').textContent = 'Iniciando...';
         
         try {
-            // Simular delay de red (remover en producción)
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            // Simular delay de red para mejor UX
+            await new Promise(resolve => setTimeout(resolve, 800));
             
-            // Aquí va la lógica de autenticación real
-            // Por ahora, llamamos a la función del auth-demo.js si existe
-            if (typeof handleLogin === 'function') {
-                const result = await handleLogin(email, password);
+            // Cargar usuarios del sistema
+            const usuariosStr = localStorage.getItem('usuarios');
+            const usuarios = usuariosStr ? JSON.parse(usuariosStr) : {};
+            
+            // Verificar credenciales
+            const usuario = usuarios[email];
+            
+            if (usuario && usuario.password === password && usuario.activo) {
+                // Cargar datos del colegio (si no es superadmin)
+                let colegio = null;
+                let colegioNombre = 'Todos los Colegios';
                 
-                if (result.success) {
-                    // Guardar "recordarme" si está marcado
-                    if (rememberMe) {
-                        localStorage.setItem('edugest_remember', 'true');
-                        localStorage.setItem('edugest_email', email);
-                    } else {
-                        localStorage.removeItem('edugest_remember');
-                        localStorage.removeItem('edugest_email');
+                if (usuario.colegioId) {
+                    const colegiosStr = localStorage.getItem('colegios');
+                    const colegios = colegiosStr ? JSON.parse(colegiosStr) : {};
+                    colegio = colegios[usuario.colegioId];
+                    
+                    if (!colegio || !colegio.activo) {
+                        throw new Error('Colegio no encontrado o inactivo');
                     }
                     
-                    // Redireccionar según rol
-                    redirectByRole(result.user);
-                } else {
-                    throw new Error(result.message || 'Credenciales incorrectas');
+                    colegioNombre = colegio.nombre;
                 }
+                
+                // Login exitoso
+                console.log('✅ Login exitoso:', email);
+                console.log('📚 Colegio:', colegioNombre);
+                console.log('👤 Rol:', usuario.rol);
+                
+                // Guardar "recordarme" si está marcado
+                if (rememberMe) {
+                    localStorage.setItem('edugest_remember', 'true');
+                    localStorage.setItem('edugest_email', email);
+                } else {
+                    localStorage.removeItem('edugest_remember');
+                    localStorage.removeItem('edugest_email');
+                }
+                
+                // Guardar sesión en localStorage
+                localStorage.setItem('demoUser', JSON.stringify({
+                    email: usuario.email,
+                    nombre: usuario.nombre,
+                    rol: usuario.rol,
+                    colegioId: usuario.colegioId,
+                    colegioNombre: colegioNombre,
+                    permisoFinanzas: usuario.permisoFinanzas,
+                    verTodosColegios: usuario.verTodosColegios || false
+                }));
+                
+                // Redireccionar al dashboard
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 500);
+                
             } else {
-                // Fallback: validación básica de demo
-                const demoUsers = {
-                    'director@colegio.cl': { password: '123456', role: 'director' },
-                    'docente@colegio.cl': { password: '123456', role: 'docente' },
-                    'tecnico@colegio.cl': { password: '123456', role: 'tecnico' }
-                };
-                
-                const user = demoUsers[email];
-                
-                if (user && user.password === password) {
-                    // Login exitoso
-                    if (rememberMe) {
-                        localStorage.setItem('edugest_remember', 'true');
-                        localStorage.setItem('edugest_email', email);
-                    }
-                    
-                    // Guardar sesión
-                    sessionStorage.setItem('edugest_user', JSON.stringify({
-                        email: email,
-                        role: user.role
-                    }));
-                    
-                    // Redireccionar
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 500);
-                } else {
-                    throw new Error('Correo o contraseña incorrectos');
-                }
+                throw new Error('Email o contraseña incorrectos');
             }
+            
         } catch (error) {
             // Ocultar loader
             hideLoader();
@@ -322,21 +329,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // CONSOLE INFO
     // ============================================
     console.log('%c🎓 EDUGEST - Sistema de Gestión Educativa', 'color: #667eea; font-size: 16px; font-weight: bold;');
-    console.log('%cLogin Moderno v2.0', 'color: #764ba2; font-size: 12px;');
-    console.log('%c\nUsuarios de prueba:', 'color: #4b5563; font-weight: bold;');
-    console.log('📧 director@colegio.cl / 123456');
-    console.log('📧 docente@colegio.cl / 123456');
-    console.log('📧 tecnico@colegio.cl / 123456');
+    console.log('%cLogin Moderno v2.0 - Diseño Profesional SaaS', 'color: #764ba2; font-size: 12px;');
+    console.log('%c\n📧 Usuarios de prueba disponibles:', 'color: #4b5563; font-weight: bold;');
+    console.log('   director@mistral.cl / Director2026');
+    console.log('   docente@mistral.cl / Docente2026');
+    console.log('   utp@mistral.cl / UTP2026');
+    console.log('   director@edugest.cl / EduGest2026');
+    console.log('   admin@edugest.cl / Admin2026 (Super Admin)');
 });
-
-// ============================================
-// FUNCIÓN GLOBAL PARA COMPATIBILIDAD
-// ============================================
-async function handleLogin(email, password) {
-    // Esta función puede ser sobrescrita por auth-demo.js
-    // o implementada con la lógica real de autenticación
-    return {
-        success: false,
-        message: 'Función de autenticación no implementada'
-    };
-}
