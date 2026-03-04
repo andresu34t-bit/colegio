@@ -2,7 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#6366f1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Iniciar Sesión - EDUGEST</title>
     <link rel="stylesheet" href="css/login-modern.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +17,12 @@
         <div class="login-brand-panel">
             <div class="brand-content">
                 <div class="brand-logo">
-                    <img src="images/LOGO EDUGEST.png" alt="EDUGEST" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <img 
+                        src="images/LOGO EDUGEST.png" 
+                        srcset="images/LOGO EDUGEST.png 1x, images/LOGO EDUGEST@2x.png 2x"
+                        alt="EDUGEST Logo" 
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                    >
                     <div class="logo-fallback" style="display: none;">
                         <span class="logo-icon">🎓</span>
                     </div>
