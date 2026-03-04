@@ -4,12 +4,22 @@ let currentUser = null;
 let allObservaciones = [];
 let charts = {};
 
-// Verificar autenticación
+// Verificar autenticación (sin redirección)
 function checkAuth() {
     const userStr = localStorage.getItem('demoUser');
     if (!userStr) {
-        window.location.href = 'index.html';
-        return null;
+        // Crear sesión demo automática si no existe
+        const demoSession = {
+            email: 'demo@edugest.cl',
+            nombre: 'Usuario Demo',
+            rol: 'director',
+            colegioId: 'colegio_001',
+            colegioNombre: 'Liceo Gabriela Mistral',
+            permisoFinanzas: true,
+            verTodosColegios: false
+        };
+        localStorage.setItem('demoUser', JSON.stringify(demoSession));
+        return demoSession;
     }
     return JSON.parse(userStr);
 }
@@ -46,10 +56,9 @@ function canCreateObservacion() {
     return ['director', 'utp', 'observador'].includes(currentUser.rol);
 }
 
-// Logout
+// Logout (solo recarga la página)
 document.getElementById('logoutBtn').addEventListener('click', () => {
-    localStorage.removeItem('demoUser');
-    window.location.href = 'index.html';
+    window.location.reload();
 });
 
 // Cargar observaciones

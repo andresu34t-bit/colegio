@@ -1,30 +1,25 @@
-// Sistema de autenticación multi-colegio
+// Sistema de datos demo - SIN AUTENTICACIÓN
 
-// Función para inicializar sesión demo automática (DESACTIVADA)
-// Esta función creaba una sesión automática que interfería con el login normal
+// Inicializar sesión demo automática
 function initAutoSession() {
-    // Comentado para permitir login normal
-    // const userStr = localStorage.getItem('demoUser');
-    // if (!userStr) {
-    //     const demoSession = {
-    //         email: 'demo@edugest.cl',
-    //         nombre: 'Usuario Demo',
-    //         rol: 'director',
-    //         colegioId: 'colegio_001',
-    //         colegioNombre: 'Liceo Gabriela Mistral',
-    //         permisoFinanzas: true,
-    //         verTodosColegios: false
-    //     };
-    //     localStorage.setItem('demoUser', JSON.stringify(demoSession));
-    //     console.log('✅ Sesión demo automática creada');
-    // }
+    const userStr = localStorage.getItem('demoUser');
+    if (!userStr) {
+        const demoSession = {
+            email: 'demo@edugest.cl',
+            nombre: 'Usuario Demo',
+            rol: 'director',
+            colegioId: 'colegio_001',
+            colegioNombre: 'Liceo Gabriela Mistral',
+            permisoFinanzas: true,
+            verTodosColegios: false
+        };
+        localStorage.setItem('demoUser', JSON.stringify(demoSession));
+        console.log('✅ Sesión demo automática creada');
+    }
 }
 
-// NO inicializar sesión demo automática - permitir login normal
-// initAutoSession();
-
-const loginForm = document.getElementById('loginForm');
-const errorMessage = document.getElementById('errorMessage');
+// Inicializar sesión demo al cargar
+initAutoSession();
 
 // Inicializar datos demo si no existen
 function initDemoData() {
@@ -293,103 +288,3 @@ function initFinanzasDemo() {
 
 // Inicializar datos demo
 initDemoData();
-
-loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const email = document.getElementById('email').value.trim().toLowerCase();
-    const password = document.getElementById('password').value;
-    const rememberMe = document.getElementById('rememberMe').checked;
-    
-    console.log('🔐 Intentando login con:', email);
-    
-    // Mostrar loader
-    const loginLoader = document.getElementById('loginLoader');
-    if (loginLoader) {
-        loginLoader.style.display = 'flex';
-    }
-    
-    // Ocultar mensajes de error previos
-    const errorMessageEl = document.querySelector('#errorMessage');
-    if (errorMessageEl) {
-        errorMessageEl.style.display = 'none';
-    }
-    
-    // Cargar usuarios
-    const usuariosStr = localStorage.getItem('usuarios');
-    const usuarios = usuariosStr ? JSON.parse(usuariosStr) : {};
-    
-    // Verificar credenciales
-    const usuario = usuarios[email];
-    
-    if (usuario && usuario.password === password && usuario.activo) {
-        // Cargar datos del colegio (si no es superadmin)
-        let colegio = null;
-        let colegioNombre = 'Todos los Colegios';
-        
-        if (usuario.colegioId) {
-            const colegiosStr = localStorage.getItem('colegios');
-            const colegios = colegiosStr ? JSON.parse(colegiosStr) : {};
-            colegio = colegios[usuario.colegioId];
-            
-            if (!colegio || !colegio.activo) {
-                if (loginLoader) loginLoader.style.display = 'none';
-                if (errorMessageEl) {
-                    const alertText = errorMessageEl.querySelector('.alert-text');
-                    if (alertText) alertText.textContent = 'Colegio no encontrado o inactivo';
-                    errorMessageEl.style.display = 'flex';
-                }
-                return;
-            }
-            
-            colegioNombre = colegio.nombre;
-        }
-        
-        // Login exitoso
-        console.log('✅ Login exitoso:', email);
-        console.log('📚 Colegio:', colegioNombre);
-        
-        // Guardar email si "Recordarme" está marcado
-        if (rememberMe) {
-            localStorage.setItem('edugest_remember', 'true');
-            localStorage.setItem('edugest_email', email);
-        } else {
-            localStorage.removeItem('edugest_remember');
-            localStorage.removeItem('edugest_email');
-        }
-        
-        // Guardar sesión en localStorage
-        const sessionData = {
-            email: usuario.email,
-            nombre: usuario.nombre,
-            rol: usuario.rol,
-            colegioId: usuario.colegioId,
-            colegioNombre: colegioNombre,
-            permisoFinanzas: usuario.permisoFinanzas,
-            verTodosColegios: usuario.verTodosColegios || false
-        };
-        
-        localStorage.setItem('demoUser', JSON.stringify(sessionData));
-        console.log('💾 Sesión guardada:', sessionData);
-        
-        // Pequeña pausa para mostrar el loader
-        setTimeout(() => {
-            if (loginLoader) loginLoader.style.display = 'none';
-            
-            // Redirigir al dashboard
-            console.log('🚀 Redirigiendo a dashboard.html...');
-            window.location.href = 'dashboard.html';
-        }, 500);
-    } else {
-        // Login fallido
-        console.error('❌ Credenciales incorrectas para:', email);
-        
-        if (loginLoader) loginLoader.style.display = 'none';
-        
-        if (errorMessageEl) {
-            const alertText = errorMessageEl.querySelector('.alert-text');
-            if (alertText) alertText.textContent = 'Email o contraseña incorrectos';
-            errorMessageEl.style.display = 'flex';
-        }
-    }
-});

@@ -7,20 +7,31 @@ let allUsuarios = [];
 let allGastos = [];
 let charts = {};
 
-// Verificar autenticación y permisos de superadmin
+// Verificar autenticación y permisos de superadmin (sin redirección)
 function checkAuth() {
     const userStr = localStorage.getItem('demoUser');
     if (!userStr) {
-        window.location.href = 'index.html';
-        return null;
+        // Crear sesión demo de superadmin si no existe
+        const demoSession = {
+            email: 'admin@edugest.cl',
+            nombre: 'Administrador Global',
+            rol: 'superadmin',
+            colegioId: null,
+            colegioNombre: 'Todos los Colegios',
+            permisoFinanzas: true,
+            verTodosColegios: true
+        };
+        localStorage.setItem('demoUser', JSON.stringify(demoSession));
+        return demoSession;
     }
     
     const user = JSON.parse(userStr);
     
-    // Verificar que sea superadmin
+    // Si no es superadmin, darle permisos de superadmin
     if (user.rol !== 'superadmin' || !user.verTodosColegios) {
-        window.location.href = 'dashboard.html';
-        return null;
+        user.rol = 'superadmin';
+        user.verTodosColegios = true;
+        localStorage.setItem('demoUser', JSON.stringify(user));
     }
     
     return user;
@@ -32,10 +43,9 @@ if (currentUser) {
     document.getElementById('userRole').textContent = 'Super Admin';
 }
 
-// Logout
+// Logout (solo recarga la página)
 document.getElementById('logoutBtn').addEventListener('click', () => {
-    localStorage.removeItem('demoUser');
-    window.location.href = 'index.html';
+    window.location.reload();
 });
 
 // Cargar todos los datos del sistema

@@ -5,12 +5,22 @@ let allGastos = [];
 let charts = {};
 const PRESUPUESTO_ANUAL = 50000000; // $50 millones
 
-// Verificar autenticación y permisos
+// Verificar autenticación y permisos (sin redirección)
 function checkAuth() {
     const userStr = localStorage.getItem('demoUser');
     if (!userStr) {
-        window.location.href = 'index.html';
-        return null;
+        // Crear sesión demo automática si no existe
+        const demoSession = {
+            email: 'demo@edugest.cl',
+            nombre: 'Usuario Demo',
+            rol: 'director',
+            colegioId: 'colegio_001',
+            colegioNombre: 'Liceo Gabriela Mistral',
+            permisoFinanzas: true,
+            verTodosColegios: false
+        };
+        localStorage.setItem('demoUser', JSON.stringify(demoSession));
+        return demoSession;
     }
     return JSON.parse(userStr);
 }
@@ -42,10 +52,9 @@ function getRoleName(rol) {
     return roles[rol] || rol;
 }
 
-// Logout
+// Logout (solo recarga la página)
 document.getElementById('logoutBtn').addEventListener('click', () => {
-    localStorage.removeItem('demoUser');
-    window.location.href = 'index.html';
+    window.location.reload();
 });
 
 // Cargar gastos desde localStorage (solo del colegio actual)
