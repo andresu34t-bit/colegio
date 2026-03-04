@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Sistema de Informes - EDUGEST</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.js"></script>
+    <style>
+        body {
+            padding: 2rem;
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-50);
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-radius: 0.5rem;
+        }
+        .test-button {
+            margin: 0.5rem;
+        }
+        .status {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        .status.success {
+            background: var(--success-100);
+            color: var(--success-700);
+        }
+        .status.error {
+            background: var(--error-100);
+            color: var(--error-700);
+        }
+        .status.info {
+            background: var(--info-100);
+            color: var(--info-700);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 style="margin-bottom: 1rem;">🧪 Test Sistema de Informes</h1>
+        <p style="color: var(--gray-600); margin-bottom: 2rem;">
+            Prueba las funcionalidades del sistema de generación de informes
+        </p>
+
+        <!-- Test 1: Cargar Datos de Prueba -->
+        <div class="test-section">
+            <h2>1️⃣ Cargar Datos de Prueba</h2>
+            <p>Carga eventos de ejemplo en localStorage para probar el sistema</p>
+            <button class="btn btn-primary test-button" onclick="cargarDatosPrueba()">
+                📦 Cargar Datos de Prueba
+            </button>
+            <div id="status1" class="status" style="display: none;"></div>
+        </div>
+
+        <!-- Test 2: Verificar Librerías -->
+        <div class="test-section">
+            <h2>2️⃣ Verificar Librerías</h2>
+            <p>Comprueba que todas las librerías necesarias están cargadas</p>
+            <button class="btn btn-secondary test-button" onclick="verificarLibrerias()">
+                🔍 Verificar Librerías
+            </button>
+            <div id="status2" class="status" style="display: none;"></div>
+        </div>
+
+        <!-- Test 3: Generar Informe Individual -->
+        <div class="test-section">
+            <h2>3️⃣ Generar Informe Individual</h2>
+            <p>Genera un PDF de informe individual de prueba</p>
+            <button class="btn btn-primary test-button" onclick="testInformeIndividual()">
+                📄 Generar Informe Individual
+            </button>
+            <div id="status3" class="status" style="display: none;"></div>
+        </div>
+
+        <!-- Test 4: Generar Informe Consolidado -->
+        <div class="test-section">
+            <h2>4️⃣ Generar Informe Consolidado</h2>
+            <p>Genera un PDF de informe consolidado de prueba</p>
+            <button class="btn btn-primary test-button" onclick="testInformeConsolidado()">
+                📊 Generar Informe Consolidado
+            </button>
+            <div id="status4" class="status" style="display: none;"></div>
+        </div>
+
+        <!-- Test 5: Limpiar Datos -->
+        <div class="test-section">
+            <h2>5️⃣ Limpiar Datos de Prueba</h2>
+            <p>Elimina los datos de prueba de localStorage</p>
+            <button class="btn btn-danger test-button" onclick="limpiarDatos()">
+                🗑️ Limpiar Datos
+            </button>
+            <div id="status5" class="status" style="display: none;"></div>
+        </div>
+
+        <!-- Navegación -->
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--gray-200);">
+            <h3>🔗 Enlaces Rápidos</h3>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+                <a href="lista-eventos.html" class="btn btn-secondary">📋 Lista de Eventos</a>
+                <a href="informes.html" class="btn btn-secondary">📄 Informes PME</a>
+                <a href="dashboard.html" class="btn btn-secondary">📊 Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/informes.js"></script>
+    <script>
+        let informesGen;
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            informesGen = new InformesGenerator();
+        });
+
+        /**
+         * Cargar datos de prueba
+         */
+        function cargarDatosPrueba() {
+            const eventosPrueba = [
+                {
+                    id: 'test-1',
+                    area: 'Currículum',
+                    subdimension: 'Gestión Pedagógica',
+                    objetivoEstrategico: 'Mejorar los resultados de aprendizaje en matemáticas',
+                    estrategia: 'Implementar talleres de reforzamiento',
+                    accion: 'Talleres de matemáticas',
+                    descripcion: 'Talleres semanales de reforzamiento en matemáticas para estudiantes de 5° básico',
+                    numeroEventos: 8,
+                    porcentajeLogro: 85,
+                    porcentajeMeta: 90,
+                    fecha: '2026-03-15',
+                    mes: 'MARZO',
+                    responsable: 'María González'
+                },
+                {
+                    id: 'test-2',
+                    area: 'Liderazgo',
+                    subdimension: 'Liderazgo del Director',
+                    objetivoEstrategico: 'Fortalecer el liderazgo pedagógico',
+                    estrategia: 'Reuniones de coordinación docente',
+                    accion: 'Reuniones de coordinación',
+                    descripcion: 'Reuniones mensuales de coordinación con jefes de departamento',
+                    numeroEventos: 3,
+                    porcentajeLogro: 92,
+                    porcentajeMeta: 95,
+                    fecha: '2026-03-10',
+                    mes: 'MARZO',
+                    responsable: 'Juan Pérez'
+                },
+                {
+                    id: 'test-3',
+                    area: 'Convivencia',
+                    subdimension: 'Formación',
+                    objetivoEstrategico: 'Mejorar el clima escolar',
+                    estrategia: 'Actividades de integración',
+                    accion: 'Jornadas de convivencia',
+                    descripcion: 'Jornadas recreativas para fortalecer la convivencia entre estudiantes',
+                    numeroEventos: 5,
+                    porcentajeLogro: 78,
+                    porcentajeMeta: 80,
+                    fecha: '2026-03-20',
+                    mes: 'MARZO',
+                    responsable: 'Ana Martínez'
+                },
+                {
+                    id: 'test-4',
+                    area: 'Recursos',
+                    subdimension: 'Gestión de Recursos',
+                    objetivoEstrategico: 'Optimizar el uso de recursos',
+                    estrategia: 'Inventario y mantención',
+                    accion: 'Mantención de equipos',
+                    descripcion: 'Mantención preventiva de equipos tecnológicos',
+                    numeroEventos: 2,
+                    porcentajeLogro: 88,
+                    porcentajeMeta: 85,
+                    fecha: '2026-03-05',
+                    mes: 'MARZO',
+                    responsable: 'Carlos López'
+                }
+            ];
+
+            // Guardar en localStorage
+            localStorage.setItem('eventos', JSON.stringify(eventosPrueba));
+
+            // Guardar info del colegio
+            const colegioInfo = {
+                nombreColegio: 'Colegio San José de Prueba',
+                rbd: '12345-6',
+                director: 'Roberto Silva',
+                año: '2026'
+            };
+            localStorage.setItem('informacionesGenerales', JSON.stringify(colegioInfo));
+
+            mostrarStatus('status1', 'success', '✅ Datos de prueba cargados exitosamente (4 eventos)');
+        }
+
+        /**
+         * Verificar librerías
+         */
+        function verificarLibrerias() {
+            const resultados = [];
+            
+            // Verificar jsPDF
+            if (typeof window.jspdf !== 'undefined') {
+                resultados.push('✅ jsPDF cargado');
+            } else {
+                resultados.push('❌ jsPDF NO cargado');
+            }
+
+            // Verificar Chart.js
+            if (typeof Chart !== 'undefined') {
+                resultados.push('✅ Chart.js cargado');
+            } else {
+                resultados.push('❌ Chart.js NO cargado');
+            }
+
+            // Verificar InformesGenerator
+            if (typeof InformesGenerator !== 'undefined') {
+                resultados.push('✅ InformesGenerator cargado');
+            } else {
+                resultados.push('❌ InformesGenerator NO cargado');
+            }
+
+            const todasCargadas = !resultados.some(r => r.includes('❌'));
+            const tipo = todasCargadas ? 'success' : 'error';
+            
+            mostrarStatus('status2', tipo, resultados.join('<br>'));
+        }
+
+        /**
+         * Test informe individual
+         */
+        async function testInformeIndividual() {
+            try {
+                const eventos = JSON.parse(localStorage.getItem('eventos') || '[]');
+                
+                if (eventos.length === 0) {
+                    mostrarStatus('status3', 'error', '❌ No hay eventos. Carga primero los datos de prueba.');
+                    return;
+                }
+
+                mostrarStatus('status3', 'info', '⏳ Generando informe individual...');
+                
+                await informesGen.generarInformeEvento(eventos[0].id);
+                
+                mostrarStatus('status3', 'success', '✅ Informe individual generado. Revisa tu carpeta de descargas.');
+            } catch (error) {
+                console.error(error);
+                mostrarStatus('status3', 'error', '❌ Error: ' + error.message);
+            }
+        }
+
+        /**
+         * Test informe consolidado
+         */
+        async function testInformeConsolidado() {
+            try {
+                const eventos = JSON.parse(localStorage.getItem('eventos') || '[]');
+                
+                if (eventos.length === 0) {
+                    mostrarStatus('status4', 'error', '❌ No hay eventos. Carga primero los datos de prueba.');
+                    return;
+                }
+
+                mostrarStatus('status4', 'info', '⏳ Generando informe consolidado...');
+                
+                await informesGen.generarInformeGeneral();
+                
+                mostrarStatus('status4', 'success', '✅ Informe consolidado generado. Revisa tu carpeta de descargas.');
+            } catch (error) {
+                console.error(error);
+                mostrarStatus('status4', 'error', '❌ Error: ' + error.message);
+            }
+        }
+
+        /**
+         * Limpiar datos
+         */
+        function limpiarDatos() {
+            if (confirm('¿Estás seguro de eliminar los datos de prueba?')) {
+                localStorage.removeItem('eventos');
+                localStorage.removeItem('informacionesGenerales');
+                mostrarStatus('status5', 'success', '✅ Datos de prueba eliminados');
+            }
+        }
+
+        /**
+         * Mostrar status
+         */
+        function mostrarStatus(id, tipo, mensaje) {
+            const status = document.getElementById(id);
+            status.className = 'status ' + tipo;
+            status.innerHTML = mensaje;
+            status.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

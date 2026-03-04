@@ -181,37 +181,9 @@ body {
     text-align: center;
 }
 
-.sidebar-logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: var(--space-4);
-}
-
-.sidebar-logo-img {
-    max-width: 100px;
-    max-height: 100px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.2));
-}
-
-.sidebar-header h2 {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 0;
-}
-
-/* Legacy support */
 .sidebar-logo {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     margin: 0 auto var(--space-4);
     border-radius: var(--radius-xl);
     overflow: hidden;
@@ -1093,4 +1065,85 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--gray-500);
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-3);
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.badge-info {
+    background: var(--info-100);
+    color: var(--info-700);
+}
+
+.badge-success {
+    background: var(--success-100);
+    color: var(--success-700);
+}
+
+.badge-warning {
+    background: var(--warning-100);
+    color: var(--warning-700);
+}
+
+.badge-primary {
+    background: var(--curriculum-100);
+    color: var(--curriculum-700);
+}
+
+.badge-secondary {
+    background: var(--gray-100);
+    color: var(--gray-700);
+}
+
+/* ============================================
+   DANGER BUTTON
+   ============================================ */
+.btn-danger {
+    background: var(--error-600);
+    color: white;
+    border: 2px solid var(--error-600);
+}
+
+.btn-danger:hover {
+    background: var(--error-700);
+    border-color: var(--error-700);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(239, 68, 68, 0.2);
+}
+
+.btn-danger:active {
+    transform: translateY(0);
+}
+
+/* ============================================
+   SPACE UTILITIES
+   ============================================ */
+.space-y-4 > * + * {
+    margin-top: var(--space-4);
+}
+
+.space-y-6 > * + * {
+    margin-top: var(--space-6);
+}
+
+/* ============================================
+   DANGER COLORS
+   ============================================ */
+:root {
+    --danger-50: #fef2f2;
+    --danger-100: #fee2e2;
+    --danger-500: #ef4444;
+    --danger-600: #dc2626;
+    --danger-700: #b91c1c;
 }
