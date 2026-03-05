@@ -642,11 +642,16 @@ async function handleLogin(email, password, remember) {
         sessionStorage.setItem('edugest_session', JSON.stringify(sessionData));
     }
     
-    // Redirigir al dashboard
+    // Redirigir según rol
     showSuccess('¡Bienvenido! Redirigiendo...');
     
     setTimeout(() => {
-        window.location.href = 'dashboard.html';
+        // Admin Global va a su panel especial
+        if (user.role === 'admin_global') {
+            window.location.href = 'admin-global.html';
+        } else {
+            window.location.href = 'dashboard.html';
+        }
     }, 1000);
 }
 

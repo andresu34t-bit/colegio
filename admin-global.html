@@ -3,109 +3,434 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración Global - EduGest PME</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Panel Super Admin - EDUGEST</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/admin-global.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo-container">
-                <img src="LOGO EDUGEST.png" alt="Logo EduGest PME" class="sidebar-logo-img">
+    <!-- Protección de Sesión -->
+    <script src="js/roles-permissions.js"></script>
+    <script src="js/multi-school.js"></script>
+    <script>
+        // Solo Admin Global puede acceder
+        if (!EdugestRoles.protectPage('admin_global')) {
+            // La función protectPage ya maneja la redirección
+        }
+    </script>
+    
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="LOGO EDUGEST.png" alt="EDUGEST" onerror="this.style.display='none'">
+                </div>
+                <h1 class="sidebar-brand">EDUGEST</h1>
+                <div class="admin-badge">SUPER ADMIN</div>
             </div>
-            <h2>EduGest PME</h2>
-        </div>
+            
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <div class="user-name" id="userName">Admin Global</div>
+                <div class="user-role" id="userRole">Administrador Global</div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Panel Global</div>
+                    <a href="#dashboard" class="nav-item active" onclick="showSection('dashboard')">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard Global</span>
+                    </a>
+                    <a href="#colegios" class="nav-item" onclick="showSection('colegios')">
+                        <span class="nav-icon">🏫</span>
+                        <span>Gestión Colegios</span>
+                    </a>
+                    <a href="#usuarios" class="nav-item" onclick="showSection('usuarios')">
+                        <span class="nav-icon">👥</span>
+                        <span>Gestión Usuarios</span>
+                    </a>
+                    <a href="#estadisticas" class="nav-item" onclick="showSection('estadisticas')">
+                        <span class="nav-icon">📈</span>
+                        <span>Estadísticas</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Acceso Colegios</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <span class="nav-icon">🎯</span>
+                        <span>Ver como Colegio</span>
+                    </a>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <span>🚪</span>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
         
-        <div class="user-info">
-            <div class="user-avatar">A</div>
-            <p class="user-name" id="userName">Admin Global</p>
-            <p class="user-role" id="userRole">Super Admin</p>
-        </div>
-
-        <nav class="sidebar-nav">
-            <a href="admin-global.html" class="nav-item active">🌐 Vista Global</a>
-            <a href="dashboard.html" class="nav-item">📊 Dashboard</a>
-            <a href="areas.html" class="nav-item">📝 Registrar Evento</a>
-            <a href="informes.html" class="nav-item">📄 Informes</a>
-            <a href="finanzas.html" class="nav-item">💰 Finanzas</a>
-        </nav>
-
-        <button class="logout-btn" id="logoutBtn">🚪 Cerrar Sesión</button>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- SECCIÓN: DASHBOARD GLOBAL -->
+            <section id="section-dashboard" class="content-section active">
+                <header class="page-header">
+                    <div class="page-header-content">
+                        <div>
+                            <h1 class="page-title">Dashboard Global</h1>
+                            <p class="page-subtitle">Vista general de todos los colegios del sistema</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn btn-secondary" onclick="refreshData()">
+                                <span>🔄</span> Actualizar
+                            </button>
+                        </div>
+                    </div>
+                </header>
+                
+                <div class="page-content">
+                    <!-- Stats Globales -->
+                    <div class="stats-grid-global">
+                        <div class="stat-card-global curriculum">
+                            <div class="stat-icon">🏫</div>
+                            <div class="stat-content">
+                                <div class="stat-label">Total Colegios</div>
+                                <div class="stat-value" id="totalSchools">20</div>
+                                <div class="stat-change positive">Todos activos</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card-global liderazgo">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-content">
+                                <div class="stat-label">Total Usuarios</div>
+                                <div class="stat-value" id="totalUsers">40</div>
+                                <div class="stat-change">20 directores + 20 docentes</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card-global convivencia">
+                            <div class="stat-icon">📚</div>
+                            <div class="stat-content">
+                                <div class="stat-label">Total Estudiantes</div>
+                                <div class="stat-value" id="totalStudents">15,610</div>
+                                <div class="stat-change positive">+5% vs año anterior</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card-global gestion">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-content">
+                                <div class="stat-label">Presupuesto Total</div>
+                                <div class="stat-value" id="totalBudget">$2.2B</div>
+                                <div class="stat-change">Suma de todos los colegios</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gráficos Principales -->
+                    <div class="charts-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Estudiantes por Colegio</h3>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="chartStudents" height="300"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Distribución por Tipo</h3>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="chartTypes" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Top Colegios -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Top 5 Colegios por Estudiantes</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="topSchools"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- SECCIÓN: GESTIÓN COLEGIOS -->
+            <section id="section-colegios" class="content-section">
+                <header class="page-header">
+                    <div class="page-header-content">
+                        <div>
+                            <h1 class="page-title">Gestión de Colegios</h1>
+                            <p class="page-subtitle">Administra todos los colegios del sistema</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn btn-primary" onclick="openCreateSchoolModal()">
+                                <span>➕</span> Nuevo Colegio
+                            </button>
+                        </div>
+                    </div>
+                </header>
+                
+                <div class="page-content">
+                    <!-- Filtros -->
+                    <div class="filters-bar">
+                        <input type="text" id="searchSchool" class="form-input" placeholder="🔍 Buscar colegio..." onkeyup="filterSchools()">
+                        <select id="filterType" class="form-select" onchange="filterSchools()">
+                            <option value="">Todos los tipos</option>
+                            <option value="municipal">Municipal</option>
+                            <option value="particular">Particular</option>
+                            <option value="subvencionado">Part. Subvencionado</option>
+                            <option value="tecnico">Técnico Profesional</option>
+                        </select>
+                        <select id="filterStatus" class="form-select" onchange="filterSchools()">
+                            <option value="">Todos los estados</option>
+                            <option value="active">Activos</option>
+                            <option value="inactive">Inactivos</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Lista de Colegios -->
+                    <div id="schoolsList" class="schools-grid"></div>
+                </div>
+            </section>
+            
+            <!-- SECCIÓN: GESTIÓN USUARIOS -->
+            <section id="section-usuarios" class="content-section">
+                <header class="page-header">
+                    <div class="page-header-content">
+                        <div>
+                            <h1 class="page-title">Gestión de Usuarios</h1>
+                            <p class="page-subtitle">Administra usuarios y asigna roles</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn btn-primary" onclick="openCreateUserModal()">
+                                <span>➕</span> Nuevo Usuario
+                            </button>
+                        </div>
+                    </div>
+                </header>
+                
+                <div class="page-content">
+                    <!-- Filtros -->
+                    <div class="filters-bar">
+                        <input type="text" id="searchUser" class="form-input" placeholder="🔍 Buscar usuario..." onkeyup="filterUsers()">
+                        <select id="filterRole" class="form-select" onchange="filterUsers()">
+                            <option value="">Todos los roles</option>
+                            <option value="director">Director</option>
+                            <option value="docente">Docente</option>
+                            <option value="tecnico">Técnico</option>
+                            <option value="admin_global">Admin Global</option>
+                        </select>
+                        <select id="filterSchoolUser" class="form-select" onchange="filterUsers()">
+                            <option value="">Todos los colegios</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Tabla de Usuarios -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table" id="usersTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Usuario</th>
+                                            <th>Email</th>
+                                            <th>Rol</th>
+                                            <th>Colegio</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usersTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- SECCIÓN: ESTADÍSTICAS -->
+            <section id="section-estadisticas" class="content-section">
+                <header class="page-header">
+                    <div class="page-header-content">
+                        <div>
+                            <h1 class="page-title">Estadísticas Avanzadas</h1>
+                            <p class="page-subtitle">Análisis comparativo de todos los colegios</p>
+                        </div>
+                    </div>
+                </header>
+                
+                <div class="page-content">
+                    <!-- Gráficos Comparativos -->
+                    <div class="charts-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Presupuesto por Colegio</h3>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="chartBudget" height="300"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Distribución Geográfica</h3>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="chartLocation" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tabla Comparativa -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Comparativa Completa</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table" id="statsTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Colegio</th>
+                                            <th>Tipo</th>
+                                            <th>Estudiantes</th>
+                                            <th>Presupuesto</th>
+                                            <th>Usuarios</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="statsTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
-
-    <div class="main-content">
-        <h1>🌐 Panel de Administración Global</h1>
-        <p style="color: var(--gray-600); margin-bottom: var(--space-2xl); font-size: 16px;">Vista consolidada de todos los colegios del sistema</p>
-
-        <!-- Estadísticas Globales -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3>Total Colegios</h3>
-                <p class="stat-number" id="totalColegios">0</p>
+    
+    <!-- Modal: Crear/Editar Colegio -->
+    <div id="schoolModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="schoolModalTitle">Nuevo Colegio</h2>
+                <button class="modal-close" onclick="closeSchoolModal()">&times;</button>
             </div>
-            <div class="stat-card">
-                <h3>Total Eventos</h3>
-                <p class="stat-number" id="totalEventos">0</p>
+            <div class="modal-body">
+                <form id="schoolForm">
+                    <div class="form-group">
+                        <label class="form-label">Nombre del Colegio</label>
+                        <input type="text" id="schoolName" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">RBD</label>
+                        <input type="text" id="schoolRBD" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tipo</label>
+                        <select id="schoolType" class="form-select" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="municipal">Municipal</option>
+                            <option value="particular">Particular</option>
+                            <option value="subvencionado">Particular Subvencionado</option>
+                            <option value="tecnico">Técnico Profesional</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ubicación</label>
+                        <input type="text" id="schoolLocation" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Dirección</label>
+                        <input type="text" id="schoolAddress" class="form-input" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Teléfono</label>
+                            <input type="tel" id="schoolPhone" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" id="schoolEmail" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">N° Estudiantes</label>
+                            <input type="number" id="schoolStudents" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Presupuesto Anual</label>
+                            <input type="number" id="schoolBudget" class="form-input" required>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="stat-card">
-                <h3>Total Usuarios</h3>
-                <p class="stat-number" id="totalUsuarios">0</p>
-            </div>
-            <div class="stat-card">
-                <h3>Presupuesto Total</h3>
-                <p class="stat-number" id="presupuestoTotal">$0</p>
-            </div>
-        </div>
-
-        <!-- Lista de Colegios -->
-        <div class="form-card">
-            <h2>Colegios Registrados</h2>
-            <div id="listaColegios" style="display: grid; gap: var(--space-lg); margin-top: var(--space-lg);">
-                <!-- Se llenará con JavaScript -->
-            </div>
-        </div>
-
-        <!-- Gráficos Comparativos -->
-        <div class="charts-grid">
-            <div class="chart-card">
-                <h3>Eventos por Colegio</h3>
-                <canvas id="chartColegios"></canvas>
-            </div>
-
-            <div class="chart-card">
-                <h3>Distribución por Área (Global)</h3>
-                <canvas id="chartAreas"></canvas>
-            </div>
-        </div>
-
-        <!-- Tabla de Eventos Recientes (Todos los Colegios) -->
-        <div class="form-card">
-            <h2>Eventos Recientes (Todos los Colegios)</h2>
-            <div style="overflow-x: auto; margin-top: var(--space-lg);">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Colegio</th>
-                            <th>Fecha</th>
-                            <th>Área</th>
-                            <th>Acción</th>
-                            <th>Docente</th>
-                            <th>N° Eventos</th>
-                            <th>% Éxito</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tablaEventos">
-                        <!-- Se llenará con JavaScript -->
-                    </tbody>
-                </table>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeSchoolModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveSchool()">Guardar</button>
             </div>
         </div>
     </div>
-
-    <script src="js/mobile-menu.js"></script>
-    <script src="js/chat-firebase.js"></script>
-    <script src="js/chat-ui.js"></script>
-    <script src="js/chat.js"></script>
-    <script src="js/admin-global-demo.js"></script>
+    
+    <!-- Modal: Crear/Editar Usuario -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="userModalTitle">Nuevo Usuario</h2>
+                <button class="modal-close" onclick="closeUserModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="userForm">
+                    <div class="form-group">
+                        <label class="form-label">Nombre Completo</label>
+                        <input type="text" id="userName" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="userEmail" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" id="userPassword" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Rol</label>
+                        <select id="userRole" class="form-select" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="director">Director</option>
+                            <option value="docente">Docente</option>
+                            <option value="tecnico">Técnico</option>
+                            <option value="admin_global">Admin Global</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Colegio</label>
+                        <select id="userSchool" class="form-select" required>
+                            <option value="">Seleccionar...</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeUserModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveUser()">Guardar</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/app.js"></script>
+    <script src="js/admin-global.js"></script>
 </body>
 </html>
