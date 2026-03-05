@@ -155,6 +155,326 @@ const DEMO_USERS = {
         school: 'Liceo Técnico Profesional Gabriela Mistral'
     },
     
+    // Instituto Técnico Industrial
+    'director.tecnico@edugest.cl': {
+        password: 'industrial2026',
+        role: 'director',
+        name: 'Rodrigo Fuentes',
+        schoolId: 'colegio-003',
+        school: 'Instituto Técnico Industrial'
+    },
+    'profesor.mecanica@edugest.cl': {
+        password: 'mecanica789',
+        role: 'docente',
+        name: 'Alberto Méndez',
+        schoolId: 'colegio-003',
+        school: 'Instituto Técnico Industrial'
+    },
+    
+    // Liceo Bicentenario de Excelencia
+    'director.bicentenario@edugest.cl': {
+        password: 'excel2026',
+        role: 'director',
+        name: 'Claudia Morales',
+        schoolId: 'colegio-004',
+        school: 'Liceo Bicentenario de Excelencia'
+    },
+    'profe.ciencias@edugest.cl': {
+        password: 'ciencias555',
+        role: 'docente',
+        name: 'Sebastián Vega',
+        schoolId: 'colegio-004',
+        school: 'Liceo Bicentenario de Excelencia'
+    },
+    
+    // Colegio Montessori del Valle
+    'coordinador.montessori@edugest.cl': {
+        password: 'montessori321',
+        role: 'director',
+        name: 'Francisca Bravo',
+        schoolId: 'colegio-005',
+        school: 'Colegio Montessori del Valle'
+    },
+    'guia.primaria@edugest.cl': {
+        password: 'guia2026',
+        role: 'docente',
+        name: 'Camila Espinoza',
+        schoolId: 'colegio-005',
+        school: 'Colegio Montessori del Valle'
+    },
+    
+    // Escuela Rural Valle Verde
+    'director.valleverde@edugest.cl': {
+        password: 'rural2026',
+        role: 'director',
+        name: 'Marcelo Campos',
+        schoolId: 'colegio-006',
+        school: 'Escuela Rural Valle Verde'
+    },
+    'maestro.multigrado@edugest.cl': {
+        password: 'rural123',
+        role: 'docente',
+        name: 'Rosa Navarro',
+        schoolId: 'colegio-006',
+        school: 'Escuela Rural Valle Verde'
+    },
+    
+    // Colegio Bilingüe Internacional
+    'principal.bilingual@edugest.cl': {
+        password: 'bilingual999',
+        role: 'director',
+        name: 'Katherine Wilson',
+        schoolId: 'colegio-007',
+        school: 'Colegio Bilingüe Internacional'
+    },
+    'teacher.english@edugest.cl': {
+        password: 'english2026',
+        role: 'docente',
+        name: 'Michael Anderson',
+        schoolId: 'colegio-007',
+        school: 'Colegio Bilingüe Internacional'
+    },
+    
+    // Liceo Artístico Gabriela Mistral
+    'director.artistico@edugest.cl': {
+        password: 'arte2026',
+        role: 'director',
+        name: 'Gabriela Reyes',
+        schoolId: 'colegio-008',
+        school: 'Liceo Artístico Gabriela Mistral'
+    },
+    'maestro.musica@edugest.cl': {
+        password: 'musica444',
+        role: 'docente',
+        name: 'Andrés Parra',
+        schoolId: 'colegio-008',
+        school: 'Liceo Artístico Gabriela Mistral'
+    },
+    
+    // Colegio Deportivo Alto Rendimiento
+    'director.deportivo@edugest.cl': {
+        password: 'deporte2026',
+        role: 'director',
+        name: 'Cristian Medina',
+        schoolId: 'colegio-009',
+        school: 'Colegio Deportivo Alto Rendimiento'
+    },
+    'coach.futbol@edugest.cl': {
+        password: 'futbol777',
+        role: 'docente',
+        name: 'Javier Contreras',
+        schoolId: 'colegio-009',
+        school: 'Colegio Deportivo Alto Rendimiento'
+    },
+    
+    // Instituto Waldorf Raíces del Sur
+    'coordinador.waldorf@edugest.cl': {
+        password: 'waldorf2026',
+        role: 'director',
+        name: 'Sofía Larraín',
+        schoolId: 'colegio-010',
+        school: 'Instituto Waldorf Raíces del Sur'
+    },
+    'maestro.waldorf@edugest.cl': {
+        password: 'steiner888',
+        role: 'docente',
+        name: 'Tomás Becker',
+        schoolId: 'colegio-010',
+        school: 'Instituto Waldorf Raíces del Sur'
+    },
+    
+    // Colegio Científico Innovación
+    'director.cientifico@edugest.cl': {
+        password: 'innovacion2026',
+        role: 'director',
+        name: 'Patricia Núñez',
+        schoolId: 'colegio-011',
+        school: 'Colegio Científico Innovación'
+    },
+    'profesor.robotica@edugest.cl': {
+        password: 'stem2026',
+        role: 'docente',
+        name: 'Diego Salazar',
+        schoolId: 'colegio-011',
+        school: 'Colegio Científico Innovación'
+    },
+    
+    // Escuela Básica Amanecer
+    'director.amanecer@edugest.cl': {
+        password: 'amanecer2026',
+        role: 'director',
+        name: 'Lorena Gutiérrez',
+        schoolId: 'colegio-012',
+        school: 'Escuela Básica Amanecer'
+    },
+    'educadora.pie@edugest.cl': {
+        password: 'inclusion2026',
+        role: 'docente',
+        name: 'Paulina Ortiz',
+        schoolId: 'colegio-012',
+        school: 'Escuela Básica Amanecer'
+    },
+    
+    // Colegio Alemán de Santiago
+    'director.aleman@edugest.cl': {
+        password: 'deutsch2026',
+        role: 'director',
+        name: 'Hans Müller',
+        schoolId: 'colegio-013',
+        school: 'Colegio Alemán de Santiago'
+    },
+    'lehrer.deutsch@edugest.cl': {
+        password: 'german888',
+        role: 'docente',
+        name: 'Ingrid Schmidt',
+        schoolId: 'colegio-013',
+        school: 'Colegio Alemán de Santiago'
+    },
+    
+    // Liceo Comercial Empresarial
+    'director.comercial@edugest.cl': {
+        password: 'comercio2026',
+        role: 'director',
+        name: 'Mónica Tapia',
+        schoolId: 'colegio-014',
+        school: 'Liceo Comercial Empresarial'
+    },
+    'profesor.contabilidad@edugest.cl': {
+        password: 'conta999',
+        role: 'docente',
+        name: 'Héctor Bustos',
+        schoolId: 'colegio-014',
+        school: 'Liceo Comercial Empresarial'
+    },
+    
+    // Colegio Adventista del Pacífico
+    'director.adventista@edugest.cl': {
+        password: 'advent2026',
+        role: 'director',
+        name: 'Samuel Rojas',
+        schoolId: 'colegio-015',
+        school: 'Colegio Adventista del Pacífico'
+    },
+    'maestro.religion@edugest.cl': {
+        password: 'faith777',
+        role: 'docente',
+        name: 'Rebeca Flores',
+        schoolId: 'colegio-015',
+        school: 'Colegio Adventista del Pacífico'
+    },
+    
+    // Instituto Marítimo de Valparaíso
+    'director.maritimo@edugest.cl': {
+        password: 'marino2026',
+        role: 'director',
+        name: 'Capitán Jorge Navarro',
+        schoolId: 'colegio-016',
+        school: 'Instituto Marítimo de Valparaíso'
+    },
+    'instructor.nautica@edugest.cl': {
+        password: 'nautica555',
+        role: 'docente',
+        name: 'Rodrigo Marín',
+        schoolId: 'colegio-016',
+        school: 'Instituto Marítimo de Valparaíso'
+    },
+    
+    // Colegio Ecológico Tierra Verde
+    'director.ecologico@edugest.cl': {
+        password: 'eco2026',
+        role: 'director',
+        name: 'Verónica Lagos',
+        schoolId: 'colegio-017',
+        school: 'Colegio Ecológico Tierra Verde'
+    },
+    'profesor.ambiental@edugest.cl': {
+        password: 'green444',
+        role: 'docente',
+        name: 'Matías Prado',
+        schoolId: 'colegio-017',
+        school: 'Colegio Ecológico Tierra Verde'
+    },
+    
+    // Liceo Agrícola Valle Fértil
+    'director.agricola@edugest.cl': {
+        password: 'agro2026',
+        role: 'director',
+        name: 'Fernando Campos',
+        schoolId: 'colegio-018',
+        school: 'Liceo Agrícola Valle Fértil'
+    },
+    'ingeniero.agronomo@edugest.cl': {
+        password: 'agro333',
+        role: 'docente',
+        name: 'Carolina Vergara',
+        schoolId: 'colegio-018',
+        school: 'Liceo Agrícola Valle Fértil'
+    },
+    
+    // Colegio de Música y Danza Contemporánea
+    'director.musica@edugest.cl': {
+        password: 'music2026',
+        role: 'director',
+        name: 'Alejandra Soto',
+        schoolId: 'colegio-019',
+        school: 'Colegio de Música y Danza Contemporánea'
+    },
+    'maestro.danza@edugest.cl': {
+        password: 'dance666',
+        role: 'docente',
+        name: 'Cristóbal Muñoz',
+        schoolId: 'colegio-019',
+        school: 'Colegio de Música y Danza Contemporánea'
+    },
+    
+    // Instituto Tecnológico de Programación
+    'director.programacion@edugest.cl': {
+        password: 'code2026',
+        role: 'director',
+        name: 'Andrés Valdivia',
+        schoolId: 'colegio-020',
+        school: 'Instituto Tecnológico de Programación'
+    },
+    'dev.python@edugest.cl': {
+        password: 'python123',
+        role: 'docente',
+        name: 'Daniela Torres',
+        schoolId: 'colegio-020',
+        school: 'Instituto Tecnológico de Programación'
+    },
+    
+    // Colegio Británico de Chile
+    'headmaster.british@edugest.cl': {
+        password: 'british2026',
+        role: 'director',
+        name: 'James Thompson',
+        schoolId: 'colegio-021',
+        school: 'Colegio Británico de Chile'
+    },
+    'teacher.cambridge@edugest.cl': {
+        password: 'cambridge999',
+        role: 'docente',
+        name: 'Emma Watson',
+        schoolId: 'colegio-021',
+        school: 'Colegio Británico de Chile'
+    },
+    
+    // Escuela de Gastronomía Culinaria
+    'director.gastronomia@edugest.cl': {
+        password: 'chef2026',
+        role: 'director',
+        name: 'Chef Rodrigo Barros',
+        schoolId: 'colegio-022',
+        school: 'Escuela de Gastronomía Culinaria'
+    },
+    'chef.instructor@edugest.cl': {
+        password: 'cocina777',
+        role: 'docente',
+        name: 'Valentina Riquelme',
+        schoolId: 'colegio-022',
+        school: 'Escuela de Gastronomía Culinaria'
+    },
+    
     // Usuarios legacy (compatibilidad)
     'director@edugest.cl': {
         password: 'director123',

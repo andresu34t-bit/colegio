@@ -139,6 +139,366 @@ const DEMO_USERS_EXTENDED = {
         name: 'Valentina Herrera',
         schoolId: 'school_003',
         active: true
+    },
+    
+    // Instituto Técnico Industrial
+    'director.tecnico@edugest.cl': {
+        email: 'director.tecnico@edugest.cl',
+        password: 'industrial2026',
+        role: 'director',
+        name: 'Rodrigo Fuentes',
+        schoolId: 'colegio-003',
+        active: true
+    },
+    'profesor.mecanica@edugest.cl': {
+        email: 'profesor.mecanica@edugest.cl',
+        password: 'mecanica789',
+        role: 'docente',
+        name: 'Alberto Méndez',
+        schoolId: 'colegio-003',
+        active: true
+    },
+    
+    // Liceo Bicentenario de Excelencia
+    'director.bicentenario@edugest.cl': {
+        email: 'director.bicentenario@edugest.cl',
+        password: 'excel2026',
+        role: 'director',
+        name: 'Claudia Morales',
+        schoolId: 'colegio-004',
+        active: true
+    },
+    'profe.ciencias@edugest.cl': {
+        email: 'profe.ciencias@edugest.cl',
+        password: 'ciencias555',
+        role: 'docente',
+        name: 'Sebastián Vega',
+        schoolId: 'colegio-004',
+        active: true
+    },
+    
+    // Colegio Montessori del Valle
+    'coordinador.montessori@edugest.cl': {
+        email: 'coordinador.montessori@edugest.cl',
+        password: 'montessori321',
+        role: 'director',
+        name: 'Francisca Bravo',
+        schoolId: 'colegio-005',
+        active: true
+    },
+    'guia.primaria@edugest.cl': {
+        email: 'guia.primaria@edugest.cl',
+        password: 'guia2026',
+        role: 'docente',
+        name: 'Camila Espinoza',
+        schoolId: 'colegio-005',
+        active: true
+    },
+    
+    // Escuela Rural Valle Verde
+    'director.valleverde@edugest.cl': {
+        email: 'director.valleverde@edugest.cl',
+        password: 'rural2026',
+        role: 'director',
+        name: 'Marcelo Campos',
+        schoolId: 'colegio-006',
+        active: true
+    },
+    'maestro.multigrado@edugest.cl': {
+        email: 'maestro.multigrado@edugest.cl',
+        password: 'rural123',
+        role: 'docente',
+        name: 'Rosa Navarro',
+        schoolId: 'colegio-006',
+        active: true
+    },
+    
+    // Colegio Bilingüe Internacional
+    'principal.bilingual@edugest.cl': {
+        email: 'principal.bilingual@edugest.cl',
+        password: 'bilingual999',
+        role: 'director',
+        name: 'Katherine Wilson',
+        schoolId: 'colegio-007',
+        active: true
+    },
+    'teacher.english@edugest.cl': {
+        email: 'teacher.english@edugest.cl',
+        password: 'english2026',
+        role: 'docente',
+        name: 'Michael Anderson',
+        schoolId: 'colegio-007',
+        active: true
+    },
+    
+    // Liceo Artístico Gabriela Mistral
+    'director.artistico@edugest.cl': {
+        email: 'director.artistico@edugest.cl',
+        password: 'arte2026',
+        role: 'director',
+        name: 'Gabriela Reyes',
+        schoolId: 'colegio-008',
+        active: true
+    },
+    'maestro.musica@edugest.cl': {
+        email: 'maestro.musica@edugest.cl',
+        password: 'musica444',
+        role: 'docente',
+        name: 'Andrés Parra',
+        schoolId: 'colegio-008',
+        active: true
+    },
+    
+    // Colegio Deportivo Alto Rendimiento
+    'director.deportivo@edugest.cl': {
+        email: 'director.deportivo@edugest.cl',
+        password: 'deporte2026',
+        role: 'director',
+        name: 'Cristian Medina',
+        schoolId: 'colegio-009',
+        active: true
+    },
+    'coach.futbol@edugest.cl': {
+        email: 'coach.futbol@edugest.cl',
+        password: 'futbol777',
+        role: 'docente',
+        name: 'Javier Contreras',
+        schoolId: 'colegio-009',
+        active: true
+    },
+    
+    // Instituto Waldorf Raíces del Sur
+    'coordinador.waldorf@edugest.cl': {
+        email: 'coordinador.waldorf@edugest.cl',
+        password: 'waldorf2026',
+        role: 'director',
+        name: 'Sofía Larraín',
+        schoolId: 'colegio-010',
+        active: true
+    },
+    'maestro.waldorf@edugest.cl': {
+        email: 'maestro.waldorf@edugest.cl',
+        password: 'steiner888',
+        role: 'docente',
+        name: 'Tomás Becker',
+        schoolId: 'colegio-010',
+        active: true
+    },
+    
+    // Colegio Científico Innovación
+    'director.cientifico@edugest.cl': {
+        email: 'director.cientifico@edugest.cl',
+        password: 'innovacion2026',
+        role: 'director',
+        name: 'Patricia Núñez',
+        schoolId: 'colegio-011',
+        active: true
+    },
+    'profesor.robotica@edugest.cl': {
+        email: 'profesor.robotica@edugest.cl',
+        password: 'stem2026',
+        role: 'docente',
+        name: 'Diego Salazar',
+        schoolId: 'colegio-011',
+        active: true
+    },
+    
+    // Escuela Básica Amanecer
+    'director.amanecer@edugest.cl': {
+        email: 'director.amanecer@edugest.cl',
+        password: 'amanecer2026',
+        role: 'director',
+        name: 'Lorena Gutiérrez',
+        schoolId: 'colegio-012',
+        active: true
+    },
+    'educadora.pie@edugest.cl': {
+        email: 'educadora.pie@edugest.cl',
+        password: 'inclusion2026',
+        role: 'docente',
+        name: 'Paulina Ortiz',
+        schoolId: 'colegio-012',
+        active: true
+    },
+    
+    // Colegio Alemán de Santiago
+    'director.aleman@edugest.cl': {
+        email: 'director.aleman@edugest.cl',
+        password: 'deutsch2026',
+        role: 'director',
+        name: 'Hans Müller',
+        schoolId: 'colegio-013',
+        active: true
+    },
+    'lehrer.deutsch@edugest.cl': {
+        email: 'lehrer.deutsch@edugest.cl',
+        password: 'german888',
+        role: 'docente',
+        name: 'Ingrid Schmidt',
+        schoolId: 'colegio-013',
+        active: true
+    },
+    
+    // Liceo Comercial Empresarial
+    'director.comercial@edugest.cl': {
+        email: 'director.comercial@edugest.cl',
+        password: 'comercio2026',
+        role: 'director',
+        name: 'Mónica Tapia',
+        schoolId: 'colegio-014',
+        active: true
+    },
+    'profesor.contabilidad@edugest.cl': {
+        email: 'profesor.contabilidad@edugest.cl',
+        password: 'conta999',
+        role: 'docente',
+        name: 'Héctor Bustos',
+        schoolId: 'colegio-014',
+        active: true
+    },
+    
+    // Colegio Adventista del Pacífico
+    'director.adventista@edugest.cl': {
+        email: 'director.adventista@edugest.cl',
+        password: 'advent2026',
+        role: 'director',
+        name: 'Samuel Rojas',
+        schoolId: 'colegio-015',
+        active: true
+    },
+    'maestro.religion@edugest.cl': {
+        email: 'maestro.religion@edugest.cl',
+        password: 'faith777',
+        role: 'docente',
+        name: 'Rebeca Flores',
+        schoolId: 'colegio-015',
+        active: true
+    },
+    
+    // Instituto Marítimo de Valparaíso
+    'director.maritimo@edugest.cl': {
+        email: 'director.maritimo@edugest.cl',
+        password: 'marino2026',
+        role: 'director',
+        name: 'Capitán Jorge Navarro',
+        schoolId: 'colegio-016',
+        active: true
+    },
+    'instructor.nautica@edugest.cl': {
+        email: 'instructor.nautica@edugest.cl',
+        password: 'nautica555',
+        role: 'docente',
+        name: 'Rodrigo Marín',
+        schoolId: 'colegio-016',
+        active: true
+    },
+    
+    // Colegio Ecológico Tierra Verde
+    'director.ecologico@edugest.cl': {
+        email: 'director.ecologico@edugest.cl',
+        password: 'eco2026',
+        role: 'director',
+        name: 'Verónica Lagos',
+        schoolId: 'colegio-017',
+        active: true
+    },
+    'profesor.ambiental@edugest.cl': {
+        email: 'profesor.ambiental@edugest.cl',
+        password: 'green444',
+        role: 'docente',
+        name: 'Matías Prado',
+        schoolId: 'colegio-017',
+        active: true
+    },
+    
+    // Liceo Agrícola Valle Fértil
+    'director.agricola@edugest.cl': {
+        email: 'director.agricola@edugest.cl',
+        password: 'agro2026',
+        role: 'director',
+        name: 'Fernando Campos',
+        schoolId: 'colegio-018',
+        active: true
+    },
+    'ingeniero.agronomo@edugest.cl': {
+        email: 'ingeniero.agronomo@edugest.cl',
+        password: 'agro333',
+        role: 'docente',
+        name: 'Carolina Vergara',
+        schoolId: 'colegio-018',
+        active: true
+    },
+    
+    // Colegio de Música y Danza Contemporánea
+    'director.musica@edugest.cl': {
+        email: 'director.musica@edugest.cl',
+        password: 'music2026',
+        role: 'director',
+        name: 'Alejandra Soto',
+        schoolId: 'colegio-019',
+        active: true
+    },
+    'maestro.danza@edugest.cl': {
+        email: 'maestro.danza@edugest.cl',
+        password: 'dance666',
+        role: 'docente',
+        name: 'Cristóbal Muñoz',
+        schoolId: 'colegio-019',
+        active: true
+    },
+    
+    // Instituto Tecnológico de Programación
+    'director.programacion@edugest.cl': {
+        email: 'director.programacion@edugest.cl',
+        password: 'code2026',
+        role: 'director',
+        name: 'Andrés Valdivia',
+        schoolId: 'colegio-020',
+        active: true
+    },
+    'dev.python@edugest.cl': {
+        email: 'dev.python@edugest.cl',
+        password: 'python123',
+        role: 'docente',
+        name: 'Daniela Torres',
+        schoolId: 'colegio-020',
+        active: true
+    },
+    
+    // Colegio Británico de Chile
+    'headmaster.british@edugest.cl': {
+        email: 'headmaster.british@edugest.cl',
+        password: 'british2026',
+        role: 'director',
+        name: 'James Thompson',
+        schoolId: 'colegio-021',
+        active: true
+    },
+    'teacher.cambridge@edugest.cl': {
+        email: 'teacher.cambridge@edugest.cl',
+        password: 'cambridge999',
+        role: 'docente',
+        name: 'Emma Watson',
+        schoolId: 'colegio-021',
+        active: true
+    },
+    
+    // Escuela de Gastronomía Culinaria
+    'director.gastronomia@edugest.cl': {
+        email: 'director.gastronomia@edugest.cl',
+        password: 'chef2026',
+        role: 'director',
+        name: 'Chef Rodrigo Barros',
+        schoolId: 'colegio-022',
+        active: true
+    },
+    'chef.instructor@edugest.cl': {
+        email: 'chef.instructor@edugest.cl',
+        password: 'cocina777',
+        role: 'docente',
+        name: 'Valentina Riquelme',
+        schoolId: 'colegio-022',
+        active: true
     }
 };
 

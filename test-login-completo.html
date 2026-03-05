@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Login - 20 Colegios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.95;
+        }
+        
+        .filter-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .colegios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 25px;
+        }
+        
+        .colegio-card {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .colegio-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .colegio-header {
+            margin-bottom: 15px;
+        }
+        
+        .colegio-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .colegio-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .badge-id {
+            background: #667eea;
+            color: white;
+        }
+        
+        .badge-location {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .badge-type {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .cuenta-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .cuenta-title {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .credencial-row {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .credencial-label {
+            font-weight: bold;
+            color: #666;
+            width: 70px;
+        }
+        
+        .credencial-value {
+            color: #333;
+            background: #f0f0f0;
+            padding: 6px 12px;
+            border-radius: 6px;
+            flex: 1;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .credencial-value:hover {
+            background: #e0e0e0;
+        }
+        
+        .btn-login {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 12px;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .quick-access {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .quick-access h2 {
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        
+        .quick-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .quick-btn {
+            background: white;
+            color: #4caf50;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏫 Sistema de Login - 20 Colegios</h1>
+        <p class="subtitle">Prueba todas las cuentas del sistema EduGest</p>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">20</div>
+                <div class="stat-label">Colegios</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">40</div>
+                <div class="stat-label">Cuentas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15.610</div>
+                <div class="stat-label">Estudiantes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">$2.2B</div>
+                <div class="stat-label">Presupuesto</div>
+            </div>
+        </div>
+        
+        <div class="quick-access">
+            <h2>🚀 Acceso Rápido</h2>
+            <div class="quick-buttons">
+                <button class="quick-btn" onclick="window.location.href='login.html'">
+                    Ir a Login Principal
+                </button>
+                <button class="quick-btn" onclick="window.location.href='dashboard.html'">
+                    Ver Dashboard
+                </button>
+                <button class="quick-btn" onclick="testRandomLogin()">
+                    Login Aleatorio
+                </button>
+            </div>
+        </div>
+        
+        <div class="filter-section">
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterColegios('all')">Todos</button>
+                <button class="filter-btn" onclick="filterColegios('tecnico')">Técnicos</button>
+                <button class="filter-btn" onclick="filterColegios('particular')">Particulares</button>
+                <button class="filter-btn" onclick="filterColegios('municipal')">Municipales</button>
+                <button class="filter-btn" onclick="filterColegios('internacional')">Internacionales</button>
+            </div>
+        </div>
+        
+        <div class="colegios-grid" id="colegiosGrid"></div>
+    </div>
+    
+    <script src="js/login-modern.js"></script>
+    <script>
+        const colegios = [
+            { nombre: 'Instituto Técnico Industrial', id: 'colegio-003', ubicacion: 'Recoleta', tipo: 'tecnico', director: 'director.tecnico@edugest.cl', pass_dir: 'industrial2026', docente: 'profesor.mecanica@edugest.cl', pass_doc: 'mecanica789' },
+            { nombre: 'Liceo Bicentenario de Excelencia', id: 'colegio-004', ubicacion: 'La Florida', tipo: 'municipal', director: 'director.bicentenario@edugest.cl', pass_dir: 'excel2026', docente: 'profe.ciencias@edugest.cl', pass_doc: 'ciencias555' },
+            { nombre: 'Colegio Montessori del Valle', id: 'colegio-005', ubicacion: 'Vitacura', tipo: 'particular', director: 'coordinador.montessori@edugest.cl', pass_dir: 'montessori321', docente: 'guia.primaria@edugest.cl', pass_doc: 'guia2026' },
+            { nombre: 'Escuela Rural Valle Verde', id: 'colegio-006', ubicacion: 'Colina', tipo: 'municipal', director: 'director.valleverde@edugest.cl', pass_dir: 'rural2026', docente: 'maestro.multigrado@edugest.cl', pass_doc: 'rural123' },
+            { nombre: 'Colegio Bilingüe Internacional', id: 'colegio-007', ubicacion: 'Lo Barnechea', tipo: 'internacional', director: 'principal.bilingual@edugest.cl', pass_dir: 'bilingual999', docente: 'teacher.english@edugest.cl', pass_doc: 'english2026' },
+            { nombre: 'Liceo Artístico Gabriela Mistral', id: 'colegio-008', ubicacion: 'Estación Central', tipo: 'municipal', director: 'director.artistico@edugest.cl', pass_dir: 'arte2026', docente: 'maestro.musica@edugest.cl', pass_doc: 'musica444' },
+            { nombre: 'Colegio Deportivo Alto Rendimiento', id: 'colegio-009', ubicacion: 'Peñalolén', tipo: 'particular', director: 'director.deportivo@edugest.cl', pass_dir: 'deporte2026', docente: 'coach.futbol@edugest.cl', pass_doc: 'futbol777' },
+            { nombre: 'Instituto Waldorf Raíces del Sur', id: 'colegio-010', ubicacion: 'La Reina', tipo: 'particular', director: 'coordinador.waldorf@edugest.cl', pass_dir: 'waldorf2026', docente: 'maestro.waldorf@edugest.cl', pass_doc: 'steiner888' },
+            { nombre: 'Colegio Científico Innovación', id: 'colegio-011', ubicacion: 'Macul', tipo: 'particular', director: 'director.cientifico@edugest.cl', pass_dir: 'innovacion2026', docente: 'profesor.robotica@edugest.cl', pass_doc: 'stem2026' },
+            { nombre: 'Escuela Básica Amanecer', id: 'colegio-012', ubicacion: 'Puente Alto', tipo: 'municipal', director: 'director.amanecer@edugest.cl', pass_dir: 'amanecer2026', docente: 'educadora.pie@edugest.cl', pass_doc: 'inclusion2026' },
+            { nombre: 'Colegio Alemán de Santiago', id: 'colegio-013', ubicacion: 'Las Condes', tipo: 'internacional', director: 'director.aleman@edugest.cl', pass_dir: 'deutsch2026', docente: 'lehrer.deutsch@edugest.cl', pass_doc: 'german888' },
+            { nombre: 'Liceo Comercial Empresarial', id: 'colegio-014', ubicacion: 'Santiago Centro', tipo: 'tecnico', director: 'director.comercial@edugest.cl', pass_dir: 'comercio2026', docente: 'profesor.contabilidad@edugest.cl', pass_doc: 'conta999' },
+            { nombre: 'Colegio Adventista del Pacífico', id: 'colegio-015', ubicacion: 'Ñuñoa', tipo: 'particular', director: 'director.adventista@edugest.cl', pass_dir: 'advent2026', docente: 'maestro.religion@edugest.cl', pass_doc: 'faith777' },
+            { nombre: 'Instituto Marítimo de Valparaíso', id: 'colegio-016', ubicacion: 'Valparaíso', tipo: 'tecnico', director: 'director.maritimo@edugest.cl', pass_dir: 'marino2026', docente: 'instructor.nautica@edugest.cl', pass_doc: 'nautica555' },
+            { nombre: 'Colegio Ecológico Tierra Verde', id: 'colegio-017', ubicacion: 'Pirque', tipo: 'particular', director: 'director.ecologico@edugest.cl', pass_dir: 'eco2026', docente: 'profesor.ambiental@edugest.cl', pass_doc: 'green444' },
+            { nombre: 'Liceo Agrícola Valle Fértil', id: 'colegio-018', ubicacion: 'Buin', tipo: 'tecnico', director: 'director.agricola@edugest.cl', pass_dir: 'agro2026', docente: 'ingeniero.agronomo@edugest.cl', pass_doc: 'agro333' },
+            { nombre: 'Colegio de Música y Danza', id: 'colegio-019', ubicacion: 'Providencia', tipo: 'particular', director: 'director.musica@edugest.cl', pass_dir: 'music2026', docente: 'maestro.danza@edugest.cl', pass_doc: 'dance666' },
+            { nombre: 'Instituto Tecnológico Programación', id: 'colegio-020', ubicacion: 'Providencia', tipo: 'tecnico', director: 'director.programacion@edugest.cl', pass_dir: 'code2026', docente: 'dev.python@edugest.cl', pass_doc: 'python123' },
+            { nombre: 'Colegio Británico de Chile', id: 'colegio-021', ubicacion: 'Vitacura', tipo: 'internacional', director: 'headmaster.british@edugest.cl', pass_dir: 'british2026', docente: 'teacher.cambridge@edugest.cl', pass_doc: 'cambridge999' },
+            { nombre: 'Escuela de Gastronomía Culinaria', id: 'colegio-022', ubicacion: 'Las Condes', tipo: 'tecnico', director: 'director.gastronomia@edugest.cl', pass_dir: 'chef2026', docente: 'chef.instructor@edugest.cl', pass_doc: 'cocina777' }
+        ];
+        
+        let currentFilter = 'all';
+        
+        function renderColegios() {
+            const grid = document.getElementById('colegiosGrid');
+            grid.innerHTML = '';
+            
+            const filtered = currentFilter === 'all' 
+                ? colegios 
+                : colegios.filter(c => c.tipo === currentFilter);
+            
+            filtered.forEach((colegio, index) => {
+                const card = document.createElement('div');
+                card.className = 'colegio-card';
+                card.innerHTML = `
+                    <div class="colegio-header">
+                        <div class="colegio-name">${index + 1}. ${colegio.nombre}</div>
+                        <div class="colegio-meta">
+                            <span class="badge badge-id">${colegio.id}</span>
+                            <span class="badge badge-location">📍 ${colegio.ubicacion}</span>
+                            <span class="badge badge-type">${colegio.tipo}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="cuenta-box">
+                        <div class="cuenta-title">👔 Director</div>
+                        <div class="credencial-row">
+                            <span class="credencial-label">Email:</span>
+                            <span class="credencial-value" onclick="copyToClipboard('${colegio.director}')" title="Click para copiar">${colegio.director}</span>
+                        </div>
+                        <div class="credencial-row">
+                            <span class="credencial-label">Pass:</span>
+                            <span class="credencial-value" onclick="copyToClipboard('${colegio.pass_dir}')" title="Click para copiar">${colegio.pass_dir}</span>
+                        </div>
+                        <button class="btn-login" onclick="testLogin('${colegio.director}', '${colegio.pass_dir}')">
+                            🚀 Probar Login Director
+                        </button>
+                    </div>
+                    
+                    <div class="cuenta-box">
+                        <div class="cuenta-title">👨‍🏫 Docente</div>
+                        <div class="credencial-row">
+                            <span class="credencial-label">Email:</span>
+                            <span class="credencial-value" onclick="copyToClipboard('${colegio.docente}')" title="Click para copiar">${colegio.docente}</span>
+                        </div>
+                        <div class="credencial-row">
+                            <span class="credencial-label">Pass:</span>
+                            <span class="credencial-value" onclick="copyToClipboard('${colegio.pass_doc}')" title="Click para copiar">${colegio.pass_doc}</span>
+                        </div>
+                        <button class="btn-login" onclick="testLogin('${colegio.docente}', '${colegio.pass_doc}')">
+                            🚀 Probar Login Docente
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        function filterColegios(tipo) {
+            currentFilter = tipo;
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderColegios();
+        }
+        
+        function testLogin(email, password) {
+            if (typeof DEMO_USERS !== 'undefined' && DEMO_USERS[email]) {
+                const user = DEMO_USERS[email];
+                if (user.password === password) {
+                    alert(`✅ ¡Login exitoso!\n\n👤 Usuario: ${user.name}\n🎭 Rol: ${user.role}\n🏫 Colegio: ${user.school}\n🆔 ID: ${user.schoolId}\n\n✨ La cuenta está funcionando correctamente.`);
+                    
+                    if (confirm('¿Deseas ir a la página de login para ingresar con esta cuenta?')) {
+                        // Guardar credenciales temporalmente
+                        sessionStorage.setItem('temp_email', email);
+                        sessionStorage.setItem('temp_password', password);
+                        window.location.href = 'login.html';
+                    }
+                } else {
+                    alert('❌ Error: Contraseña incorrecta');
+                }
+            } else {
+                alert('❌ Error: Usuario no encontrado en la base de datos');
+            }
+        }
+        
+        function testRandomLogin() {
+            const randomColegio = colegios[Math.floor(Math.random() * colegios.length)];
+            const isDirector = Math.random() > 0.5;
+            const email = isDirector ? randomColegio.director : randomColegio.docente;
+            const password = isDirector ? randomColegio.pass_dir : randomColegio.pass_doc;
+            
+            testLogin(email, password);
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Show temporary feedback
+                const tooltip = document.createElement('div');
+                tooltip.textContent = '✓ Copiado';
+                tooltip.style.cssText = 'position:fixed;top:20px;right:20px;background:#4caf50;color:white;padding:10px 20px;border-radius:5px;z-index:9999;';
+                document.body.appendChild(tooltip);
+                setTimeout(() => tooltip.remove(), 2000);
+            });
+        }
+        
+        // Initial render
+        renderColegios();
+        
+        console.log('✅ Sistema de login cargado');
+        console.log('📊 Total de colegios:', colegios.length);
+        console.log('📊 Total de cuentas:', colegios.length * 2);
+    </script>
+</body>
+</html>
