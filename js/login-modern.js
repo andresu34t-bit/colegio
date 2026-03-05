@@ -13,6 +13,13 @@ const DEMO_USERS = {
         schoolId: null,
         school: 'Sistema EDUGEST'
     },
+    'andmien': {
+        password: 'admin123',
+        role: 'admin_global',
+        name: 'Administrador Global',
+        schoolId: null,
+        school: 'Sistema EDUGEST'
+    },
     
     // Colegio San José
     'director.sanjose@edugest.cl': {
@@ -648,9 +655,9 @@ async function handleLogin(email, password, remember) {
     setTimeout(() => {
         // Admin Global va a su panel especial
         if (user.role === 'admin_global') {
-            window.location.href = 'admin-global.html';
+            window.location.replace('admin-global.html');
         } else {
-            window.location.href = 'dashboard.html';
+            window.location.replace('dashboard.html');
         }
     }, 1000);
 }
@@ -659,17 +666,24 @@ async function handleLogin(email, password, remember) {
  * Verificar sesión existente
  */
 function checkExistingSession() {
+    // Solo ejecutar en la página de login
+    if (!window.location.pathname.includes('login.html') && 
+        !window.location.pathname.endsWith('/') && 
+        window.location.pathname !== '') {
+        return;
+    }
+    
     const session = localStorage.getItem('edugest_session') || 
                    sessionStorage.getItem('edugest_session');
     
     if (session) {
         try {
             const data = JSON.parse(session);
-            // Redirigir según rol
+            // Redirigir según rol SOLO si estamos en login
             if (data.role === 'admin_global') {
-                window.location.href = 'admin-global.html';
+                window.location.replace('admin-global.html');
             } else {
-                window.location.href = 'dashboard.html';
+                window.location.replace('dashboard.html');
             }
         } catch (e) {
             // Sesión inválida, limpiar
