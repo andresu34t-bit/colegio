@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Login - Verificar Cuentas</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #2d2d2d;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #00ff00;
+        }
+        h1 {
+            color: #00ff00;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .section {
+            background: #1e1e1e;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #00ff00;
+        }
+        .success {
+            color: #00ff00;
+        }
+        .error {
+            color: #ff0000;
+        }
+        .warning {
+            color: #ffaa00;
+        }
+        .info {
+            color: #00aaff;
+        }
+        pre {
+            background: #000;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            color: #00ff00;
+        }
+        button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #00cc00;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .test-pass {
+            background: #004400;
+            border-left: 4px solid #00ff00;
+        }
+        .test-fail {
+            background: #440000;
+            border-left: 4px solid #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 DEBUG - Sistema de Login</h1>
+        
+        <div class="section">
+            <h2 class="info">📊 Estado del Sistema</h2>
+            <div id="systemStatus"></div>
+        </div>
+        
+        <div class="section">
+            <h2 class="info">🔑 Verificar Cuentas Específicas</h2>
+            <button onclick="testAccount('director.tecnico@edugest.cl', 'industrial2026')">
+                Test: Instituto Técnico
+            </button>
+            <button onclick="testAccount('headmaster.british@edugest.cl', 'british2026')">
+                Test: Colegio Británico
+            </button>
+            <button onclick="testAccount('director.programacion@edugest.cl', 'code2026')">
+                Test: Instituto Programación
+            </button>
+            <button onclick="testAccount('admin@edugest.cl', 'admin123')">
+                Test: Admin Global
+            </button>
+            <div id="testResults"></div>
+        </div>
+        
+        <div class="section">
+            <h2 class="info">📋 Lista de Todas las Cuentas</h2>
+            <button onclick="listAllAccounts()">Mostrar Todas las Cuentas</button>
+            <div id="accountsList"></div>
+        </div>
+        
+        <div class="section">
+            <h2 class="info">🔧 Información Técnica</h2>
+            <div id="technicalInfo"></div>
+        </div>
+    </div>
+    
+    <script src="js/login-modern.js"></script>
+    <script>
+        // Verificar estado del sistema
+        function checkSystemStatus() {
+            const statusDiv = document.getElementById('systemStatus');
+            let html = '';
+            
+            // Verificar si DEMO_USERS existe
+            if (typeof DEMO_USERS !== 'undefined') {
+                const totalUsers = Object.keys(DEMO_USERS).length;
+                html += `<div class="test-result test-pass">✅ DEMO_USERS cargado correctamente</div>`;
+                html += `<div class="test-result test-pass">✅ Total de cuentas: ${totalUsers}</div>`;
+                
+                // Contar por tipo
+                const directors = Object.values(DEMO_USERS).filter(u => u.role === 'director').length;
+                const docentes = Object.values(DEMO_USERS).filter(u => u.role === 'docente').length;
+                const admins = Object.values(DEMO_USERS).filter(u => u.role === 'admin_global').length;
+                
+                html += `<div class="test-result test-pass">👔 Directores: ${directors}</div>`;
+                html += `<div class="test-result test-pass">👨‍🏫 Docentes: ${docentes}</div>`;
+                html += `<div class="test-result test-pass">👨‍💼 Admins: ${admins}</div>`;
+            } else {
+                html += `<div class="test-result test-fail">❌ ERROR: DEMO_USERS no está definido</div>`;
+            }
+            
+            statusDiv.innerHTML = html;
+        }
+        
+        // Probar una cuenta específica
+        function testAccount(email, password) {
+            const resultsDiv = document.getElementById('testResults');
+            let html = `<h3 class="warning">Probando: ${email}</h3>`;
+            
+            if (typeof DEMO_USERS === 'undefined') {
+                html += `<div class="test-result test-fail">❌ DEMO_USERS no está definido</div>`;
+                resultsDiv.innerHTML = html;
+                return;
+            }
+            
+            const user = DEMO_USERS[email];
+            
+            if (!user) {
+                html += `<div class="test-result test-fail">❌ Usuario NO encontrado en la base de datos</div>`;
+                html += `<pre>Email buscado: ${email}</pre>`;
+            } else {
+                html += `<div class="test-result test-pass">✅ Usuario encontrado</div>`;
+                html += `<pre>${JSON.stringify(user, null, 2)}</pre>`;
+                
+                if (user.password === password) {
+                    html += `<div class="test-result test-pass">✅ Contraseña CORRECTA</div>`;
+                    html += `<div class="test-result test-pass">🎉 LOGIN DEBERÍA FUNCIONAR</div>`;
+                } else {
+                    html += `<div class="test-result test-fail">❌ Contraseña INCORRECTA</div>`;
+                    html += `<pre>Esperada: ${password}\nEncontrada: ${user.password}</pre>`;
+                }
+            }
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        // Listar todas las cuentas
+        function listAllAccounts() {
+            const listDiv = document.getElementById('accountsList');
+            
+            if (typeof DEMO_USERS === 'undefined') {
+                listDiv.innerHTML = `<div class="test-result test-fail">❌ DEMO_USERS no está definido</div>`;
+                return;
+            }
+            
+            let html = '<pre>';
+            let count = 1;
+            
+            for (const [email, user] of Object.entries(DEMO_USERS)) {
+                html += `${count}. ${email}\n`;
+                html += `   Password: ${user.password}\n`;
+                html += `   Rol: ${user.role}\n`;
+                html += `   Nombre: ${user.name}\n`;
+                html += `   Colegio: ${user.school || 'N/A'}\n`;
+                html += `   SchoolID: ${user.schoolId || 'N/A'}\n`;
+                html += `\n`;
+                count++;
+            }
+            
+            html += '</pre>';
+            listDiv.innerHTML = html;
+        }
+        
+        // Información técnica
+        function showTechnicalInfo() {
+            const techDiv = document.getElementById('technicalInfo');
+            let html = '<pre>';
+            
+            html += `Navegador: ${navigator.userAgent}\n`;
+            html += `URL actual: ${window.location.href}\n`;
+            html += `Protocolo: ${window.location.protocol}\n`;
+            html += `\n`;
+            html += `Scripts cargados:\n`;
+            
+            const scripts = document.querySelectorAll('script[src]');
+            scripts.forEach(script => {
+                html += `  - ${script.src}\n`;
+            });
+            
+            html += `\n`;
+            html += `Variables globales definidas:\n`;
+            html += `  - DEMO_USERS: ${typeof DEMO_USERS !== 'undefined' ? 'SÍ' : 'NO'}\n`;
+            
+            html += '</pre>';
+            techDiv.innerHTML = html;
+        }
+        
+        // Ejecutar al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            checkSystemStatus();
+            showTechnicalInfo();
+            
+            console.log('🔍 Debug Login cargado');
+            console.log('📊 DEMO_USERS:', typeof DEMO_USERS !== 'undefined' ? 'Definido' : 'NO definido');
+            if (typeof DEMO_USERS !== 'undefined') {
+                console.log('📊 Total cuentas:', Object.keys(DEMO_USERS).length);
+                console.log('📋 Primeras 5 cuentas:', Object.keys(DEMO_USERS).slice(0, 5));
+            }
+        });
+    </script>
+</body>
+</html>
