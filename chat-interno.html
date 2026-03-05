@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interno - EDUGEST</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/chat-interno.css">
+</head>
+<body>
+    <!-- Protección de Sesión -->
+    <script src="js/roles-permissions.js"></script>
+    <script>
+        if (!EdugestRoles.protectPage()) {
+            window.location.replace('login.html');
+        }
+    </script>
+    
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="LOGO EDUGEST.png" alt="EDUGEST" onerror="this.style.display='none'">
+                </div>
+                <h1 class="sidebar-brand">EDUGEST</h1>
+            </div>
+            
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">D</div>
+                <div class="user-name" id="userName">Usuario Demo</div>
+                <div class="user-role" id="userRole">Director</div>
+                <div style="margin-top: 0.5rem; font-size: 0.75rem; color: #9ca3af;" id="userSchool">Colegio</div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Módulo PME</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard PME</span>
+                    </a>
+                    <a href="informaciones-generales.html" class="nav-item">
+                        <span class="nav-icon">⚙️</span>
+                        <span>Configuración</span>
+                    </a>
+                    <a href="areas-new.html" class="nav-item">
+                        <span class="nav-icon">📝</span>
+                        <span>Registrar Evento</span>
+                    </a>
+                    <a href="informes.html" class="nav-item">
+                        <span class="nav-icon">📄</span>
+                        <span>Informes PME</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Comunicación</div>
+                    <a href="chat-interno.html" class="nav-item active">
+                        <span class="nav-icon">💬</span>
+                        <span>Chat Interno</span>
+                        <span class="notification-badge" id="chatBadge" style="display: none;">0</span>
+                    </a>
+                    <a href="notificaciones.html" class="nav-item">
+                        <span class="nav-icon">🔔</span>
+                        <span>Notificaciones</span>
+                    </a>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <span>🚪</span>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="chat-container">
+                <!-- Lista de Conversaciones -->
+                <div class="chat-sidebar">
+                    <div class="chat-sidebar-header">
+                        <h2>Conversaciones</h2>
+                        <button class="btn-icon" id="btnNuevoChat" title="Nueva conversación">
+                            ✏️
+                        </button>
+                    </div>
+                    
+                    <div class="chat-search">
+                        <input type="text" id="searchUsers" placeholder="Buscar usuarios..." class="search-input">
+                    </div>
+                    
+                    <div class="chat-tabs">
+                        <button class="chat-tab active" data-tab="all">Todos</button>
+                        <button class="chat-tab" data-tab="unread">No leídos</button>
+                    </div>
+                    
+                    <div class="conversations-list" id="conversationsList">
+                        <!-- Las conversaciones se cargarán aquí -->
+                    </div>
+                </div>
+                
+                <!-- Ventana de Chat -->
+                <div class="chat-main">
+                    <div class="chat-empty" id="chatEmpty">
+                        <div class="chat-empty-icon">💬</div>
+                        <h3>Selecciona una conversación</h3>
+                        <p>Elige un usuario de la lista para comenzar a chatear</p>
+                    </div>
+                    
+                    <div class="chat-active" id="chatActive" style="display: none;">
+                        <!-- Header del Chat -->
+                        <div class="chat-header">
+                            <div class="chat-header-user">
+                                <div class="user-avatar-small" id="chatUserAvatar">U</div>
+                                <div>
+                                    <div class="chat-header-name" id="chatUserName">Usuario</div>
+                                    <div class="chat-header-status" id="chatUserStatus">
+                                        <span class="status-dot"></span>
+                                        <span>En línea</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-header-actions">
+                                <button class="btn-icon" title="Buscar en conversación">🔍</button>
+                                <button class="btn-icon" title="Más opciones">⋮</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Mensajes -->
+                        <div class="chat-messages" id="chatMessages">
+                            <!-- Los mensajes se cargarán aquí -->
+                        </div>
+                        
+                        <!-- Input de Mensaje -->
+                        <div class="chat-input-container">
+                            <button class="btn-icon" title="Adjuntar archivo">📎</button>
+                            <input type="text" id="messageInput" placeholder="Escribe un mensaje..." class="message-input">
+                            <button class="btn-send" id="btnSend">
+                                <span>Enviar</span>
+                                <span>📤</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Panel de Información del Usuario -->
+                <div class="chat-info" id="chatInfo" style="display: none;">
+                    <div class="chat-info-header">
+                        <h3>Información del usuario</h3>
+                        <button class="btn-icon" id="btnCloseInfo">✕</button>
+                    </div>
+                    
+                    <div class="chat-info-content">
+                        <div class="chat-info-avatar" id="infoUserAvatar">U</div>
+                        <h4 id="infoUserName">Usuario</h4>
+                        <p class="info-user-role" id="infoUserRole">Rol</p>
+                        
+                        <div class="info-section">
+                            <div class="info-label">Estado</div>
+                            <div class="info-value" id="infoUserStatus">
+                                <span class="status-dot"></span>
+                                <span>En línea</span>
+                            </div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <div class="info-label">Colegio</div>
+                            <div class="info-value" id="infoUserSchool">-</div>
+                        </div>
+                        
+                        <div class="info-actions">
+                            <button class="btn btn-secondary btn-block">
+                                <span>🔇</span>
+                                <span>Silenciar notificaciones</span>
+                            </button>
+                            <button class="btn btn-secondary btn-block">
+                                <span>🗑️</span>
+                                <span>Eliminar conversación</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal: Nueva Conversación -->
+    <div class="modal" id="modalNuevoChat">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nueva Conversación</h3>
+                <button class="btn-icon" onclick="closeModal('modalNuevoChat')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Buscar usuario</label>
+                    <input type="text" id="searchNewChat" placeholder="Nombre o rol..." class="form-input">
+                </div>
+                
+                <div class="users-list" id="newChatUsersList">
+                    <!-- Lista de usuarios disponibles -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/chat-interno.js"></script>
+    <script>
+        function logout() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                localStorage.removeItem('edugest_session');
+                sessionStorage.removeItem('edugest_session');
+                window.location.replace('login.html');
+            }
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+    </script>
+</body>
+</html>

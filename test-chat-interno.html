@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Chat Interno - EDUGEST</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .info-box h3 {
+            color: #1976d2;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-box ul {
+            margin-left: 1.5rem;
+            color: #555;
+        }
+        
+        .info-box li {
+            margin: 0.5rem 0;
+        }
+        
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .user-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .user-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .user-card.active {
+            border-color: #667eea;
+            background: #eff6ff;
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 auto 1rem;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: #111;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .user-role {
+            text-align: center;
+            color: #666;
+            font-size: 0.875rem;
+        }
+        
+        .user-status {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .status-online {
+            color: #10b981;
+        }
+        
+        .status-offline {
+            color: #9ca3af;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin: 0.5rem;
+        }
+        
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        .actions {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e9ecef;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        .warning-box h3 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+        }
+        
+        .warning-box p {
+            color: #856404;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💬 Test Chat Interno</h1>
+        <p class="subtitle">Selecciona un usuario para probar el chat</p>
+        
+        <div class="info-box">
+            <h3>📋 Instrucciones</h3>
+            <ul>
+                <li>Selecciona un usuario haciendo click en su tarjeta</li>
+                <li>El sistema cargará automáticamente ese usuario</li>
+                <li>Serás redirigido al chat interno</li>
+                <li>Podrás ver y enviar mensajes como ese usuario</li>
+            </ul>
+        </div>
+        
+        <h2 style="margin-bottom: 1rem; color: #333;">Usuarios Disponibles</h2>
+        
+        <div class="users-grid" id="usersGrid">
+            <!-- Los usuarios se cargarán aquí -->
+        </div>
+        
+        <div class="actions">
+            <button class="btn" onclick="abrirChat()">
+                🚀 Abrir Chat con Usuario Seleccionado
+            </button>
+            <button class="btn btn-secondary" onclick="limpiarDatos()">
+                🗑️ Limpiar Datos de Prueba
+            </button>
+            <a href="chat-interno.html" class="btn btn-secondary">
+                📱 Ir al Chat Directamente
+            </a>
+        </div>
+        
+        <div class="warning-box">
+            <h3>💡 Tip para Probar</h3>
+            <p>Para simular múltiples usuarios:</p>
+            <p>1. Abre esta página en una pestaña normal</p>
+            <p>2. Selecciona "María González" y abre el chat</p>
+            <p>3. Abre esta página en una pestaña de incógnito</p>
+            <p>4. Selecciona "Juan Pérez" y abre el chat</p>
+            <p>5. ¡Envía mensajes entre ambas pestañas!</p>
+        </div>
+    </div>
+    
+    <script>
+        const users = [
+            {
+                id: 'user-1',
+                name: 'María González',
+                role: 'director',
+                schoolId: 'colegio-1',
+                online: true
+            },
+            {
+                id: 'user-2',
+                name: 'Juan Pérez',
+                role: 'profesor',
+                schoolId: 'colegio-1',
+                online: true
+            },
+            {
+                id: 'user-3',
+                name: 'Ana Martínez',
+                role: 'administrador',
+                schoolId: 'colegio-1',
+                online: false
+            },
+            {
+                id: 'user-4',
+                name: 'Carlos López',
+                role: 'tecnico',
+                schoolId: 'colegio-1',
+                online: true
+            },
+            {
+                id: 'user-5',
+                name: 'Laura Sánchez',
+                role: 'profesor',
+                schoolId: 'colegio-1',
+                online: true
+            },
+            {
+                id: 'user-6',
+                name: 'Pedro Ramírez',
+                role: 'profesor',
+                schoolId: 'colegio-1',
+                online: false
+            }
+        ];
+        
+        const roleNames = {
+            'director': 'Director',
+            'administrador': 'Administrador',
+            'profesor': 'Profesor',
+            'tecnico': 'Técnico'
+        };
+        
+        let selectedUser = null;
+        
+        function renderUsers() {
+            const grid = document.getElementById('usersGrid');
+            
+            grid.innerHTML = users.map(user => `
+                <div class="user-card" onclick="selectUser('${user.id}')">
+                    <div class="user-avatar">${user.name.charAt(0)}</div>
+                    <div class="user-name">${user.name}</div>
+                    <div class="user-role">${roleNames[user.role]}</div>
+                    <div class="user-status ${user.online ? 'status-online' : 'status-offline'}">
+                        ${user.online ? '● En línea' : '● Desconectado'}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function selectUser(userId) {
+            selectedUser = users.find(u => u.id === userId);
+            
+            // Actualizar UI
+            document.querySelectorAll('.user-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            event.currentTarget.classList.add('active');
+            
+            console.log('Usuario seleccionado:', selectedUser);
+        }
+        
+        function abrirChat() {
+            if (!selectedUser) {
+                alert('Por favor selecciona un usuario primero');
+                return;
+            }
+            
+            // Guardar sesión del usuario
+            localStorage.setItem('edugest_session', JSON.stringify({
+                userId: selectedUser.id,
+                userName: selectedUser.name,
+                userRole: selectedUser.role,
+                schoolId: selectedUser.schoolId
+            }));
+            
+            // Redirigir al chat
+            window.location.href = 'chat-interno.html';
+        }
+        
+        function limpiarDatos() {
+            if (confirm('¿Estás seguro de que deseas limpiar todos los datos de prueba?')) {
+                localStorage.removeItem('chat_demo_users');
+                localStorage.removeItem('chat_demo_messages');
+                localStorage.removeItem('edugest_session');
+                
+                alert('✅ Datos limpiados. La página se recargará.');
+                location.reload();
+            }
+        }
+        
+        // Inicializar
+        renderUsers();
+        
+        // Cargar datos de prueba si no existen
+        if (!localStorage.getItem('chat_demo_users')) {
+            localStorage.setItem('chat_demo_users', JSON.stringify(users));
+            
+            // Mensajes de demostración
+            const demoMessages = {
+                'user-1_user-2': [
+                    {
+                        id: 'msg-1',
+                        senderId: 'user-2',
+                        recipientId: 'user-1',
+                        message: 'Buenos días, directora. Necesito hablar sobre el evento de mañana.',
+                        timestamp: Date.now() - 3600000,
+                        read: true
+                    },
+                    {
+                        id: 'msg-2',
+                        senderId: 'user-1',
+                        recipientId: 'user-2',
+                        message: 'Hola Juan, claro. ¿Qué necesitas?',
+                        timestamp: Date.now() - 3500000,
+                        read: true
+                    },
+                    {
+                        id: 'msg-3',
+                        senderId: 'user-2',
+                        recipientId: 'user-1',
+                        message: '¿Podemos confirmar el horario? Algunos padres han preguntado.',
+                        timestamp: Date.now() - 3400000,
+                        read: true
+                    }
+                ],
+                'user-1_user-4': [
+                    {
+                        id: 'msg-4',
+                        senderId: 'user-4',
+                        recipientId: 'user-1',
+                        message: 'Directora, el proyector de la sala 3 necesita reparación.',
+                        timestamp: Date.now() - 7200000,
+                        read: false
+                    }
+                ],
+                'user-2_user-4': [
+                    {
+                        id: 'msg-5',
+                        senderId: 'user-2',
+                        recipientId: 'user-4',
+                        message: 'Carlos, ¿puedes revisar el computador del laboratorio?',
+                        timestamp: Date.now() - 1800000,
+                        read: true
+                    },
+                    {
+                        id: 'msg-6',
+                        senderId: 'user-4',
+                        recipientId: 'user-2',
+                        message: 'Claro, voy en 10 minutos.',
+                        timestamp: Date.now() - 1700000,
+                        read: true
+                    }
+                ]
+            };
+            
+            localStorage.setItem('chat_demo_messages', JSON.stringify(demoMessages));
+        }
+    </script>
+</body>
+</html>
