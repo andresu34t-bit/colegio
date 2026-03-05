@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Admin Login - EDUGEST</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #111827;
+        }
+        
+        .info-box {
+            background: #f3f4f6;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-box h2 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+        
+        .info-box p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        
+        .status {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+        
+        .status.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Admin Login</h1>
+        
+        <div class="info-box">
+            <h2>Credenciales Admin Global</h2>
+            <p><strong>Email:</strong> admin@edugest.cl</p>
+            <p><strong>Password:</strong> admin123</p>
+        </div>
+        
+        <button class="btn btn-primary" onclick="testAdminLogin()">
+            🔐 Login como Admin Global
+        </button>
+        
+        <button class="btn btn-secondary" onclick="checkSession()">
+            🔍 Verificar Sesión Actual
+        </button>
+        
+        <button class="btn btn-danger" onclick="clearSession()">
+            🗑️ Limpiar Sesión
+        </button>
+        
+        <div id="status"></div>
+    </div>
+    
+    <script src="js/roles-permissions.js"></script>
+    <script>
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+        }
+        
+        function testAdminLogin() {
+            showStatus('Iniciando sesión como Admin Global...', 'info');
+            
+            // Crear sesión de admin
+            const sessionData = {
+                email: 'admin@edugest.cl',
+                role: 'admin_global',
+                name: 'Administrador Global',
+                school: 'Sistema EDUGEST',
+                schoolId: null,
+                loginTime: new Date().toISOString()
+            };
+            
+            // Guardar en localStorage
+            localStorage.setItem('edugest_session', JSON.stringify(sessionData));
+            
+            showStatus('✅ Sesión creada. Redirigiendo a admin-global.html...', 'success');
+            
+            setTimeout(() => {
+                window.location.href = 'admin-global.html';
+            }, 1500);
+        }
+        
+        function checkSession() {
+            const session = localStorage.getItem('edugest_session') || 
+                           sessionStorage.getItem('edugest_session');
+            
+            if (!session) {
+                showStatus('❌ No hay sesión activa', 'error');
+                return;
+            }
+            
+            try {
+                const data = JSON.parse(session);
+                showStatus(
+                    `✅ Sesión activa:\n` +
+                    `Usuario: ${data.name}\n` +
+                    `Email: ${data.email}\n` +
+                    `Rol: ${data.role}\n` +
+                    `Colegio: ${data.school || 'N/A'}`,
+                    'success'
+                );
+            } catch (e) {
+                showStatus('❌ Error al leer sesión: ' + e.message, 'error');
+            }
+        }
+        
+        function clearSession() {
+            localStorage.removeItem('edugest_session');
+            sessionStorage.removeItem('edugest_session');
+            showStatus('✅ Sesión eliminada correctamente', 'success');
+        }
+        
+        // Verificar sesión al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            checkSession();
+        });
+    </script>
+</body>
+</html>

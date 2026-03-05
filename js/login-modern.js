@@ -665,8 +665,12 @@ function checkExistingSession() {
     if (session) {
         try {
             const data = JSON.parse(session);
-            // Si hay sesión válida, redirigir al dashboard
-            window.location.href = 'dashboard.html';
+            // Redirigir según rol
+            if (data.role === 'admin_global') {
+                window.location.href = 'admin-global.html';
+            } else {
+                window.location.href = 'dashboard.html';
+            }
         } catch (e) {
             // Sesión inválida, limpiar
             localStorage.removeItem('edugest_session');
