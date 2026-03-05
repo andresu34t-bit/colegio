@@ -58,30 +58,34 @@ const sessionData = localStorage.getItem('edugest_session') ||
                    sessionStorage.getItem('edugest_session');
 
 if (!sessionData) {
-    window.location.replace('login.html');
+    // Usar flag para evitar bucles al retroceder
+    if (!sessionStorage.getItem('admin_redirect_attempted')) {
+        sessionStorage.setItem('admin_redirect_attempted', 'true');
+        window.location.href = 'login.html';
+    }
     return;
 }
 
 const user = JSON.parse(sessionData);
 ```
 
-### 3. Usar window.location.replace en lugar de href
+### 3. Permitir Navegación con Botón Atrás
 
-**Cambios en `js/login-modern.js`:**
+**Se mantiene `window.location.href` para permitir historial:**
 
 ```javascript
 // En handleLogin()
 if (user.role === 'admin_global') {
-    window.location.replace('admin-global.html'); // ✅ Sin historial
+    window.location.href = 'admin-global.html'; // ✅ Con historial
 } else {
-    window.location.replace('dashboard.html');
+    window.location.href = 'dashboard.html';
 }
 
 // En checkExistingSession()
 if (data.role === 'admin_global') {
-    window.location.replace('admin-global.html'); // ✅ Sin historial
+    window.location.href = 'admin-global.html'; // ✅ Con historial
 } else {
-    window.location.replace('dashboard.html');
+    window.location.href = 'dashboard.html';
 }
 ```
 
@@ -97,6 +101,27 @@ function checkExistingSession() {
     }
     
     // ... resto del código
+}
+```
+
+### 5. Prevenir Bucles con Flag de Redirección
+
+**Se usa `sessionStorage` para evitar redirecciones infinitas:**
+
+```javascript
+// En admin-global.html
+if (!sessionData) {
+    // Solo redirigir una vez
+    if (!sessionStorage.getItem('admin_redirect_attempted')) {
+        sessionStorage.setItem('admin_redirect_attempted', 'true');
+        window.location.href = 'login.html';
+    }
+    return;
+}
+
+// Limpiar flag cuando la sesión es válida
+if (user.role === 'admin_global') {
+    sessionStorage.removeItem('admin_redirect_attempted');
 }
 ```
 
@@ -232,16 +257,28 @@ Asegúrate de que estos archivos estén guardados:
 
 ### Reglas a Seguir
 
-1. **Siempre usar window.location.replace() para redirecciones de autenticación**
+1. **Usar window.location.href para permitir navegación con botón atrás**
    ```javascript
-   // ✅ CORRECTO
-   window.location.replace('admin-global.html');
-   
-   // ❌ INCORRECTO (permite volver atrás)
+   // ✅ CORRECTO (permite volver atrás)
    window.location.href = 'admin-global.html';
+   
+   // ⚠️ ALTERNATIVA (no permite volver atrás)
+   window.location.replace('admin-global.html');
    ```
 
-2. **Verificar sesión sin dependencias externas**
+2. **Usar flags para prevenir bucles de redirección**
+   ```javascript
+   // ✅ CORRECTO (evita bucles al retroceder)
+   if (!sessionStorage.getItem('admin_redirect_attempted')) {
+       sessionStorage.setItem('admin_redirect_attempted', 'true');
+       window.location.href = 'login.html';
+   }
+   
+   // ❌ INCORRECTO (puede causar bucles)
+   window.location.href = 'login.html';
+   ```
+
+3. **Verificar sesión sin dependencias externas**
    ```javascript
    // ✅ CORRECTO
    const session = localStorage.getItem('edugest_session');
@@ -251,7 +288,7 @@ Asegúrate de que estos archivos estén guardados:
    const user = EdugestRoles.getCurrentUser();
    ```
 
-3. **Limitar verificaciones a páginas específicas**
+4. **Limitar verificaciones a páginas específicas**
    ```javascript
    // ✅ CORRECTO
    if (window.location.pathname.includes('login.html')) {
@@ -262,11 +299,19 @@ Asegúrate de que estos archivos estén guardados:
    checkExistingSession();
    ```
 
-4. **Proteger contra múltiples ejecuciones**
+5. **Proteger contra múltiples ejecuciones**
    ```javascript
    // ✅ CORRECTO
    if (window.adminGlobalChecked) return;
    window.adminGlobalChecked = true;
+   ```
+
+6. **Limpiar flags cuando la sesión es válida**
+   ```javascript
+   // ✅ CORRECTO
+   if (user.role === 'admin_global') {
+       sessionStorage.removeItem('admin_redirect_attempted');
+   }
    ```
 
 ---
@@ -294,15 +339,23 @@ BUCLE INFINITO 🔄
 ```
 Usuario: andmien
     ↓
-Login → admin-global.html (replace)
+Login → admin-global.html (con historial)
     ↓
 Verifica sesión (directamente)
     ↓
 Valida role === 'admin_global' ✅
     ↓
+Limpia flag de redirección
+    ↓
 Muestra panel correctamente
     ↓
-SIN BUCLES ✅
+Botón atrás → Vuelve a login ✅
+    ↓
+checkExistingSession detecta sesión
+    ↓
+Redirige a admin-global.html
+    ↓
+SIN BUCLES (gracias al flag) ✅
 ```
 
 ---
@@ -330,11 +383,13 @@ SIN BUCLES ✅
 El problema del bucle ha sido completamente resuelto:
 
 1. ✅ Usuario "andmien" agregado al sistema
-2. ✅ Verificación de sesión optimizada
-3. ✅ Redirecciones sin historial (replace)
-4. ✅ Protección contra múltiples ejecuciones
-5. ✅ Test file disponible para verificación rápida
-6. ✅ Documentación completa del problema y solución
+2. ✅ Verificación de sesión optimizada sin dependencias
+3. ✅ Navegación con botón atrás habilitada (window.location.href)
+4. ✅ Protección contra bucles con flag de redirección
+5. ✅ Protección contra múltiples ejecuciones
+6. ✅ Test file disponible para verificación rápida
+7. ✅ Documentación completa del problema y solución
+8. ✅ Limpieza automática de flags cuando la sesión es válida
 
 ---
 

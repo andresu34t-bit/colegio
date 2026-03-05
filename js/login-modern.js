@@ -655,9 +655,9 @@ async function handleLogin(email, password, remember) {
     setTimeout(() => {
         // Admin Global va a su panel especial
         if (user.role === 'admin_global') {
-            window.location.replace('admin-global.html');
+            window.location.href = 'admin-global.html';
         } else {
-            window.location.replace('dashboard.html');
+            window.location.href = 'dashboard.html';
         }
     }, 1000);
 }
@@ -681,9 +681,9 @@ function checkExistingSession() {
             const data = JSON.parse(session);
             // Redirigir según rol SOLO si estamos en login
             if (data.role === 'admin_global') {
-                window.location.replace('admin-global.html');
+                window.location.href = 'admin-global.html';
             } else {
-                window.location.replace('dashboard.html');
+                window.location.href = 'dashboard.html';
             }
         } catch (e) {
             // Sesión inválida, limpiar

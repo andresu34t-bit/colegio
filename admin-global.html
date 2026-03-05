@@ -22,8 +22,11 @@
                                sessionStorage.getItem('edugest_session');
             
             if (!sessionData) {
-                // No hay sesión, redirigir a login
-                window.location.replace('login.html');
+                // No hay sesión, redirigir a login SOLO UNA VEZ
+                if (!sessionStorage.getItem('admin_redirect_attempted')) {
+                    sessionStorage.setItem('admin_redirect_attempted', 'true');
+                    window.location.href = 'login.html';
+                }
                 return;
             }
             
@@ -44,12 +47,18 @@
                             </div>
                         </div>
                     `;
+                } else {
+                    // Sesión válida, limpiar flag de redirección
+                    sessionStorage.removeItem('admin_redirect_attempted');
                 }
             } catch (e) {
                 // Sesión corrupta, limpiar y redirigir
                 localStorage.removeItem('edugest_session');
                 sessionStorage.removeItem('edugest_session');
-                window.location.replace('login.html');
+                if (!sessionStorage.getItem('admin_redirect_attempted')) {
+                    sessionStorage.setItem('admin_redirect_attempted', 'true');
+                    window.location.href = 'login.html';
+                }
             }
         })();
     </script>
