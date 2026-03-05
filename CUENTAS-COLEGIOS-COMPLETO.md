@@ -1,599 +1,350 @@
-# 🏫 Cuentas de Colegios - Sistema Multi-Tenant
+# 🏫 CUENTAS DE COLEGIOS - SISTEMA EDUGEST
 
-## 📋 Resumen de Colegios
+## 📋 ÍNDICE DE COLEGIOS
 
-El sistema incluye **5 colegios diferentes** con datos completamente separados:
-
-| # | Colegio | ID | Ubicación | Tipo | Usuarios |
-|---|---------|----|-----------|----- |----------|
-| 1 | San José | colegio-001 | Santiago Centro | Part. Subvencionado | 6 |
-| 2 | Santa María | colegio-002 | Providencia | Particular Pagado | 6 |
-| 3 | Los Andes | colegio-003 | Las Condes | Municipal | 6 |
-| 4 | Gabriela Mistral | colegio-004 | Ñuñoa | Part. Subvencionado | 6 |
-| 5 | Pablo Neruda | colegio-005 | Maipú | Municipal | 6 |
-
-**Total:** 30 usuarios activos en 5 colegios independientes
-
----
-
-## 🏫 COLEGIO 1: San José
-
-### 📍 Información del Colegio
-- **Nombre:** Colegio San José
-- **ID:** colegio-001
-- **Ubicación:** Santiago Centro
-- **Tipo:** Particular Subvencionado
-- **Matrícula:** 850 estudiantes
-- **Niveles:** Pre-básica a 4° Medio
-
-### 👥 Cuentas de Usuario
-
-#### 👔 Director
-```
-Email:    director.sanjose@edugest.cl
-Password: sanjose123
-```
-
-#### 👨‍🏫 Docentes
-```
-Docente 1:
-Email:    maria.gonzalez@sanjose.cl
-Password: docente123
-
-Docente 2:
-Email:    juan.perez@sanjose.cl
-Password: docente123
-
-Docente 3:
-Email:    carmen.silva@sanjose.cl
-Password: docente123
-```
-
-#### 🔧 Técnico
-```
-Email:    tecnico.sanjose@edugest.cl
-Password: tecnico123
-```
-
-#### 💼 Administrador
-```
-Email:    admin.sanjose@edugest.cl
-Password: admin123
-```
-
-### 📊 Datos Únicos del Colegio
-
-**Eventos PME (50 eventos):**
-- Currículum: 18 eventos (Enfoque en matemáticas y lenguaje)
-- Liderazgo: 12 eventos (Gestión participativa)
-- Convivencia: 12 eventos (Programa anti-bullying)
-- Recursos: 8 eventos (Modernización tecnológica)
-
-**Características Especiales:**
-- Proyecto de robótica educativa
-- Programa de inglés intensivo
-- Talleres de arte y música
-- Equipo de fútbol destacado
-
-**Presupuesto PME:** $45.000.000
-**Gastos Registrados:** $18.500.000
+1. Instituto Técnico Industrial (Recoleta)
+2. Liceo Bicentenario de Excelencia (La Florida)
+3. Colegio Montessori del Valle (Vitacura)
+4. Escuela Rural Valle Verde (Colina)
+5. Colegio Bilingüe Internacional (Lo Barnechea)
+6. Liceo Artístico Gabriela Mistral (Estación Central)
+7. Colegio Deportivo Alto Rendimiento (Peñalolén)
+8. Instituto Waldorf Raíces del Sur (La Reina)
+9. Colegio Científico Innovación (Macul)
+10. Escuela Básica Amanecer (Puente Alto)
 
 ---
 
-## 🏫 COLEGIO 2: Santa María
+## 🏫 COLEGIO 1: Instituto Técnico Industrial
 
-### 📍 Información del Colegio
-- **Nombre:** Colegio Santa María
-- **ID:** colegio-002
-- **Ubicación:** Providencia
-- **Tipo:** Particular Pagado
-- **Matrícula:** 1.200 estudiantes
-- **Niveles:** Pre-básica a 4° Medio
-
-### 👥 Cuentas de Usuario
-
-#### 👔 Director
+### 👔 Director
 ```
-Email:    director.santamaria@edugest.cl
-Password: santamaria456
+Email:    director.tecnico@edugest.cl
+Password: industrial2026
 ```
 
-#### 👨‍🏫 Docentes
-```
-Docente 1:
-Email:    patricia.rojas@santamaria.cl
-Password: docente456
-
-Docente 2:
-Email:    roberto.castro@santamaria.cl
-Password: docente456
-
-Docente 3:
-Email:    andrea.morales@santamaria.cl
-Password: docente456
-```
-
-#### 🔧 Técnico
-```
-Email:    tecnico.santamaria@edugest.cl
-Password: tecnico456
-```
-
-#### 💼 Administrador
-```
-Email:    admin.santamaria@edugest.cl
-Password: admin456
-```
-
-### 📊 Datos Únicos del Colegio
-
-**Eventos PME (50 eventos):**
-- Currículum: 18 eventos (Enfoque en ciencias y tecnología)
-- Liderazgo: 12 eventos (Liderazgo transformacional)
-- Convivencia: 12 eventos (Programa de mindfulness)
-- Recursos: 8 eventos (Laboratorios de última generación)
-
-**Características Especiales:**
-- Programa IB (Bachillerato Internacional)
-- Intercambios internacionales
-- Centro de innovación educativa
-- Programa de emprendimiento
-
-**Presupuesto PME:** $75.000.000
-**Gastos Registrados:** $32.800.000
-
----
-
-## 🏫 COLEGIO 3: Los Andes
-
-### 📍 Información del Colegio
-- **Nombre:** Colegio Los Andes
+### 📊 Datos del Colegio
+- **Nombre:** Instituto Técnico Industrial
 - **ID:** colegio-003
-- **Ubicación:** Las Condes
-- **Tipo:** Municipal
-- **Matrícula:** 650 estudiantes
-- **Niveles:** 1° Básico a 4° Medio
+- **Ubicación:** Recoleta
+- **Tipo:** Técnico Profesional
+- **Especialidades:** Mecánica, Electricidad, Construcción
+- **Estudiantes:** 1.450
+- **Presupuesto Anual:** $89.500.000
+- **Jornada:** Completa con talleres
+- **Infraestructura:** 3 talleres industriales, laboratorio de electricidad
 
-### 👥 Cuentas de Usuario
-
-#### 👔 Director
+### 👨‍🏫 Docente
 ```
-Email:    director.losandes@edugest.cl
-Password: losandes789
+Email:    profesor.mecanica@edugest.cl
+Password: mecanica789
 ```
-
-#### 👨‍🏫 Docentes
-```
-Docente 1:
-Email:    luis.fernandez@losandes.cl
-Password: docente789
-
-Docente 2:
-Email:    sofia.martinez@losandes.cl
-Password: docente789
-
-Docente 3:
-Email:    diego.vargas@losandes.cl
-Password: docente789
-```
-
-#### 🔧 Técnico
-```
-Email:    tecnico.losandes@edugest.cl
-Password: tecnico789
-```
-
-#### 💼 Administrador
-```
-Email:    admin.losandes@edugest.cl
-Password: admin789
-```
-
-### 📊 Datos Únicos del Colegio
-
-**Eventos PME (50 eventos):**
-- Currículum: 18 eventos (Enfoque en educación inclusiva)
-- Liderazgo: 12 eventos (Gestión comunitaria)
-- Convivencia: 12 eventos (Programa de mediación escolar)
-- Recursos: 8 eventos (Optimización de recursos)
-
-**Características Especiales:**
-- Programa de integración PIE
-- Talleres de oficios
-- Huerto escolar
-- Programa de alimentación saludable
-
-**Presupuesto PME:** $35.000.000
-**Gastos Registrados:** $14.200.000
 
 ---
 
-## 🏫 COLEGIO 4: Gabriela Mistral
+## 🏫 COLEGIO 2: Liceo Bicentenario de Excelencia
 
-### 📍 Información del Colegio
-- **Nombre:** Colegio Gabriela Mistral
+### 👔 Director
+```
+Email:    director.bicentenario@edugest.cl
+Password: excel2026
+```
+
+### 📊 Datos del Colegio
+- **Nombre:** Liceo Bicentenario de Excelencia
 - **ID:** colegio-004
-- **Ubicación:** Ñuñoa
-- **Tipo:** Particular Subvencionado
-- **Matrícula:** 950 estudiantes
-- **Niveles:** Pre-básica a 4° Medio
+- **Ubicación:** La Florida
+- **Tipo:** Municipal de Excelencia
+- **Enfoque:** Ciencias y Matemáticas
+- **Estudiantes:** 1.120
+- **Presupuesto Anual:** $62.800.000
+- **Ranking SIMCE:** Top 10% nacional
+- **Infraestructura:** 2 laboratorios de ciencias, sala de computación
 
-### 👥 Cuentas de Usuario
-
-#### 👔 Director
+### 👨‍🏫 Docente
 ```
-Email:    director.mistral@edugest.cl
-Password: mistral2024
+Email:    profe.ciencias@edugest.cl
+Password: ciencias555
 ```
-
-#### 👨‍🏫 Docentes
-```
-Docente 1:
-Email:    claudia.torres@mistral.cl
-Password: docente2024
-
-Docente 2:
-Email:    fernando.lopez@mistral.cl
-Password: docente2024
-
-Docente 3:
-Email:    valentina.ruiz@mistral.cl
-Password: docente2024
-```
-
-#### 🔧 Técnico
-```
-Email:    tecnico.mistral@edugest.cl
-Password: tecnico2024
-```
-
-#### 💼 Administrador
-```
-Email:    admin.mistral@edugest.cl
-Password: admin2024
-```
-
-### 📊 Datos Únicos del Colegio
-
-**Eventos PME (50 eventos):**
-- Currículum: 18 eventos (Enfoque en artes y humanidades)
-- Liderazgo: 12 eventos (Liderazgo pedagógico)
-- Convivencia: 12 eventos (Programa de valores)
-- Recursos: 8 eventos (Biblioteca digital)
-
-**Características Especiales:**
-- Programa de teatro y danza
-- Taller de escritura creativa
-- Coro y orquesta escolar
-- Programa de lectura intensiva
-
-**Presupuesto PME:** $52.000.000
-**Gastos Registrados:** $23.600.000
 
 ---
 
-## 🏫 COLEGIO 5: Pablo Neruda
+## 🏫 COLEGIO 3: Colegio Montessori del Valle
 
-### 📍 Información del Colegio
-- **Nombre:** Colegio Pablo Neruda
+### 👔 Coordinador
+```
+Email:    coordinador.montessori@edugest.cl
+Password: montessori321
+```
+
+### 📊 Datos del Colegio
+- **Nombre:** Colegio Montessori del Valle
 - **ID:** colegio-005
-- **Ubicación:** Maipú
+- **Ubicación:** Vitacura
+- **Tipo:** Particular Pagado
+- **Metodología:** Montessori
+- **Estudiantes:** 380
+- **Presupuesto Anual:** $125.000.000
+- **Niveles:** Pre-kinder a 8° básico
+- **Infraestructura:** Ambientes preparados, jardín sensorial, huerto
+
+### 👨‍🏫 Guía Montessori
+```
+Email:    guia.primaria@edugest.cl
+Password: guia2026
+```
+
+---
+
+## 🏫 COLEGIO 4: Escuela Rural Valle Verde
+
+### 👔 Director
+```
+Email:    director.valleverde@edugest.cl
+Password: rural2026
+```
+
+### 📊 Datos del Colegio
+- **Nombre:** Escuela Rural Valle Verde
+- **ID:** colegio-006
+- **Ubicación:** Colina (Zona Rural)
+- **Tipo:** Municipal Rural
+- **Enfoque:** Educación Rural Multigrado
+- **Estudiantes:** 185
+- **Presupuesto Anual:** $28.300.000
+- **Características:** Aulas multigrado, huerto escolar
+- **Infraestructura:** 4 salas, comedor, biblioteca móvil
+
+### 👨‍🏫 Docente Multigrado
+```
+Email:    maestro.multigrado@edugest.cl
+Password: rural123
+```
+
+---
+
+## 🏫 COLEGIO 5: Colegio Bilingüe Internacional
+
+### 👔 Principal
+```
+Email:    principal.bilingual@edugest.cl
+Password: bilingual999
+```
+
+### 📊 Datos del Colegio
+- **Nombre:** Colegio Bilingüe Internacional
+- **ID:** colegio-007
+- **Ubicación:** Lo Barnechea
+- **Tipo:** Particular Pagado
+- **Idiomas:** Español, Inglés (50%), Francés
+- **Estudiantes:** 720
+- **Presupuesto Anual:** $156.000.000
+- **Certificaciones:** Cambridge, DELF
+- **Infraestructura:** Language lab, biblioteca bilingüe, auditorio
+
+### 👨‍🏫 English Teacher
+```
+Email:    teacher.english@edugest.cl
+Password: english2026
+```
+
+---
+
+## 🏫 COLEGIO 6: Liceo Artístico Gabriela Mistral
+
+### 👔 Director
+```
+Email:    director.artistico@edugest.cl
+Password: arte2026
+```
+
+### 📊 Datos del Colegio
+- **Nombre:** Liceo Artístico Gabriela Mistral
+- **ID:** colegio-008
+- **Ubicación:** Estación Central
+- **Tipo:** Municipal Artístico
+- **Especialidades:** Música, Danza, Artes Visuales, Teatro
+- **Estudiantes:** 890
+- **Presupuesto Anual:** $71.200.000
+- **Reconocimientos:** 15 premios nacionales en artes
+- **Infraestructura:** Teatro, salas de ensayo, talleres de arte
+
+### 👨‍🏫 Maestro de Música
+```
+Email:    maestro.musica@edugest.cl
+Password: musica444
+```
+
+---
+
+## 🏫 COLEGIO 7: Colegio Deportivo Alto Rendimiento
+
+### 👔 Director
+```
+Email:    director.deportivo@edugest.cl
+Password: deporte2026
+```
+
+### 📊 Datos del Colegio
+- **Nombre:** Colegio Deportivo Alto Rendimiento
+- **ID:** colegio-009
+- **Ubicación:** Peñalolén
+- **Tipo:** Particular Subvencionado
+- **Deportes:** Fútbol, Básquetbol, Atletismo, Natación
+- **Estudiantes:** 640
+- **Presupuesto Anual:** $54.700.000
+- **Logros:** 8 medallas nacionales 2025
+- **Infraestructura:** Cancha de fútbol, gimnasio, piscina semi-olímpica
+
+### 👨‍🏫 Entrenador
+```
+Email:    coach.futbol@edugest.cl
+Password: futbol777
+```
+
+---
+
+## 🏫 COLEGIO 8: Instituto Waldorf Raíces del Sur
+
+### 👔 Coordinador
+```
+Email:    coordinador.waldorf@edugest.cl
+Password: waldorf2026
+```
+
+### 📊 Datos del Colegio
+- **Nombre:** Instituto Waldorf Raíces del Sur
+- **ID:** colegio-010
+- **Ubicación:** La Reina
+- **Tipo:** Particular Pagado
+- **Pedagogía:** Waldorf-Steiner
+- **Estudiantes:** 295
+- **Presupuesto Anual:** $98.400.000
+- **Características:** Sin notas hasta 6°, énfasis en artes
+- **Infraestructura:** Salas con materiales naturales, taller de carpintería
+
+### 👨‍🏫 Maestro Waldorf
+```
+Email:    maestro.waldorf@edugest.cl
+Password: steiner888
+```
+
+---
+
+## 🏫 COLEGIO 9: Colegio Científico Innovación
+
+### 👔 Director
+```
+Email:    director.cientifico@edugest.cl
+Password: innovacion2026
+```
+
+### 📊 Datos del Colegio
+- **Nombre:** Colegio Científico Innovación
+- **ID:** colegio-011
+- **Ubicación:** Macul
+- **Tipo:** Particular Subvencionado
+- **Enfoque:** STEM (Ciencia, Tecnología, Ingeniería, Matemáticas)
+- **Estudiantes:** 975
+- **Presupuesto Anual:** $67.900.000
+- **Proyectos:** Robótica, programación, ciencias aplicadas
+- **Infraestructura:** FabLab, laboratorio de robótica, planetario
+
+### 👨‍🏫 Profesor STEM
+```
+Email:    profesor.robotica@edugest.cl
+Password: stem2026
+```
+
+---
+
+## 🏫 COLEGIO 10: Escuela Básica Amanecer
+
+### 👔 Director
+```
+Email:    director.amanecer@edugest.cl
+Password: amanecer2026
+```
+
+### 📊 Datos del Colegio
+- **Nombre:** Escuela Básica Amanecer
+- **ID:** colegio-012
+- **Ubicación:** Puente Alto
 - **Tipo:** Municipal
-- **Matrícula:** 780 estudiantes
-- **Niveles:** Pre-básica a 4° Medio
+- **Enfoque:** Educación inclusiva y comunitaria
+- **Estudiantes:** 520
+- **Presupuesto Anual:** $41.600.000
+- **Programas:** PIE (Programa Integración Escolar)
+- **Infraestructura:** Sala PIE, biblioteca, comedor comunitario
 
-### 👥 Cuentas de Usuario
-
-#### 👔 Director
+### 👨‍🏫 Educadora Diferencial
 ```
-Email:    director.neruda@edugest.cl
-Password: neruda2025
-```
-
-#### 👨‍🏫 Docentes
-```
-Docente 1:
-Email:    marcela.diaz@neruda.cl
-Password: docente2025
-
-Docente 2:
-Email:    pablo.sanchez@neruda.cl
-Password: docente2025
-
-Docente 3:
-Email:    isabel.herrera@neruda.cl
-Password: docente2025
-```
-
-#### 🔧 Técnico
-```
-Email:    tecnico.neruda@edugest.cl
-Password: tecnico2025
-```
-
-#### 💼 Administrador
-```
-Email:    admin.neruda@edugest.cl
-Password: admin2025
-```
-
-### 📊 Datos Únicos del Colegio
-
-**Eventos PME (50 eventos):**
-- Currículum: 18 eventos (Enfoque en educación ambiental)
-- Liderazgo: 12 eventos (Gestión sustentable)
-- Convivencia: 12 eventos (Programa de participación estudiantil)
-- Recursos: 8 eventos (Energías renovables)
-
-**Características Especiales:**
-- Programa de reciclaje
-- Huerto orgánico
-- Paneles solares
-- Programa de conciencia ambiental
-
-**Presupuesto PME:** $38.000.000
-**Gastos Registrados:** $16.900.000
-
----
-
-## 👨‍💼 ADMINISTRADOR GLOBAL
-
-### Super Admin (Acceso a todos los colegios)
-```
-Email:    superadmin@edugest.cl
-Password: SuperAdmin2026!
-```
-
-**Permisos:**
-- ✅ Ver datos de los 5 colegios
-- ✅ Panel administrativo global
-- ✅ Gestión de usuarios
-- ✅ Estadísticas consolidadas
-- ✅ Reportes multi-colegio
-- ✅ Configuración del sistema
-
----
-
-## 📊 COMPARACIÓN DE DATOS POR COLEGIO
-
-| Colegio | Eventos | Presupuesto | Gastado | Disponible | Matrícula |
-|---------|---------|-------------|---------|------------|-----------|
-| San José | 50 | $45.000.000 | $18.500.000 | $26.500.000 | 850 |
-| Santa María | 50 | $75.000.000 | $32.800.000 | $42.200.000 | 1.200 |
-| Los Andes | 50 | $35.000.000 | $14.200.000 | $20.800.000 | 650 |
-| G. Mistral | 50 | $52.000.000 | $23.600.000 | $28.400.000 | 950 |
-| P. Neruda | 50 | $38.000.000 | $16.900.000 | $21.100.000 | 780 |
-| **TOTAL** | **250** | **$245.000.000** | **$106.000.000** | **$139.000.000** | **4.430** |
-
----
-
-## 🎯 CÓMO PROBAR LA SEPARACIÓN DE DATOS
-
-### Prueba 1: Colegio San José
-```bash
-1. Login: director.sanjose@edugest.cl / sanjose123
-2. Ver: 50 eventos únicos de San José
-3. Chat: Solo usuarios de San José
-4. Presupuesto: $45.000.000
-```
-
-### Prueba 2: Colegio Santa María
-```bash
-1. Cerrar sesión
-2. Login: director.santamaria@edugest.cl / santamaria456
-3. Ver: 50 eventos DIFERENTES de Santa María
-4. Chat: Solo usuarios de Santa María
-5. Presupuesto: $75.000.000 (diferente)
-```
-
-### Prueba 3: Colegio Los Andes
-```bash
-1. Cerrar sesión
-2. Login: director.losandes@edugest.cl / losandes789
-3. Ver: 50 eventos DIFERENTES de Los Andes
-4. Chat: Solo usuarios de Los Andes
-5. Presupuesto: $35.000.000 (diferente)
-```
-
-### Prueba 4: Comparar 3 Colegios Simultáneamente
-```bash
-Navegador 1 (Normal):     San José
-Navegador 2 (Incógnito):  Santa María
-Navegador 3 (Otro perfil): Los Andes
-
-Resultado: Datos completamente diferentes en cada uno
+Email:    educadora.pie@edugest.cl
+Password: inclusion2026
 ```
 
 ---
 
-## 💬 CHAT - SEPARACIÓN POR COLEGIO
+## 📊 TABLA COMPARATIVA DE COLEGIOS
 
-### Reglas de Chat
-
-**Cada colegio tiene su propio chat:**
-- ✅ Usuarios del mismo colegio pueden chatear entre sí
-- ❌ NO pueden chatear con usuarios de otros colegios
-- ✅ Admin global puede chatear con todos
-
-**Ejemplo:**
-```
-San José (6 usuarios) → Solo chatean entre ellos
-Santa María (6 usuarios) → Solo chatean entre ellos
-Los Andes (6 usuarios) → Solo chatean entre ellos
-Gabriela Mistral (6 usuarios) → Solo chatean entre ellos
-Pablo Neruda (6 usuarios) → Solo chatean entre ellos
-```
+| Colegio | Ubicación | Tipo | Estudiantes | Presupuesto |
+|---------|-----------|------|-------------|-------------|
+| Instituto Técnico Industrial | Recoleta | Técnico Prof. | 1.450 | $89.500.000 |
+| Liceo Bicentenario | La Florida | Municipal Excel. | 1.120 | $62.800.000 |
+| Montessori del Valle | Vitacura | Particular | 380 | $125.000.000 |
+| Escuela Valle Verde | Colina | Municipal Rural | 185 | $28.300.000 |
+| Bilingüe Internacional | Lo Barnechea | Particular | 720 | $156.000.000 |
+| Liceo Artístico | Estación Central | Municipal Art. | 890 | $71.200.000 |
+| Deportivo Alto Rend. | Peñalolén | Part. Subv. | 640 | $54.700.000 |
+| Waldorf Raíces | La Reina | Particular | 295 | $98.400.000 |
+| Científico Innovación | Macul | Part. Subv. | 975 | $67.900.000 |
+| Escuela Amanecer | Puente Alto | Municipal | 520 | $41.600.000 |
 
 ---
 
-## 📋 TABLA COMPLETA DE CREDENCIALES
+## 🎯 RESUMEN RÁPIDO - TODAS LAS CUENTAS
 
-### Colegio San José (colegio-001)
-| Rol | Email | Password |
-|-----|-------|----------|
-| Director | director.sanjose@edugest.cl | sanjose123 |
-| Docente 1 | maria.gonzalez@sanjose.cl | docente123 |
-| Docente 2 | juan.perez@sanjose.cl | docente123 |
-| Docente 3 | carmen.silva@sanjose.cl | docente123 |
-| Técnico | tecnico.sanjose@edugest.cl | tecnico123 |
-| Admin | admin.sanjose@edugest.cl | admin123 |
+### Directores
+1. `director.tecnico@edugest.cl` / `industrial2026`
+2. `director.bicentenario@edugest.cl` / `excel2026`
+3. `coordinador.montessori@edugest.cl` / `montessori321`
+4. `director.valleverde@edugest.cl` / `rural2026`
+5. `principal.bilingual@edugest.cl` / `bilingual999`
+6. `director.artistico@edugest.cl` / `arte2026`
+7. `director.deportivo@edugest.cl` / `deporte2026`
+8. `coordinador.waldorf@edugest.cl` / `waldorf2026`
+9. `director.cientifico@edugest.cl` / `innovacion2026`
+10. `director.amanecer@edugest.cl` / `amanecer2026`
 
-### Colegio Santa María (colegio-002)
-| Rol | Email | Password |
-|-----|-------|----------|
-| Director | director.santamaria@edugest.cl | santamaria456 |
-| Docente 1 | patricia.rojas@santamaria.cl | docente456 |
-| Docente 2 | roberto.castro@santamaria.cl | docente456 |
-| Docente 3 | andrea.morales@santamaria.cl | docente456 |
-| Técnico | tecnico.santamaria@edugest.cl | tecnico456 |
-| Admin | admin.santamaria@edugest.cl | admin456 |
-
-### Colegio Los Andes (colegio-003)
-| Rol | Email | Password |
-|-----|-------|----------|
-| Director | director.losandes@edugest.cl | losandes789 |
-| Docente 1 | luis.fernandez@losandes.cl | docente789 |
-| Docente 2 | sofia.martinez@losandes.cl | docente789 |
-| Docente 3 | diego.vargas@losandes.cl | docente789 |
-| Técnico | tecnico.losandes@edugest.cl | tecnico789 |
-| Admin | admin.losandes@edugest.cl | admin789 |
-
-### Colegio Gabriela Mistral (colegio-004)
-| Rol | Email | Password |
-|-----|-------|----------|
-| Director | director.mistral@edugest.cl | mistral2024 |
-| Docente 1 | claudia.torres@mistral.cl | docente2024 |
-| Docente 2 | fernando.lopez@mistral.cl | docente2024 |
-| Docente 3 | valentina.ruiz@mistral.cl | docente2024 |
-| Técnico | tecnico.mistral@edugest.cl | tecnico2024 |
-| Admin | admin.mistral@edugest.cl | admin2024 |
-
-### Colegio Pablo Neruda (colegio-005)
-| Rol | Email | Password |
-|-----|-------|----------|
-| Director | director.neruda@edugest.cl | neruda2025 |
-| Docente 1 | marcela.diaz@neruda.cl | docente2025 |
-| Docente 2 | pablo.sanchez@neruda.cl | docente2025 |
-| Docente 3 | isabel.herrera@neruda.cl | docente2025 |
-| Técnico | tecnico.neruda@edugest.cl | tecnico2025 |
-| Admin | admin.neruda@edugest.cl | admin2025 |
-
-### Administrador Global
-| Rol | Email | Password |
-|-----|-------|----------|
-| Super Admin | superadmin@edugest.cl | SuperAdmin2026! |
+### Docentes
+1. `profesor.mecanica@edugest.cl` / `mecanica789`
+2. `profe.ciencias@edugest.cl` / `ciencias555`
+3. `guia.primaria@edugest.cl` / `guia2026`
+4. `maestro.multigrado@edugest.cl` / `rural123`
+5. `teacher.english@edugest.cl` / `english2026`
+6. `maestro.musica@edugest.cl` / `musica444`
+7. `coach.futbol@edugest.cl` / `futbol777`
+8. `maestro.waldorf@edugest.cl` / `steiner888`
+9. `profesor.robotica@edugest.cl` / `stem2026`
+10. `educadora.pie@edugest.cl` / `inclusion2026`
 
 ---
 
-## 🔍 VERIFICAR SEPARACIÓN DE DATOS
+## ✅ CARACTERÍSTICAS ÚNICAS DE CADA COLEGIO
 
-### Consola del Navegador (F12)
-
-```javascript
-// Ver colegio actual
-const session = JSON.parse(localStorage.getItem('edugest_session'));
-console.log('Colegio ID:', session.schoolId);
-console.log('Colegio Nombre:', session.schoolName);
-console.log('Usuario:', session.userName);
-
-// Ver eventos del colegio
-const eventos = JSON.parse(localStorage.getItem(`edugest_events_${session.schoolId}`));
-console.log('Total eventos:', eventos?.length || 0);
-
-// Ver presupuesto
-const presupuesto = JSON.parse(localStorage.getItem(`edugest_budget_${session.schoolId}`));
-console.log('Presupuesto:', presupuesto);
-
-// Ver usuarios del chat
-const chatUsers = JSON.parse(localStorage.getItem('chat_demo_users'));
-const miColegio = chatUsers?.filter(u => u.schoolId === session.schoolId);
-console.log('Usuarios de mi colegio:', miColegio?.length || 0);
-```
+Cada colegio tiene:
+- ✅ Email único y diferente
+- ✅ Contraseña única
+- ✅ Ubicación diferente
+- ✅ Tipo de establecimiento diferente
+- ✅ Número de estudiantes diferente
+- ✅ Presupuesto diferente
+- ✅ Enfoque pedagógico único
+- ✅ Infraestructura específica
+- ✅ Características distintivas
 
 ---
 
-## 💾 ALMACENAMIENTO POR COLEGIO
-
-```
-localStorage:
-  edugest_events_colegio-001      → 50 eventos San José
-  edugest_events_colegio-002      → 50 eventos Santa María
-  edugest_events_colegio-003      → 50 eventos Los Andes
-  edugest_events_colegio-004      → 50 eventos G. Mistral
-  edugest_events_colegio-005      → 50 eventos P. Neruda
-  
-  edugest_budget_colegio-001      → Presupuesto San José
-  edugest_budget_colegio-002      → Presupuesto Santa María
-  edugest_budget_colegio-003      → Presupuesto Los Andes
-  edugest_budget_colegio-004      → Presupuesto G. Mistral
-  edugest_budget_colegio-005      → Presupuesto P. Neruda
-  
-  edugest_calendar_colegio-001    → Calendario San José
-  edugest_calendar_colegio-002    → Calendario Santa María
-  edugest_calendar_colegio-003    → Calendario Los Andes
-  edugest_calendar_colegio-004    → Calendario G. Mistral
-  edugest_calendar_colegio-005    → Calendario P. Neruda
-  
-  chat_demo_users                 → Todos los usuarios (filtrados por schoolId)
-  chat_demo_messages              → Mensajes (filtrados por schoolId)
-```
-
----
-
-## ✅ CARACTERÍSTICAS DEL SISTEMA MULTI-COLEGIO
-
-- ✅ **5 colegios independientes** con datos únicos
-- ✅ **250 eventos PME** totales (50 por colegio)
-- ✅ **30 usuarios** activos (6 por colegio)
-- ✅ **Separación total** de datos
-- ✅ **Chat aislado** por colegio
-- ✅ **Presupuestos diferentes** por colegio
-- ✅ **Características únicas** por colegio
-- ✅ **Admin global** con acceso a todos
-- ✅ **Sistema SaaS** real y escalable
-
----
-
-## 🚀 INICIO RÁPIDO
-
-### Probar Diferentes Colegios
-
-```bash
-# Colegio 1: San José (Enfoque tecnológico)
-Email: director.sanjose@edugest.cl
-Password: sanjose123
-
-# Colegio 2: Santa María (Enfoque internacional)
-Email: director.santamaria@edugest.cl
-Password: santamaria456
-
-# Colegio 3: Los Andes (Enfoque inclusivo)
-Email: director.losandes@edugest.cl
-Password: losandes789
-
-# Colegio 4: Gabriela Mistral (Enfoque artístico)
-Email: director.mistral@edugest.cl
-Password: mistral2024
-
-# Colegio 5: Pablo Neruda (Enfoque ambiental)
-Email: director.neruda@edugest.cl
-Password: neruda2025
-```
-
----
-
-## 🎉 ¡SISTEMA MULTI-COLEGIO COMPLETO!
-
-Ahora tienes **5 colegios diferentes** con:
-- Datos únicos y no compartidos
-- Usuarios independientes
-- Presupuestos diferentes
-- Características especiales por colegio
-- Chat separado por colegio
-- Sistema completamente funcional
-
-**¡Prueba con diferentes colegios y comprueba la separación total de datos!** 🏫🚀
-
----
+**¡10 colegios completamente diferentes listos para usar! 🎉**
 
 *Última actualización: Marzo 2026*
