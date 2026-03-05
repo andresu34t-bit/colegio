@@ -727,3 +727,182 @@
 .chat-messages::-webkit-scrollbar-thumb:hover {
     background: #9ca3af;
 }
+
+
+/* Imágenes en Mensajes */
+.message-image-container {
+    position: relative;
+    max-width: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.message-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.message-image:hover {
+    transform: scale(1.02);
+}
+
+.message-image-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.05);
+    gap: 0.5rem;
+}
+
+.message.sent .message-image-info {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.message-image-name {
+    font-size: 0.75rem;
+    color: #6b7280;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.message.sent .message-image-name {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.btn-download-image {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.btn-download-image:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.message.sent .btn-download-image:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Modal de Imagen */
+.image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.image-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    cursor: pointer;
+}
+
+.image-modal-content {
+    position: relative;
+    background: white;
+    border-radius: 12px;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.image-modal-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.image-modal-header span {
+    font-weight: 600;
+    color: #111827;
+}
+
+.image-modal-body {
+    padding: 1rem;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9fafb;
+    max-height: calc(90vh - 140px);
+}
+
+.image-modal-body img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.image-modal-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    background: white;
+    border-radius: 0 0 12px 12px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Botón de adjuntar imagen */
+#btnAttachImage {
+    font-size: 1.25rem;
+    transition: transform 0.2s;
+}
+
+#btnAttachImage:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive para imágenes */
+@media (max-width: 768px) {
+    .message-image-container {
+        max-width: 250px;
+    }
+    
+    .image-modal-content {
+        max-width: 95vw;
+        max-height: 95vh;
+    }
+    
+    .image-modal-body {
+        max-height: calc(95vh - 140px);
+    }
+}

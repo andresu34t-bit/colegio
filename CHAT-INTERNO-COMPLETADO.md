@@ -77,6 +77,12 @@ El sistema de Chat Interno ha sido implementado exitosamente en EDUGEST.
   - Actualización cada 5 segundos
   - Sincronización entre pestañas
 
+- [x] **Compartir imágenes** 🆕
+  - Subir imágenes (máx 5MB)
+  - Ver en thumbnail y modal
+  - Descargar imágenes
+  - Múltiples formatos (JPG, PNG, GIF, SVG, WebP)
+
 ### Advanced Features ✅
 
 - [x] **Interfaz tipo WhatsApp**
@@ -129,9 +135,11 @@ El sistema de Chat Interno ha sido implementado exitosamente en EDUGEST.
 ### Mensajes (6 total)
 
 ```javascript
-Total de mensajes: 6
-Mensajes leídos: 5
-Mensajes no leídos: 1
+Total de mensajes: 8
+Mensajes de texto: 6
+Mensajes con imagen: 2
+Mensajes leídos: 6
+Mensajes no leídos: 2
 ```
 
 ---
@@ -455,7 +463,8 @@ location.reload();
 
 ### Fase 2 (Futuro)
 
-- [ ] Envío de archivos e imágenes
+- [x] Envío de imágenes ✅ COMPLETADO
+- [ ] Envío de documentos (PDF, Word, Excel)
 - [ ] Mensajes de voz
 - [ ] Videollamadas
 - [ ] Grupos de chat

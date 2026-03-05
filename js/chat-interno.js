@@ -102,7 +102,8 @@ class ChatInterno {
                         recipientId: 'user-1',
                         message: 'Buenos días, directora. Necesito hablar sobre el evento de mañana.',
                         timestamp: Date.now() - 3600000,
-                        read: true
+                        read: true,
+                        type: 'text'
                     },
                     {
                         id: 'msg-2',
@@ -110,7 +111,8 @@ class ChatInterno {
                         recipientId: 'user-2',
                         message: 'Hola Juan, claro. ¿Qué necesitas?',
                         timestamp: Date.now() - 3500000,
-                        read: true
+                        read: true,
+                        type: 'text'
                     },
                     {
                         id: 'msg-3',
@@ -118,7 +120,23 @@ class ChatInterno {
                         recipientId: 'user-1',
                         message: '¿Podemos confirmar el horario? Algunos padres han preguntado.',
                         timestamp: Date.now() - 3400000,
-                        read: true
+                        read: true,
+                        type: 'text'
+                    },
+                    {
+                        id: 'msg-demo-img-1',
+                        senderId: 'user-2',
+                        recipientId: 'user-1',
+                        message: 'Te envío el afiche del evento',
+                        timestamp: Date.now() - 3300000,
+                        read: true,
+                        type: 'image',
+                        image: {
+                            data: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzY2N2VlYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNDAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5FdmVudG8gRXNjb2xhcjwvdGV4dD48dGV4dCB4PSI1MCUiIHk9IjU1JSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TWHDsWFuYSAxMDowMCBocnM8L3RleHQ+PHRleHQgeD0iNTAlIiB5PSI2NSUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkF1bGEgTWFnbmE8L3RleHQ+PC9zdmc+',
+                            name: 'afiche-evento.jpg',
+                            size: 45678,
+                            type: 'image/svg+xml'
+                        }
                     }
                 ],
                 'user-1_user-4': [
@@ -128,7 +146,23 @@ class ChatInterno {
                         recipientId: 'user-1',
                         message: 'Directora, el proyector de la sala 3 necesita reparación.',
                         timestamp: Date.now() - 7200000,
-                        read: false
+                        read: false,
+                        type: 'text'
+                    },
+                    {
+                        id: 'msg-demo-img-2',
+                        senderId: 'user-4',
+                        recipientId: 'user-1',
+                        message: 'Foto del problema',
+                        timestamp: Date.now() - 7100000,
+                        read: false,
+                        type: 'image',
+                        image: {
+                            data: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2VmNDQ0NCIvPjx0ZXh0IHg9IjUwJSIgeT0iNDAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNDgiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7imqDvuI88L3RleHQ+PHRleHQgeD0iNTAlIiB5PSI2MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlByb3llY3RvciBEYcOxYWRvPC90ZXh0Pjwvc3ZnPg==',
+                            name: 'proyector-dañado.jpg',
+                            size: 32456,
+                            type: 'image/svg+xml'
+                        }
                     }
                 ],
                 'user-2_user-4': [
@@ -138,7 +172,8 @@ class ChatInterno {
                         recipientId: 'user-4',
                         message: 'Carlos, ¿puedes revisar el computador del laboratorio?',
                         timestamp: Date.now() - 1800000,
-                        read: true
+                        read: true,
+                        type: 'text'
                     },
                     {
                         id: 'msg-6',
@@ -146,7 +181,8 @@ class ChatInterno {
                         recipientId: 'user-2',
                         message: 'Claro, voy en 10 minutos.',
                         timestamp: Date.now() - 1700000,
-                        read: true
+                        read: true,
+                        type: 'text'
                     }
                 ]
             };
@@ -376,7 +412,23 @@ class ChatInterno {
                                 </div>
                             `}
                             <div class="message-bubble">
-                                <p class="message-text">${this.escapeHtml(msg.message)}</p>
+                                ${msg.type === 'image' ? `
+                                    <div class="message-image-container">
+                                        <img src="${msg.image.data}" 
+                                             alt="${msg.image.name}" 
+                                             class="message-image"
+                                             onclick="chatInterno.openImageModal('${msg.image.data}', '${msg.image.name}')">
+                                        <div class="message-image-info">
+                                            <span class="message-image-name">${msg.image.name}</span>
+                                            <button class="btn-download-image" 
+                                                    onclick="event.stopPropagation(); chatInterno.downloadImage('${msg.image.data}', '${msg.image.name}')"
+                                                    title="Descargar imagen">
+                                                ⬇️
+                                            </button>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${msg.message ? `<p class="message-text">${this.escapeHtml(msg.message)}</p>` : ''}
                             </div>
                         </div>
                     </div>
@@ -390,12 +442,15 @@ class ChatInterno {
         container.scrollTop = container.scrollHeight;
     }
     
-    sendMessage() {
+    sendMessage(messageText = null, imageData = null) {
         const input = document.getElementById('messageInput');
-        if (!input) return;
         
-        const message = input.value.trim();
-        if (!message) return;
+        // Si no hay texto ni imagen, obtener del input
+        if (!messageText && !imageData) {
+            if (!input) return;
+            messageText = input.value.trim();
+            if (!messageText) return;
+        }
         
         if (!this.currentConversation) {
             alert('Selecciona una conversación primero');
@@ -411,10 +466,18 @@ class ChatInterno {
             id: 'msg-' + Date.now(),
             senderId: this.currentUser.id,
             recipientId: recipientId,
-            message: message,
+            message: messageText || '',
             timestamp: Date.now(),
             read: false
         };
+        
+        // Agregar imagen si existe
+        if (imageData) {
+            newMessage.image = imageData;
+            newMessage.type = 'image';
+        } else {
+            newMessage.type = 'text';
+        }
         
         // Agregar a la conversación
         if (!this.messages[this.currentConversation]) {
@@ -427,7 +490,9 @@ class ChatInterno {
         localStorage.setItem('chat_demo_messages', JSON.stringify(this.messages));
         
         // Limpiar input
-        input.value = '';
+        if (input) {
+            input.value = '';
+        }
         
         // Actualizar UI
         this.renderMessages(this.currentConversation);
@@ -435,6 +500,81 @@ class ChatInterno {
         
         // Simular notificación de sonido
         this.playNotificationSound();
+    }
+    
+    handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        // Validar que sea una imagen
+        if (!file.type.startsWith('image/')) {
+            alert('Por favor selecciona un archivo de imagen válido');
+            return;
+        }
+        
+        // Validar tamaño (máximo 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('La imagen es muy grande. Máximo 5MB');
+            return;
+        }
+        
+        // Leer la imagen como base64
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const imageData = {
+                data: e.target.result,
+                name: file.name,
+                size: file.size,
+                type: file.type
+            };
+            
+            // Enviar mensaje con imagen
+            this.sendMessage('📷 Imagen', imageData);
+        };
+        
+        reader.readAsDataURL(file);
+        
+        // Limpiar el input
+        event.target.value = '';
+    }
+    
+    downloadImage(imageData, imageName) {
+        // Crear un enlace temporal para descargar
+        const link = document.createElement('a');
+        link.href = imageData;
+        link.download = imageName || 'imagen-chat.jpg';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+    
+    openImageModal(imageSrc, imageName) {
+        // Crear modal para ver imagen en grande
+        const modal = document.createElement('div');
+        modal.className = 'image-modal';
+        modal.innerHTML = `
+            <div class="image-modal-overlay" onclick="this.parentElement.remove()"></div>
+            <div class="image-modal-content">
+                <div class="image-modal-header">
+                    <span>${imageName || 'Imagen'}</span>
+                    <button class="btn-icon" onclick="this.closest('.image-modal').remove()">✕</button>
+                </div>
+                <div class="image-modal-body">
+                    <img src="${imageSrc}" alt="Imagen">
+                </div>
+                <div class="image-modal-footer">
+                    <button class="btn btn-secondary" onclick="chatInterno.downloadImage('${imageSrc}', '${imageName || 'imagen.jpg'}')">
+                        <span>⬇️</span>
+                        <span>Descargar</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="this.closest('.image-modal').remove()">
+                        <span>Cerrar</span>
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
     }
     
     markAsRead(conversationId) {
@@ -704,6 +844,20 @@ class ChatInterno {
                     this.sendMessage();
                 }
             });
+        }
+        
+        // Botón adjuntar imagen
+        const btnAttach = document.getElementById('btnAttachImage');
+        if (btnAttach) {
+            btnAttach.addEventListener('click', () => {
+                document.getElementById('imageInput').click();
+            });
+        }
+        
+        // Input de imagen
+        const imageInput = document.getElementById('imageInput');
+        if (imageInput) {
+            imageInput.addEventListener('change', (e) => this.handleImageUpload(e));
         }
         
         // Búsqueda de usuarios

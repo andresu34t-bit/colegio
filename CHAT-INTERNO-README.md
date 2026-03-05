@@ -19,6 +19,9 @@ Sistema de mensajería en tiempo real integrado en EDUGEST que permite la comuni
 - ✅ **Interfaz tipo WhatsApp** - Diseño moderno y familiar
 - ✅ **Responsive** - Funciona en desktop, tablet y móvil
 - ✅ **Datos de prueba** - Usuarios y mensajes simulados para testing
+- ✅ **Compartir imágenes** - Subir, ver y descargar fotos en el chat
+- ✅ **Visor de imágenes** - Modal para ver imágenes en tamaño completo
+- ✅ **Descarga de imágenes** - Descargar imágenes compartidas
 
 ---
 
@@ -90,6 +93,46 @@ El sistema incluye 6 usuarios de demostración:
 
 - **Todos**: Muestra todas las conversaciones
 - **No leídos**: Solo conversaciones con mensajes sin leer
+
+---
+
+## 📷 Compartir Imágenes
+
+### 1. Enviar una Imagen
+
+1. Abre una conversación
+2. Click en el botón **📷** (junto al campo de texto)
+3. Selecciona una imagen de tu dispositivo
+4. La imagen se enviará automáticamente
+
+### 2. Ver Imagen en Grande
+
+1. Click en cualquier imagen del chat
+2. Se abrirá un modal con la imagen en tamaño completo
+3. Puedes hacer zoom o descargar la imagen
+
+### 3. Descargar Imagen
+
+**Opción 1: Desde el mensaje**
+- Click en el botón **⬇️** en la imagen
+
+**Opción 2: Desde el modal**
+- Abre la imagen en grande
+- Click en **"Descargar"**
+
+### 4. Formatos Soportados
+
+- JPG / JPEG
+- PNG
+- GIF
+- SVG
+- WebP
+
+### 5. Límites
+
+- Tamaño máximo: **5 MB** por imagen
+- Solo se permiten archivos de imagen
+- Las imágenes se guardan en formato base64
 
 ---
 
@@ -174,13 +217,32 @@ localStorage.setItem('edugest_session', JSON.stringify({
 ### Estructura de Mensajes
 
 ```javascript
+// Mensaje de texto
 {
     id: 'msg-1',
     senderId: 'user-1',
     recipientId: 'user-2',
     message: 'Hola, ¿cómo estás?',
     timestamp: 1709568000000,
-    read: false
+    read: false,
+    type: 'text'
+}
+
+// Mensaje con imagen
+{
+    id: 'msg-2',
+    senderId: 'user-1',
+    recipientId: 'user-2',
+    message: 'Te envío la foto',
+    timestamp: 1709568100000,
+    read: false,
+    type: 'image',
+    image: {
+        data: 'data:image/jpeg;base64,...',
+        name: 'foto.jpg',
+        size: 123456,
+        type: 'image/jpeg'
+    }
 }
 ```
 
@@ -375,7 +437,8 @@ const demoUsers = [
 
 ### Funcionalidades Futuras
 
-- [ ] Envío de archivos e imágenes
+- [x] Envío de imágenes ✅ COMPLETADO
+- [ ] Envío de documentos (PDF, Word, Excel)
 - [ ] Mensajes de voz
 - [ ] Videollamadas
 - [ ] Grupos de chat

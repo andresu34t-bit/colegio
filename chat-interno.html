@@ -136,7 +136,8 @@
                         
                         <!-- Input de Mensaje -->
                         <div class="chat-input-container">
-                            <button class="btn-icon" title="Adjuntar archivo">📎</button>
+                            <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                            <button class="btn-icon" id="btnAttachImage" title="Adjuntar imagen">📷</button>
                             <input type="text" id="messageInput" placeholder="Escribe un mensaje..." class="message-input">
                             <button class="btn-send" id="btnSend">
                                 <span>Enviar</span>
