@@ -13,8 +13,12 @@
     <script src="js/roles-permissions.js"></script>
     <script src="js/multi-school.js"></script>
     <script>
-        // Verificar que el usuario sea Admin Global
-        window.addEventListener('DOMContentLoaded', () => {
+        // Verificar sesión SOLO UNA VEZ
+        (function() {
+            // Evitar múltiples ejecuciones
+            if (window.adminGlobalChecked) return;
+            window.adminGlobalChecked = true;
+            
             const user = EdugestRoles.getCurrentUser();
             
             if (!user) {
@@ -38,7 +42,7 @@
                     </div>
                 `;
             }
-        });
+        })();
     </script>
     
     <div class="app-layout">

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Super Admin - EDUGEST</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/admin-global.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <script src="js/roles-permissions.js"></script>
+    <script src="js/multi-school.js"></script>
+    
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="LOGO EDUGEST.png" alt="EDUGEST" onerror="this.style.display='none'">
+                </div>
+                <h1 class="sidebar-brand">EDUGEST</h1>
+                <div class="admin-badge">SUPER ADMIN</div>
+            </div>
+            
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <div class="user-name" id="userName">Admin Global</div>
+                <div class="user-role" id="userRole">Administrador Global</div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Panel Global</div>
+                    <a href="#dashboard" class="nav-item active" onclick="showSection('dashboard')">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard Global</span>
+                    </a>
+                    <a href="#colegios" class="nav-item" onclick="showSection('colegios')">
+                        <span class="nav-icon">🏫</span>
+                        <span>Gestión Colegios</span>
+                    </a>
+                    <a href="#usuarios" class="nav-item" onclick="showSection('usuarios')">
+                        <span class="nav-icon">👥</span>
+                        <span>Gestión Usuarios</span>
+                    </a>
+                    <a href="#estadisticas" class="nav-item" onclick="showSection('estadisticas')">
+                        <span class="nav-icon">📈</span>
+                        <span>Estadísticas</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Acceso Colegios</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <span class="nav-icon">🎯</span>
+                        <span>Ver como Colegio</span>
+                    </a>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <span>🚪</span>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- SECCIÓN: DASHBOARD GLOBAL -->
+            <section id="section-dashboard" class="content-section active">
+                <header class="page-header">
+                    <div class="page-header-content">
+                        <div>
+                            <h1 class="page-title">Dashboard Global</h1>
+                            <p class="page-subtitle">Vista general de todos los colegios del sistema</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="btn btn-secondary" onclick="refreshData()">
+                                <span>🔄</span> Actualizar
+                            </button>
+                        </div>
+                    </div>
+                </header>
+                
+                <div class="page-content">
+                    <!-- Stats Globales -->
+                    <div class="stats-grid-global">
+                        <div class="stat-card-global curriculum">
+                            <div class="stat-icon">🏫</div>
+                            <div class="stat-content">
+                                <div class="stat-label">Total Colegios</div>
+                                <div class="stat-value" id="totalSchools">20</div>
+                                <div class="stat-change positive">Todos activos</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card-global liderazgo">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-content">
+                                <div class="stat-label">Total Usuarios</div>
+                                <div class="stat-value" id="totalUsers">40</div>
+                                <div class="stat-change">20 directores + 20 docentes</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card-global convivencia">
+                            <div class="stat-icon">📚</div>
+                            <div class="stat-content">
+                                <div class="stat-label">Total Estudiantes</div>
+                                <div class="stat-value" id="totalStudents">15,610</div>
+                                <div class="stat-change positive">+5% vs año anterior</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card-global gestion">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-content">
+                                <div class="stat-label">Presupuesto Total</div>
+                                <div class="stat-value" id="totalBudget">$2.2B</div>
+                                <div class="stat-change">Suma de todos los colegios</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">✅ Panel Cargado Correctamente</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>El Panel de Administración Global está funcionando correctamente.</p>
+                            <p>Sesión activa como: <strong id="currentUserName">Admin Global</strong></p>
+                            <p>Rol: <strong id="currentUserRole">admin_global</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script>
+        // Verificación simple sin bucles
+        const user = EdugestRoles.getCurrentUser();
+        
+        if (!user) {
+            alert('No hay sesión activa. Redirigiendo al login...');
+            window.location.replace('login.html');
+        } else if (user.role !== 'admin_global') {
+            alert('Acceso denegado. Solo Admin Global puede acceder.');
+            window.location.replace('dashboard.html');
+        } else {
+            // Usuario correcto, actualizar info
+            document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('currentUserName').textContent = user.name;
+            document.getElementById('currentUserRole').textContent = user.role;
+        }
+        
+        function logout() {
+            if (confirm('¿Cerrar sesión?')) {
+                localStorage.removeItem('edugest_session');
+                sessionStorage.removeItem('edugest_session');
+                window.location.replace('login.html');
+            }
+        }
+        
+        function refreshData() {
+            alert('Datos actualizados');
+        }
+        
+        function showSection(section) {
+            alert('Navegando a: ' + section);
+        }
+    </script>
+</body>
+</html>
