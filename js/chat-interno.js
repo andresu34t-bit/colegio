@@ -326,6 +326,12 @@ class ChatInterno {
         document.getElementById('chatEmpty').style.display = 'none';
         document.getElementById('chatActive').style.display = 'flex';
         
+        // En móvil, agregar clase para mostrar el chat
+        const chatContainer = document.querySelector('.chat-container');
+        if (chatContainer && window.innerWidth <= 768) {
+            chatContainer.classList.add('conversation-open');
+        }
+        
         // Actualizar header del chat
         const userAvatar = document.getElementById('chatUserAvatar');
         const userName = document.getElementById('chatUserName');
@@ -846,6 +852,14 @@ class ChatInterno {
             });
         }
         
+        // Botón volver en móvil
+        const btnBackToList = document.getElementById('btnBackToList');
+        if (btnBackToList) {
+            btnBackToList.addEventListener('click', () => {
+                this.backToConversationList();
+            });
+        }
+        
         // Botón adjuntar imagen
         const btnAttach = document.getElementById('btnAttachImage');
         if (btnAttach) {
@@ -902,10 +916,33 @@ class ChatInterno {
             });
         }
         
+        // Manejar cambio de tamaño de ventana
+        window.addEventListener('resize', () => {
+            // Si se cambia a desktop, remover clase mobile
+            if (window.innerWidth > 768) {
+                const chatContainer = document.querySelector('.chat-container');
+                if (chatContainer) {
+                    chatContainer.classList.remove('conversation-open');
+                }
+            }
+        });
+        
         // Solicitar permiso de notificaciones
         if ('Notification' in window && Notification.permission === 'default') {
             Notification.requestPermission();
         }
+    }
+    
+    backToConversationList() {
+        const chatContainer = document.querySelector('.chat-container');
+        if (chatContainer) {
+            chatContainer.classList.remove('conversation-open');
+        }
+        
+        // Opcional: cerrar el chat activo
+        // document.getElementById('chatActive').style.display = 'none';
+        // document.getElementById('chatEmpty').style.display = 'flex';
+        // this.currentConversation = null;
     }
     
     showNewChatModal() {

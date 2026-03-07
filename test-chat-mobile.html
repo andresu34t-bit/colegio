@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Chat Móvil - EDUGEST</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f3f4f6;
+        }
+        
+        .test-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .test-header {
+            background: #3b82f6;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .test-info {
+            padding: 1rem;
+            background: #fef3c7;
+            border-bottom: 2px solid #f59e0b;
+        }
+        
+        .test-info h3 {
+            margin-bottom: 0.5rem;
+            color: #92400e;
+        }
+        
+        .test-info ul {
+            margin-left: 1.5rem;
+            color: #78350f;
+        }
+        
+        .test-info li {
+            margin: 0.25rem 0;
+        }
+        
+        iframe {
+            width: 100%;
+            height: calc(100vh - 200px);
+            border: none;
+        }
+        
+        .test-buttons {
+            padding: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .test-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .test-btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .test-btn-primary:hover {
+            background: #2563eb;
+        }
+        
+        .test-btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+        
+        .test-btn-secondary:hover {
+            background: #d1d5db;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h2>📱 Test Chat Móvil</h2>
+            <p style="font-size: 0.875rem; margin-top: 0.5rem; opacity: 0.9;">
+                Simulador de vista móvil
+            </p>
+        </div>
+        
+        <div class="test-info">
+            <h3>✅ Funcionalidades a probar:</h3>
+            <ul>
+                <li>Ver lista de conversaciones al inicio</li>
+                <li>Tocar un chat para abrirlo</li>
+                <li>Ver botón "←" para volver</li>
+                <li>Volver a la lista de chats</li>
+                <li>Enviar mensajes</li>
+                <li>Buscar usuarios</li>
+            </ul>
+        </div>
+        
+        <iframe src="chat-interno.html" id="chatFrame"></iframe>
+        
+        <div class="test-buttons">
+            <button class="test-btn test-btn-secondary" onclick="location.reload()">
+                🔄 Recargar
+            </button>
+            <button class="test-btn test-btn-primary" onclick="window.open('chat-interno.html', '_blank')">
+                🚀 Abrir Chat
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // Simular sesión para el test
+        if (!localStorage.getItem('edugest_session')) {
+            localStorage.setItem('edugest_session', JSON.stringify({
+                userId: 'user-1',
+                userName: 'María González',
+                userRole: 'director',
+                schoolId: 'colegio-1'
+            }));
+        }
+        
+        console.log('📱 Test móvil iniciado');
+        console.log('Ancho de pantalla simulado: 400px');
+    </script>
+</body>
+</html>

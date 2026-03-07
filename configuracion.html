@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - EDUGEST</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/sidebar-professional.css">
+    <link rel="stylesheet" href="css/configuracion.css">
+</head>
+<body>
+    <!-- Protección de Sesión -->
+    <script src="js/roles-permissions.js"></script>
+    <script>
+        if (!EdugestRoles.protectPage()) {
+            window.location.replace('login.html');
+        }
+    </script>
+    
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="LOGO EDUGEST.png" alt="EDUGEST" onerror="this.style.display='none'">
+                </div>
+                <h1 class="sidebar-brand">EDUGEST</h1>
+            </div>
+            
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">D</div>
+                <div class="user-name" id="userName">Usuario Demo</div>
+                <div class="user-role" id="userRole">Director</div>
+                <div style="margin-top: 0.5rem; font-size: 0.75rem; color: #9ca3af;" id="userSchool">Colegio</div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Módulo PME</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard PME</span>
+                    </a>
+                    <a href="configuracion.html" class="nav-item active">
+                        <span class="nav-icon">⚙️</span>
+                        <span>Configuración</span>
+                    </a>
+                    <a href="areas-new.html" class="nav-item">
+                        <span class="nav-icon">📝</span>
+                        <span>Registrar Evento</span>
+                    </a>
+                    <a href="informes.html" class="nav-item">
+                        <span class="nav-icon">📄</span>
+                        <span>Informes PME</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Comunicación</div>
+                    <a href="chat-interno.html" class="nav-item">
+                        <span class="nav-icon">💬</span>
+                        <span>Chat Interno</span>
+                    </a>
+                    <a href="notificaciones.html" class="nav-item">
+                        <span class="nav-icon">🔔</span>
+                        <span>Notificaciones</span>
+                    </a>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <span>🚪</span>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">⚙️ Configuración</h1>
+                    <p class="page-subtitle">Administra tu perfil y preferencias del sistema</p>
+                </div>
+            </div>
+            
+            <!-- Tabs de Configuración -->
+            <div class="config-tabs">
+                <button class="config-tab active" data-tab="perfil">
+                    <span class="tab-icon">👤</span>
+                    <span>Mi Perfil</span>
+                </button>
+                <button class="config-tab" data-tab="seguridad">
+                    <span class="tab-icon">🔒</span>
+                    <span>Seguridad</span>
+                </button>
+                <button class="config-tab" data-tab="colegio">
+                    <span class="tab-icon">🏫</span>
+                    <span>Mi Colegio</span>
+                </button>
+                <button class="config-tab" data-tab="sistema">
+                    <span class="tab-icon">🎨</span>
+                    <span>Sistema</span>
+                </button>
+            </div>
+            
+            <!-- Contenido de Tabs -->
+            <div class="config-content">
+                <!-- Tab: Mi Perfil -->
+                <div class="config-panel active" id="panel-perfil">
+                    <div class="config-card">
+                        <div class="config-card-header">
+                            <h2>Información Personal</h2>
+                            <p>Actualiza tus datos personales</p>
+                        </div>
+                        
+                        <form id="formPerfil" class="config-form">
+                            <div class="form-avatar-section">
+                                <div class="avatar-preview" id="avatarPreview">
+                                    <span id="avatarLetter">D</span>
+                                </div>
+                                <div class="avatar-info">
+                                    <h3>Foto de Perfil</h3>
+                                    <p>Haz clic para cambiar tu avatar</p>
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="cambiarAvatar()">
+                                        Cambiar Avatar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Nombre Completo</label>
+                                    <input type="text" id="nombreCompleto" class="form-input" placeholder="Ej: María González">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>RUT</label>
+                                    <input type="text" id="rut" class="form-input" placeholder="12.345.678-9" readonly>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" id="email" class="form-input" placeholder="usuario@colegio.cl">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Teléfono</label>
+                                    <input type="tel" id="telefono" class="form-input" placeholder="+56 9 1234 5678">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Cargo</label>
+                                <input type="text" id="cargo" class="form-input" readonly>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" onclick="cancelarCambios('perfil')">
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    💾 Guardar Cambios
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Tab: Seguridad -->
+                <div class="config-panel" id="panel-seguridad">
+                    <div class="config-card">
+                        <div class="config-card-header">
+                            <h2>Cambiar Contraseña</h2>
+                            <p>Actualiza tu contraseña de acceso</p>
+                        </div>
+                        
+                        <form id="formPassword" class="config-form">
+                            <div class="form-group">
+                                <label>Contraseña Actual</label>
+                                <div class="password-input-group">
+                                    <input type="password" id="passwordActual" class="form-input" placeholder="Ingresa tu contraseña actual">
+                                    <button type="button" class="btn-toggle-password" onclick="togglePassword('passwordActual')">
+                                        👁️
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Nueva Contraseña</label>
+                                <div class="password-input-group">
+                                    <input type="password" id="passwordNueva" class="form-input" placeholder="Mínimo 8 caracteres">
+                                    <button type="button" class="btn-toggle-password" onclick="togglePassword('passwordNueva')">
+                                        👁️
+                                    </button>
+                                </div>
+                                <div class="password-strength" id="passwordStrength"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Confirmar Nueva Contraseña</label>
+                                <div class="password-input-group">
+                                    <input type="password" id="passwordConfirmar" class="form-input" placeholder="Repite la nueva contraseña">
+                                    <button type="button" class="btn-toggle-password" onclick="togglePassword('passwordConfirmar')">
+                                        👁️
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info">
+                                <strong>Requisitos de contraseña:</strong>
+                                <ul>
+                                    <li>Mínimo 8 caracteres</li>
+                                    <li>Al menos una letra mayúscula</li>
+                                    <li>Al menos un número</li>
+                                    <li>Se recomienda incluir caracteres especiales</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" onclick="cancelarCambios('seguridad')">
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    🔒 Cambiar Contraseña
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="config-card">
+                        <div class="config-card-header">
+                            <h2>Sesiones Activas</h2>
+                            <p>Administra tus sesiones en diferentes dispositivos</p>
+                        </div>
+                        
+                        <div class="sessions-list">
+                            <div class="session-item current">
+                                <div class="session-icon">💻</div>
+                                <div class="session-info">
+                                    <h4>Sesión Actual</h4>
+                                    <p>Windows • Chrome • Santiago, Chile</p>
+                                    <span class="session-time">Activo ahora</span>
+                                </div>
+                                <span class="session-badge">Actual</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tab: Mi Colegio -->
+                <div class="config-panel" id="panel-colegio">
+                    <div class="config-card">
+                        <div class="config-card-header">
+                            <h2>Información del Colegio</h2>
+                            <p>Datos de tu institución educativa</p>
+                        </div>
+                        
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Nombre del Colegio</div>
+                                <div class="info-value" id="colegioNombre">-</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-label">RBD</div>
+                                <div class="info-value" id="colegioRBD">-</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-label">Dirección</div>
+                                <div class="info-value" id="colegioDireccion">-</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-label">Comuna</div>
+                                <div class="info-value" id="colegioComuna">-</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-label">Región</div>
+                                <div class="info-value" id="colegioRegion">-</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-label">Teléfono</div>
+                                <div class="info-value" id="colegioTelefono">-</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-label">Email</div>
+                                <div class="info-value" id="colegioEmail">-</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-label">Tipo de Establecimiento</div>
+                                <div class="info-value" id="colegioTipo">-</div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <strong>ℹ️ Nota:</strong> Para modificar la información del colegio, contacta al administrador del sistema.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tab: Sistema -->
+                <div class="config-panel" id="panel-sistema">
+                    <div class="config-card">
+                        <div class="config-card-header">
+                            <h2>Preferencias del Sistema</h2>
+                            <p>Personaliza tu experiencia en EDUGEST</p>
+                        </div>
+                        
+                        <form id="formSistema" class="config-form">
+                            <div class="form-group">
+                                <label>Idioma</label>
+                                <select id="idioma" class="form-input">
+                                    <option value="es" selected>Español</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Zona Horaria</label>
+                                <select id="zonaHoraria" class="form-input">
+                                    <option value="America/Santiago" selected>Santiago (GMT-3)</option>
+                                    <option value="America/Argentina/Buenos_Aires">Buenos Aires (GMT-3)</option>
+                                    <option value="America/Lima">Lima (GMT-5)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="notificacionesEmail" checked>
+                                    <span>Recibir notificaciones por email</span>
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="notificacionesPush" checked>
+                                    <span>Recibir notificaciones push</span>
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="sonidoNotificaciones" checked>
+                                    <span>Sonido en notificaciones</span>
+                                </label>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" onclick="cancelarCambios('sistema')">
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    💾 Guardar Preferencias
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="config-card">
+                        <div class="config-card-header">
+                            <h2>Información del Sistema</h2>
+                            <p>Detalles técnicos de EDUGEST</p>
+                        </div>
+                        
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Versión</div>
+                                <div class="info-value">2.0.0</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-label">Última Actualización</div>
+                                <div class="info-value">Marzo 2026</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-label">Navegador</div>
+                                <div class="info-value" id="navegadorInfo">-</div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-label">Sistema Operativo</div>
+                                <div class="info-value" id="sistemaInfo">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Toast de Notificaciones -->
+    <div class="toast" id="toast"></div>
+    
+    <script src="js/sidebar-toggle.js"></script>
+    <script src="js/configuracion.js"></script>
+    <script>
+        function logout() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                localStorage.removeItem('edugest_session');
+                sessionStorage.removeItem('edugest_session');
+                window.location.replace('login.html');
+            }
+        }
+    </script>
+</body>
+</html>
