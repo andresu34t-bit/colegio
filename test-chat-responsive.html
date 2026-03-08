@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Chat Responsive - EDUGEST</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f3f4f6;
+        }
+        
+        .test-header {
+            background: #3b82f6;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .test-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.5rem;
+        }
+        
+        .test-header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 0.875rem;
+        }
+        
+        .test-controls {
+            background: white;
+            padding: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .test-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+        
+        .test-btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .test-btn-primary:hover {
+            background: #2563eb;
+        }
+        
+        .test-btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .test-btn-secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        .test-info {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem;
+            border-radius: 6px;
+        }
+        
+        .test-info h3 {
+            margin: 0 0 0.5rem 0;
+            color: #92400e;
+            font-size: 1rem;
+        }
+        
+        .test-info ul {
+            margin: 0.5rem 0 0 1.5rem;
+            color: #78350f;
+            font-size: 0.875rem;
+        }
+        
+        .test-info li {
+            margin: 0.25rem 0;
+        }
+        
+        .viewport-container {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .viewport {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .viewport-header {
+            background: #111827;
+            color: white;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .viewport iframe {
+            border: none;
+            display: block;
+        }
+        
+        .viewport-mobile {
+            width: 375px;
+        }
+        
+        .viewport-mobile iframe {
+            width: 375px;
+            height: 667px;
+        }
+        
+        .viewport-tablet {
+            width: 768px;
+        }
+        
+        .viewport-tablet iframe {
+            width: 768px;
+            height: 600px;
+        }
+        
+        .viewport-desktop {
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .viewport-desktop iframe {
+            width: 100%;
+            height: 700px;
+        }
+        
+        .test-checklist {
+            background: white;
+            margin: 1rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .test-checklist h3 {
+            margin: 0 0 1rem 0;
+            color: #111827;
+        }
+        
+        .checklist-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: #f9fafb;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .checklist-item label {
+            flex: 1;
+            cursor: pointer;
+            font-size: 0.9375rem;
+        }
+        
+        @media (max-width: 768px) {
+            .viewport-container {
+                padding: 0.5rem;
+            }
+            
+            .viewport-mobile,
+            .viewport-tablet {
+                width: 100%;
+            }
+            
+            .viewport-mobile iframe,
+            .viewport-tablet iframe {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-header">
+        <h1>📱 Test Chat Responsive</h1>
+        <p>Verificación del chat en diferentes dispositivos</p>
+    </div>
+    
+    <div class="test-controls">
+        <button class="test-btn test-btn-primary" onclick="showView('mobile')">
+            📱 Vista Móvil
+        </button>
+        <button class="test-btn test-btn-primary" onclick="showView('tablet')">
+            📱 Vista Tablet
+        </button>
+        <button class="test-btn test-btn-primary" onclick="showView('desktop')">
+            💻 Vista Desktop
+        </button>
+        <button class="test-btn test-btn-secondary" onclick="reloadAll()">
+            🔄 Recargar Todo
+        </button>
+        <button class="test-btn test-btn-secondary" onclick="window.open('chat-interno.html', '_blank')">
+            🚀 Abrir Chat
+        </button>
+    </div>
+    
+    <div class="test-info">
+        <h3>✅ Funcionalidades a Verificar:</h3>
+        <ul>
+            <li><strong>Móvil:</strong> Lista de chats visible al inicio, botón "←" para volver</li>
+            <li><strong>Tablet:</strong> 2 columnas (lista + chat)</li>
+            <li><strong>Desktop:</strong> 2 columnas con más espacio</li>
+            <li><strong>General:</strong> Nombres visibles, selección funcional, envío de mensajes</li>
+        </ul>
+    </div>
+    
+    <div class="viewport-container" id="viewportContainer">
+        <!-- Las vistas se cargarán aquí -->
+    </div>
+    
+    <div class="test-checklist">
+        <h3>📋 Checklist de Pruebas</h3>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="check1">
+            <label for="check1">✅ En móvil se ve la lista de conversaciones al inicio</label>
+        </div>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="check2">
+            <label for="check2">✅ Los nombres de usuarios son legibles</label>
+        </div>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="check3">
+            <label for="check3">✅ Al tocar un chat se abre la conversación</label>
+        </div>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="check4">
+            <label for="check4">✅ Aparece el botón "←" para volver en móvil</label>
+        </div>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="check5">
+            <label for="check5">✅ El botón volver funciona correctamente</label>
+        </div>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="check6">
+            <label for="check6">✅ Se pueden enviar mensajes</label>
+        </div>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="check7">
+            <label for="check7">✅ El área de escritura es accesible</label>
+        </div>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="check8">
+            <label for="check8">✅ Los botones tienen buen tamaño para tocar</label>
+        </div>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="check9">
+            <label for="check9">✅ En desktop se ven 2 columnas</label>
+        </div>
+        
+        <div class="checklist-item">
+            <input type="checkbox" id="check10">
+            <label for="check10">✅ Todo el contenido se ajusta al ancho</label>
+        </div>
+    </div>
+    
+    <script>
+        // Crear sesión de prueba
+        if (!localStorage.getItem('edugest_session')) {
+            localStorage.setItem('edugest_session', JSON.stringify({
+                userId: 'user-1',
+                userName: 'María González',
+                userRole: 'director',
+                schoolId: 'colegio-1'
+            }));
+        }
+        
+        function showView(type) {
+            const container = document.getElementById('viewportContainer');
+            
+            if (type === 'mobile') {
+                container.innerHTML = `
+                    <div class="viewport viewport-mobile">
+                        <div class="viewport-header">📱 iPhone (375x667)</div>
+                        <iframe src="chat-interno.html"></iframe>
+                    </div>
+                `;
+            } else if (type === 'tablet') {
+                container.innerHTML = `
+                    <div class="viewport viewport-tablet">
+                        <div class="viewport-header">📱 iPad (768x1024)</div>
+                        <iframe src="chat-interno.html"></iframe>
+                    </div>
+                `;
+            } else if (type === 'desktop') {
+                container.innerHTML = `
+                    <div class="viewport viewport-desktop">
+                        <div class="viewport-header">💻 Desktop (1200px+)</div>
+                        <iframe src="chat-interno.html"></iframe>
+                    </div>
+                `;
+            }
+        }
+        
+        function reloadAll() {
+            const iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => {
+                iframe.src = iframe.src;
+            });
+        }
+        
+        // Mostrar vista móvil por defecto
+        showView('mobile');
+        
+        console.log('📱 Test Chat Responsive cargado');
+        console.log('✅ Sesión de prueba creada');
+    </script>
+</body>
+</html>
