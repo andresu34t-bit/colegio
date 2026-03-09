@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informes de Observaciones - EduGest</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo-container">
+                <img src="LOGO EDUGEST.png" alt="Logo EduGest PME" class="sidebar-logo-img">
+            </div>
+            <h2>EduGest</h2>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar">U</div>
+            <p class="user-name" id="userName">Usuario</p>
+            <p class="user-role" id="userRole">Rol</p>
+            <p class="user-school" id="userSchool" style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 4px;">Colegio</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div style="padding: var(--space-sm) var(--space-lg); color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                Módulo PME
+            </div>
+            <a href="dashboard.html" class="nav-item">📊 Dashboard PME</a>
+            <a href="areas.html" class="nav-item">📝 Registrar Evento</a>
+            <a href="informes.html" class="nav-item">📄 Informes PME</a>
+            <a href="finanzas.html" class="nav-item" id="navFinanzas" style="display: none;">💰 Finanzas</a>
+            
+            <div style="padding: var(--space-lg) var(--space-lg) var(--space-sm) var(--space-lg); color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: var(--space-md);">
+                Observación Clases
+            </div>
+            <a href="seo-dashboard.html" class="nav-item">👨‍🏫 Dashboard</a>
+            <a href="seo-observacion.html" class="nav-item" id="navNuevaObservacion">➕ Nueva Observación</a>
+            <a href="seo-lista.html" class="nav-item">📋 Mis Observaciones</a>
+            <a href="seo-informes.html" class="nav-item active">📊 Informes</a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">🚪 Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <!-- Header -->
+        <div style="margin-bottom: var(--space-2xl); animation: fadeIn 0.5s ease-out;">
+            <div>
+                <h1 style="font-size: 36px; font-weight: 900; margin: 0; background: var(--gradient-success); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    📊 Informes de Observaciones
+                </h1>
+                <p style="color: var(--gray-600); margin: var(--space-xs) 0 0 0; font-weight: 600; font-size: 16px;">
+                    Análisis y reportes del sistema de evaluación docente
+                </p>
+            </div>
+        </div>
+
+        <!-- Filtros de Período -->
+        <div class="form-card" style="animation: slideInUp 0.5s ease-out; margin-bottom: var(--space-xl);">
+            <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+                <span style="font-size: 24px;">📅</span>
+                <h3 style="margin: 0; font-size: 20px; font-weight: 800;">Período de Análisis</h3>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>📆 Desde</label>
+                    <input type="date" id="fechaDesde">
+                </div>
+                <div class="form-group">
+                    <label>📆 Hasta</label>
+                    <input type="date" id="fechaHasta">
+                </div>
+                <div class="form-group">
+                    <label>👤 Docente</label>
+                    <select id="docenteFilter">
+                        <option value="">Todos los docentes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>📚 Asignatura</label>
+                    <select id="asignaturaFilter">
+                        <option value="">Todas las asignaturas</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: var(--space-md); margin-top: var(--space-md);">
+                <button onclick="generarInforme()" class="btn btn-primary">
+                    📊 Generar Informe
+                </button>
+                <button onclick="exportarPDF()" class="btn btn-secondary">
+                    📄 Exportar PDF
+                </button>
+                <button onclick="exportarExcel()" class="btn btn-secondary">
+                    📊 Exportar Excel
+                </button>
+            </div>
+        </div>
+
+        <!-- Resumen Ejecutivo -->
+        <div class="stats-grid" style="animation: slideInUp 0.6s ease-out; margin-bottom: var(--space-xl);">
+            <div class="stat-card">
+                <h3 style="color: var(--primary-700); font-size: 14px;">Total Observaciones</h3>
+                <p class="stat-number" id="totalObservaciones">0</p>
+                <small style="color: var(--gray-600);">En el período seleccionado</small>
+            </div>
+            <div class="stat-card">
+                <h3 style="color: var(--success-700); font-size: 14px;">Promedio General</h3>
+                <p class="stat-number" id="promedioGeneral">0.0</p>
+                <small style="color: var(--gray-600);">Escala 1-4</small>
+            </div>
+            <div class="stat-card">
+                <h3 style="color: var(--info-700); font-size: 14px;">Docentes Evaluados</h3>
+                <p class="stat-number" id="docentesEvaluados">0</p>
+                <small style="color: var(--gray-600);">Únicos</small>
+            </div>
+            <div class="stat-card">
+                <h3 style="color: var(--warning-700); font-size: 14px;">Nivel Destacado</h3>
+                <p class="stat-number" id="porcentajeDestacado">0%</p>
+                <small style="color: var(--gray-600);">Del total</small>
+            </div>
+        </div>
+
+        <!-- Gráficos -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); gap: var(--space-xl); margin-bottom: var(--space-xl);">
+            <div class="form-card" style="animation: slideInUp 0.7s ease-out;">
+                <h3 style="font-size: 20px; font-weight: 800; margin-bottom: var(--space-lg);">📊 Distribución por Nivel</h3>
+                <canvas id="chartNiveles" style="max-height: 300px;"></canvas>
+            </div>
+            
+            <div class="form-card" style="animation: slideInUp 0.8s ease-out;">
+                <h3 style="font-size: 20px; font-weight: 800; margin-bottom: var(--space-lg);">📈 Evolución Temporal</h3>
+                <canvas id="chartEvolucion" style="max-height: 300px;"></canvas>
+            </div>
+        </div>
+
+        <div class="form-card" style="animation: slideInUp 0.9s ease-out; margin-bottom: var(--space-xl);">
+            <h3 style="font-size: 20px; font-weight: 800; margin-bottom: var(--space-lg);">🎯 Promedios por Dimensión</h3>
+            <canvas id="chartDimensiones" style="max-height: 400px;"></canvas>
+        </div>
+
+        <!-- Tabla Detallada -->
+        <div class="form-card" style="animation: slideInUp 1s ease-out;">
+            <h3 style="font-size: 20px; font-weight: 800; margin-bottom: var(--space-lg);">📋 Detalle por Docente</h3>
+            <div style="overflow-x: auto;">
+                <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: var(--gray-100); border-bottom: 3px solid var(--primary-600);">
+                            <th style="padding: var(--space-md); text-align: left; font-weight: 800;">Docente</th>
+                            <th style="padding: var(--space-md); text-align: left; font-weight: 800;">Asignatura</th>
+                            <th style="padding: var(--space-md); text-align: center; font-weight: 800;">N° Obs.</th>
+                            <th style="padding: var(--space-md); text-align: center; font-weight: 800;">Promedio</th>
+                            <th style="padding: var(--space-md); text-align: center; font-weight: 800;">Planif.</th>
+                            <th style="padding: var(--space-md); text-align: center; font-weight: 800;">Enseñ.</th>
+                            <th style="padding: var(--space-md); text-align: center; font-weight: 800;">Eval.</th>
+                            <th style="padding: var(--space-md); text-align: center; font-weight: 800;">Gestión</th>
+                            <th style="padding: var(--space-md); text-align: center; font-weight: 800;">Incl.</th>
+                            <th style="padding: var(--space-md); text-align: left; font-weight: 800;">Nivel</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaDetalle">
+                        <tr>
+                            <td colspan="10" style="text-align: center; padding: var(--space-2xl); color: var(--gray-500);">
+                                Selecciona un período y haz clic en "Generar Informe"
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/seo-informes-demo.js"></script>
+</body>
+</html>

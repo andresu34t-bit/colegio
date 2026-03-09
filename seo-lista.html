@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Observaciones - EduGest</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo-container">
+                <img src="LOGO EDUGEST.png" alt="Logo EduGest PME" class="sidebar-logo-img">
+            </div>
+            <h2>EduGest</h2>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar">U</div>
+            <p class="user-name" id="userName">Usuario</p>
+            <p class="user-role" id="userRole">Rol</p>
+            <p class="user-school" id="userSchool" style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 4px;">Colegio</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div style="padding: var(--space-sm) var(--space-lg); color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                Módulo PME
+            </div>
+            <a href="dashboard.html" class="nav-item">📊 Dashboard PME</a>
+            <a href="areas.html" class="nav-item">📝 Registrar Evento</a>
+            <a href="informes.html" class="nav-item">📄 Informes PME</a>
+            <a href="finanzas.html" class="nav-item" id="navFinanzas" style="display: none;">💰 Finanzas</a>
+            
+            <div style="padding: var(--space-lg) var(--space-lg) var(--space-sm) var(--space-lg); color: rgba(255,255,255,0.5); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: var(--space-md);">
+                Observación Clases
+            </div>
+            <a href="seo-dashboard.html" class="nav-item">👨‍🏫 Dashboard</a>
+            <a href="seo-observacion.html" class="nav-item" id="navNuevaObservacion">➕ Nueva Observación</a>
+            <a href="seo-lista.html" class="nav-item active">📋 Mis Observaciones</a>
+            <a href="seo-informes.html" class="nav-item">📊 Informes</a>
+        </nav>
+
+        <button class="logout-btn" id="logoutBtn">🚪 Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <!-- Header -->
+        <div style="margin-bottom: var(--space-2xl); animation: fadeIn 0.5s ease-out;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-md);">
+                <div>
+                    <h1 style="font-size: 36px; font-weight: 900; margin: 0; background: var(--gradient-success); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                        📋 Mis Observaciones
+                    </h1>
+                    <p style="color: var(--gray-600); margin: var(--space-xs) 0 0 0; font-weight: 600; font-size: 16px;">
+                        Gestiona y revisa todas las observaciones de clase
+                    </p>
+                </div>
+                <button onclick="window.location.href='seo-observacion.html'" class="btn btn-primary" id="btnNuevaObservacion" style="min-width: auto; padding: 14px 28px; font-size: 16px;">
+                    ➕ Nueva Observación
+                </button>
+            </div>
+        </div>
+
+        <!-- Filtros y Búsqueda -->
+        <div class="form-card" style="animation: slideInUp 0.5s ease-out; margin-bottom: var(--space-xl);">
+            <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-lg);">
+                <span style="font-size: 24px;">🔍</span>
+                <h3 style="margin: 0; font-size: 20px; font-weight: 800;">Filtros y Búsqueda</h3>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>🔎 Buscar</label>
+                    <input type="text" id="searchInput" placeholder="Buscar por docente, asignatura, curso...">
+                </div>
+                <div class="form-group">
+                    <label>👤 Docente</label>
+                    <select id="docenteFilter">
+                        <option value="">Todos los docentes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>📚 Asignatura</label>
+                    <select id="asignaturaFilter">
+                        <option value="">Todas las asignaturas</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>📊 Nivel Desempeño</label>
+                    <select id="nivelFilter">
+                        <option value="">Todos los niveles</option>
+                        <option value="Destacado">Destacado</option>
+                        <option value="Adecuado">Adecuado</option>
+                        <option value="Básico">Básico</option>
+                        <option value="Insuficiente">Insuficiente</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: var(--space-md); margin-top: var(--space-md);">
+                <button onclick="limpiarFiltros()" class="btn btn-secondary" style="min-width: auto;">
+                    🔄 Limpiar Filtros
+                </button>
+                <div style="flex: 1;"></div>
+                <div style="display: flex; align-items: center; gap: var(--space-sm); color: var(--gray-600); font-weight: 600;">
+                    <span>📋</span>
+                    <span id="resultadosCount">0 observaciones encontradas</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de Observaciones -->
+        <div class="form-card" style="animation: slideInUp 0.6s ease-out;">
+            <div style="overflow-x: auto;">
+                <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: var(--gray-100); border-bottom: 3px solid var(--primary-600);">
+                            <th style="padding: var(--space-md); text-align: left; font-weight: 800; color: var(--gray-900);">Fecha</th>
+                            <th style="padding: var(--space-md); text-align: left; font-weight: 800; color: var(--gray-900);">Docente</th>
+                            <th style="padding: var(--space-md); text-align: left; font-weight: 800; color: var(--gray-900);">Asignatura</th>
+                            <th style="padding: var(--space-md); text-align: left; font-weight: 800; color: var(--gray-900);">Curso</th>
+                            <th style="padding: var(--space-md); text-align: center; font-weight: 800; color: var(--gray-900);">Promedio</th>
+                            <th style="padding: var(--space-md); text-align: left; font-weight: 800; color: var(--gray-900);">Nivel</th>
+                            <th style="padding: var(--space-md); text-align: center; font-weight: 800; color: var(--gray-900);">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaObservaciones">
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: var(--space-2xl); color: var(--gray-500);">
+                                <div style="font-size: 48px; margin-bottom: var(--space-md);">📭</div>
+                                <div style="font-size: 18px; font-weight: 600;">Cargando observaciones...</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalle -->
+    <div id="modalDetalle" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; overflow-y: auto; padding: var(--space-xl);">
+        <div style="max-width: 1200px; margin: 0 auto; background: white; border-radius: var(--radius-xl); padding: var(--space-2xl); position: relative;">
+            <button onclick="cerrarModal()" style="position: absolute; top: var(--space-lg); right: var(--space-lg); background: var(--gray-200); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 20px; font-weight: bold; color: var(--gray-700);">
+                ✕
+            </button>
+            
+            <div id="modalContent">
+                <!-- Se llenará dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/seo-lista-demo.js"></script>
+</body>
+</html>
