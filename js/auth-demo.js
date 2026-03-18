@@ -128,7 +128,7 @@ function initDemoData() {
             // Super Usuario - Ve todos los colegios
             'admin@edugest.cl': {
                 email: 'admin@edugest.cl',
-                password: 'Admin2026',
+                password: 'admin123',
                 nombre: 'Administrador Global',
                 rol: 'superadmin',
                 colegioId: null, // No pertenece a un colegio específico

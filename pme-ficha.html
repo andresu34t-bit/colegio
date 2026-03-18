@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha PME - EDUGEST</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/sidebar-professional.css">
+    <style>
+        .ficha-hero {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #6366f1 100%);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .ficha-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+        .ficha-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 0.375rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(4px);
+        }
+        .ficha-hero h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0 0 0.5rem 0;
+            font-family: var(--font-display);
+        }
+        .ficha-hero p {
+            font-size: 1rem;
+            opacity: 0.85;
+            margin: 0;
+        }
+        .ficha-hero-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .ficha-hero-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .ficha-hero-meta-item span:first-child {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .ficha-hero-meta-item span:last-child {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.875rem;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .status-badge.activo {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        .status-badge.en-proceso {
+            background: #fef9c3;
+            color: #a16207;
+        }
+        .ficha-section {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: 1.75rem;
+            margin-bottom: 1.25rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-100);
+        }
+        .ficha-section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.875rem;
+            border-bottom: 2px solid var(--gray-100);
+        }
+        .ficha-section-title .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .info-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .info-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+        .objetivo-card {
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            border-left: 4px solid #3b82f6;
+            margin-bottom: 0.875rem;
+        }
+        .objetivo-card:last-child { margin-bottom: 0; }
+        .objetivo-card h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #1d4ed8;
+            margin: 0 0 0.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .objetivo-card p {
+            font-size: 0.9rem;
+            color: var(--gray-700);
+            margin: 0;
+            line-height: 1.6;
+        }
+        .objetivo-card.liderazgo { border-left-color: #a855f7; }
+        .objetivo-card.liderazgo h4 { color: #7e22ce; }
+        .objetivo-card.convivencia { border-left-color: #22c55e; }
+        .objetivo-card.convivencia h4 { color: #15803d; }
+        .objetivo-card.recursos { border-left-color: #f59e0b; }
+        .objetivo-card.recursos h4 { color: #b45309; }
+        .responsable-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.875rem;
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            margin-bottom: 0.75rem;
+        }
+        .responsable-item:last-child { margin-bottom: 0; }
+        .responsable-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            color: white;
+            flex-shrink: 0;
+        }
+        .responsable-info { flex: 1; }
+        .responsable-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--gray-800);
+        }
+        .responsable-role {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+        }
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            padding-bottom: 1.25rem;
+            position: relative;
+        }
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 40px;
+            bottom: 0;
+            width: 2px;
+            background: var(--gray-200);
+        }
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+            border: 3px solid white;
+            box-shadow: var(--shadow-sm);
+        }
+        .timeline-content { flex: 1; padding-top: 0.5rem; }
+        .timeline-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 0.25rem;
+        }
+        .timeline-desc {
+            font-size: 0.82rem;
+            color: var(--gray-500);
+        }
+        .area-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.875rem;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0.25rem;
+        }
+        .progress-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.875rem;
+        }
+        .progress-row:last-child { margin-bottom: 0; }
+        .progress-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            min-width: 120px;
+        }
+        .progress-bar-wrap {
+            flex: 1;
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            height: 10px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: var(--radius-full);
+            transition: width 1s ease;
+        }
+        .progress-pct {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--gray-600);
+            min-width: 38px;
+            text-align: right;
+        }
+        @media (max-width: 768px) {
+            .ficha-hero { padding: 1.5rem; }
+            .ficha-hero h2 { font-size: 1.4rem; }
+            .ficha-hero-meta { gap: 1rem; }
+            .info-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <script src="js/roles-permissions.js"></script>
+    <script src="js/multi-school.js"></script>
+    <script>
+        (function() {
+            if (typeof EdugestRoles !== 'undefined' && !EdugestRoles.protectPage()) return;
+            const user = typeof EdugestRoles !== 'undefined' ? EdugestRoles.getCurrentUser() : {};
+            ['userAvatar','userName','userRole','userSchool'].forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                if (id === 'userAvatar') el.textContent = (user.name || 'D').charAt(0).toUpperCase();
+                if (id === 'userName') el.textContent = user.name || 'Usuario Demo';
+                if (id === 'userRole' && typeof EdugestRoles !== 'undefined') el.textContent = EdugestRoles.getRoleName(user.role);
+                if (id === 'userSchool') el.textContent = user.school || 'Colegio';
+            });
+            if (typeof EdugestRoles !== 'undefined') EdugestRoles.applyPermissions();
+        })();
+    </script>
+
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="LOGO EDUGEST.png" alt="EDUGEST" onerror="this.style.display='none'">
+                </div>
+                <h1 class="sidebar-brand">EDUGEST</h1>
+            </div>
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">D</div>
+                <div class="user-name" id="userName">Usuario Demo</div>
+                <div class="user-role" id="userRole">Director</div>
+                <div style="margin-top:0.5rem;font-size:0.75rem;color:#9ca3af" id="userSchool">Colegio</div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section" data-module="admin-global" style="display:none">
+                    <div class="nav-section-title">Administración</div>
+                    <a href="admin-panel.html" class="nav-item"><span class="nav-icon">🏢</span><span>Panel Admin</span></a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Vista General</div>
+                    <a href="dashboard-general.html" class="nav-item"><span class="nav-icon">🏠</span><span>Dashboard General</span></a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Módulo PME</div>
+                    <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span><span>Dashboard PME</span></a>
+                    <a href="pme-ficha.html" class="nav-item active"><span class="nav-icon">📋</span><span>Ficha PME</span></a>
+                    <a href="configuracion.html" class="nav-item"><span class="nav-icon">⚙️</span><span>Configuración</span></a>
+                    <a href="areas-new.html" class="nav-item"><span class="nav-icon">📝</span><span>Registrar Evento</span></a>
+                    <a href="informes.html" class="nav-item"><span class="nav-icon">📄</span><span>Informes PME</span></a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Comunicación</div>
+                    <a href="chat-interno.html" class="nav-item"><span class="nav-icon">💬</span><span>Chat Interno</span></a>
+                    <a href="notificaciones.html" class="nav-item"><span class="nav-icon">🔔</span><span>Notificaciones</span></a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Observación Clases</div>
+                    <a href="seo-dashboard.html" class="nav-item"><span class="nav-icon">👨‍🏫</span><span>Dashboard</span></a>
+                    <a href="seo-observacion.html" class="nav-item"><span class="nav-icon">➕</span><span>Nueva Observación</span></a>
+                    <a href="seo-lista.html" class="nav-item"><span class="nav-icon">📋</span><span>Mis Observaciones</span></a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="logout()"><span>🚪</span><span>Cerrar Sesión</span></button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div class="page-header-content">
+                    <div>
+                        <h1 class="page-title">Ficha Institucional PME</h1>
+                        <p class="page-subtitle">Plan de Mejoramiento Educativo · Año 2026</p>
+                    </div>
+                    <div style="display:flex;gap:0.75rem;align-items:center">
+                        <span class="status-badge activo">● En Ejecución</span>
+                        <button class="btn btn-primary" onclick="window.print()" style="display:flex;align-items:center;gap:0.5rem">
+                            <span>🖨️</span><span>Imprimir</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+
+                <!-- HERO INSTITUCIONAL -->
+                <div class="ficha-hero">
+                    <div class="ficha-hero-badge">📋 Plan de Mejoramiento Educativo</div>
+                    <h2 id="nombreColegio">Colegio Ejemplo</h2>
+                    <p>RBD: <strong id="rbdColegio">12345-6</strong> · Dependencia: <strong>Municipal</strong> · Región: <strong>Metropolitana</strong></p>
+                    <div class="ficha-hero-meta">
+                        <div class="ficha-hero-meta-item">
+                            <span>Año PME</span>
+                            <span>2026</span>
+                        </div>
+                        <div class="ficha-hero-meta-item">
+                            <span>Vigencia</span>
+                            <span>Marzo – Diciembre 2026</span>
+                        </div>
+                        <div class="ficha-hero-meta-item">
+                            <span>Presupuesto SEP</span>
+                            <span>$45.200.000</span>
+                        </div>
+                        <div class="ficha-hero-meta-item">
+                            <span>Estado</span>
+                            <span>✅ Aprobado</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESCRIPCIÓN -->
+                <div class="ficha-section">
+                    <div class="ficha-section-title">
+                        <div class="icon" style="background:#eff6ff">📖</div>
+                        Descripción del PME
+                    </div>
+                    <p style="color:var(--gray-700);line-height:1.75;font-size:0.95rem">
+                        El Plan de Mejoramiento Educativo (PME) es el instrumento de planificación estratégica que orienta el quehacer institucional del establecimiento. Articula los recursos SEP con las necesidades de mejora identificadas en el proceso de autoevaluación, estableciendo objetivos, estrategias y metas concretas para elevar la calidad de los aprendizajes y la gestión escolar durante el año 2026.
+                    </p>
+                    <p style="color:var(--gray-700);line-height:1.75;font-size:0.95rem;margin-top:0.875rem">
+                        El PME se estructura en cuatro dimensiones de gestión: <strong>Currículum</strong>, <strong>Liderazgo</strong>, <strong>Convivencia Escolar</strong> y <strong>Gestión de Recursos</strong>, cada una con objetivos estratégicos, estrategias e indicadores de seguimiento.
+                    </p>
+                </div>
+
+                <!-- DATOS INSTITUCIONALES -->
+                <div class="ficha-section">
+                    <div class="ficha-section-title">
+                        <div class="icon" style="background:#f0fdf4">🏫</div>
+                        Datos Institucionales
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Nombre del Establecimiento</span>
+                            <span class="info-value" id="infoNombre">Colegio Ejemplo</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">RBD</span>
+                            <span class="info-value">12345-6</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Dependencia</span>
+                            <span class="info-value">Municipal</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Región</span>
+                            <span class="info-value">Metropolitana</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Comuna</span>
+                            <span class="info-value">Santiago</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Niveles Educativos</span>
+                            <span class="info-value">Pre-Kínder a 4° Medio</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">N° de Estudiantes</span>
+                            <span class="info-value">850</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">N° de Docentes</span>
+                            <span class="info-value">42</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Clasificación SIMCE</span>
+                            <span class="info-value">Autónomo</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Categoría de Desempeño</span>
+                            <span class="info-value">Medio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OBJETIVOS ESTRATÉGICOS -->
+                <div class="ficha-section">
+                    <div class="ficha-section-title">
+                        <div class="icon" style="background:#eff6ff">🎯</div>
+                        Objetivos Estratégicos por Dimensión
+                    </div>
+                    <div class="objetivo-card">
+                        <h4>📚 Currículum</h4>
+                        <p>Mejorar los resultados de aprendizaje de los estudiantes mediante la implementación de estrategias pedagógicas innovadoras, el fortalecimiento de la planificación curricular y el uso de datos para la toma de decisiones pedagógicas.</p>
+                    </div>
+                    <div class="objetivo-card liderazgo">
+                        <h4>👔 Liderazgo</h4>
+                        <p>Fortalecer las capacidades directivas y de liderazgo pedagógico del equipo de gestión, promoviendo una cultura de mejora continua, trabajo colaborativo y rendición de cuentas orientada a resultados.</p>
+                    </div>
+                    <div class="objetivo-card convivencia">
+                        <h4>🤝 Convivencia Escolar</h4>
+                        <p>Desarrollar un clima escolar positivo e inclusivo que favorezca el bienestar socioemocional de toda la comunidad educativa, previniendo situaciones de violencia y promoviendo la participación activa de familias y estudiantes.</p>
+                    </div>
+                    <div class="objetivo-card recursos">
+                        <h4>💼 Gestión de Recursos</h4>
+                        <p>Optimizar la gestión y uso de los recursos SEP, asegurando su correcta asignación a las acciones del PME, la transparencia en el gasto y la rendición de cuentas ante la comunidad educativa.</p>
+                    </div>
+                </div>
+
+                <!-- RESPONSABLES -->
+                <div class="ficha-section">
+                    <div class="ficha-section-title">
+                        <div class="icon" style="background:#faf5ff">👥</div>
+                        Equipo Responsable
+                    </div>
+                    <div class="responsable-item">
+                        <div class="responsable-avatar" style="background:linear-gradient(135deg,#3b82f6,#6366f1)">D</div>
+                        <div class="responsable-info">
+                            <div class="responsable-name" id="respDirector">Director/a del Establecimiento</div>
+                            <div class="responsable-role">Responsable General del PME · Firma y aprobación</div>
+                        </div>
+                        <span class="status-badge activo">Activo</span>
+                    </div>
+                    <div class="responsable-item">
+                        <div class="responsable-avatar" style="background:linear-gradient(135deg,#a855f7,#ec4899)">J</div>
+                        <div class="responsable-info">
+                            <div class="responsable-name">Jefe/a de UTP</div>
+                            <div class="responsable-role">Coordinación Curricular · Seguimiento de indicadores</div>
+                        </div>
+                        <span class="status-badge activo">Activo</span>
+                    </div>
+                    <div class="responsable-item">
+                        <div class="responsable-avatar" style="background:linear-gradient(135deg,#22c55e,#16a34a)">O</div>
+                        <div class="responsable-info">
+                            <div class="responsable-name">Orientador/a</div>
+                            <div class="responsable-role">Convivencia Escolar · Bienestar estudiantil</div>
+                        </div>
+                        <span class="status-badge activo">Activo</span>
+                    </div>
+                    <div class="responsable-item">
+                        <div class="responsable-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">A</div>
+                        <div class="responsable-info">
+                            <div class="responsable-name">Administrador/a</div>
+                            <div class="responsable-role">Gestión de Recursos SEP · Rendición de cuentas</div>
+                        </div>
+                        <span class="status-badge activo">Activo</span>
+                    </div>
+                </div>
+
+                <!-- FECHAS Y CRONOGRAMA -->
+                <div class="ficha-section">
+                    <div class="ficha-section-title">
+                        <div class="icon" style="background:#fff7ed">📅</div>
+                        Cronograma de Hitos
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background:#dcfce7">✅</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Diagnóstico y Autoevaluación</div>
+                            <div class="timeline-desc">Enero – Febrero 2026 · Completado</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background:#dcfce7">✅</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Elaboración y Aprobación del PME</div>
+                            <div class="timeline-desc">Febrero – Marzo 2026 · Completado</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background:#fef9c3">🔄</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Ejecución Primer Semestre</div>
+                            <div class="timeline-desc">Marzo – Julio 2026 · En curso</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background:#eff6ff">📊</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Evaluación Intermedia</div>
+                            <div class="timeline-desc">Julio 2026 · Pendiente</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background:#eff6ff">📝</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Ejecución Segundo Semestre</div>
+                            <div class="timeline-desc">Agosto – Noviembre 2026 · Pendiente</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background:#eff6ff">🏁</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Evaluación Final y Rendición de Cuentas</div>
+                            <div class="timeline-desc">Diciembre 2026 · Pendiente</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AVANCE POR DIMENSIÓN -->
+                <div class="ficha-section">
+                    <div class="ficha-section-title">
+                        <div class="icon" style="background:#f0fdf4">📈</div>
+                        Avance por Dimensión
+                    </div>
+                    <div class="progress-row">
+                        <span class="progress-label">📚 Currículum</span>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar-fill" style="width:68%;background:linear-gradient(90deg,#3b82f6,#6366f1)"></div>
+                        </div>
+                        <span class="progress-pct">68%</span>
+                    </div>
+                    <div class="progress-row">
+                        <span class="progress-label">👔 Liderazgo</span>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar-fill" style="width:75%;background:linear-gradient(90deg,#a855f7,#ec4899)"></div>
+                        </div>
+                        <span class="progress-pct">75%</span>
+                    </div>
+                    <div class="progress-row">
+                        <span class="progress-label">🤝 Convivencia</span>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar-fill" style="width:55%;background:linear-gradient(90deg,#22c55e,#16a34a)"></div>
+                        </div>
+                        <span class="progress-pct">55%</span>
+                    </div>
+                    <div class="progress-row">
+                        <span class="progress-label">💼 Recursos</span>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar-fill" style="width:82%;background:linear-gradient(90deg,#f59e0b,#ef4444)"></div>
+                        </div>
+                        <span class="progress-pct">82%</span>
+                    </div>
+                </div>
+
+                <!-- ÁREAS DE ACCIÓN -->
+                <div class="ficha-section">
+                    <div class="ficha-section-title">
+                        <div class="icon" style="background:#fef2f2">🗂️</div>
+                        Áreas de Acción Prioritarias
+                    </div>
+                    <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+                        <span class="area-pill" style="background:#eff6ff;color:#1d4ed8">📚 Planificación Curricular</span>
+                        <span class="area-pill" style="background:#eff6ff;color:#1d4ed8">📊 Evaluación Formativa</span>
+                        <span class="area-pill" style="background:#eff6ff;color:#1d4ed8">🔬 Metodologías Activas</span>
+                        <span class="area-pill" style="background:#faf5ff;color:#7e22ce">👁️ Observación de Clases</span>
+                        <span class="area-pill" style="background:#faf5ff;color:#7e22ce">🤝 Trabajo Colaborativo</span>
+                        <span class="area-pill" style="background:#faf5ff;color:#7e22ce">📋 Retroalimentación</span>
+                        <span class="area-pill" style="background:#f0fdf4;color:#15803d">🌱 Clima Escolar</span>
+                        <span class="area-pill" style="background:#f0fdf4;color:#15803d">👨‍👩‍👧 Participación Familias</span>
+                        <span class="area-pill" style="background:#f0fdf4;color:#15803d">🛡️ Prevención Violencia</span>
+                        <span class="area-pill" style="background:#fffbeb;color:#b45309">💰 Gestión SEP</span>
+                        <span class="area-pill" style="background:#fffbeb;color:#b45309">🏗️ Infraestructura</span>
+                        <span class="area-pill" style="background:#fffbeb;color:#b45309">📦 Recursos Didácticos</span>
+                    </div>
+                </div>
+
+            </div><!-- /page-content -->
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/sidebar-toggle.js"></script>
+    <script>
+        function logout() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                localStorage.removeItem('edugest_session');
+                sessionStorage.removeItem('edugest_session');
+                window.location.replace('login.html');
+            }
+        }
+        // Cargar nombre del colegio desde sesión
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const session = JSON.parse(localStorage.getItem('edugest_session') || sessionStorage.getItem('edugest_session') || '{}');
+                if (session.school) {
+                    document.getElementById('nombreColegio').textContent = session.school;
+                    document.getElementById('infoNombre').textContent = session.school;
+                }
+            } catch(e) {}
+        });
+    </script>
+</body>
+</html>
