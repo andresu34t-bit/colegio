@@ -816,15 +816,15 @@ body {
    RESPONSIVE DESIGN
    ============================================ */
 
-/* Mobile Menu Button */
+/* Mobile Menu Button - manejado por css/responsive.css */
 .mobile-menu-btn {
     display: none;
     position: fixed;
     top: var(--space-4);
     left: var(--space-4);
-    z-index: 10001;
-    width: 48px;
-    height: 48px;
+    z-index: 1100;
+    width: 44px;
+    height: 44px;
     background: var(--curriculum-600);
     color: var(--white);
     border: none;
@@ -841,96 +841,9 @@ body {
     transform: scale(0.95);
 }
 
-/* Sidebar Overlay */
-.sidebar-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    z-index: 999;
-    opacity: 0;
-    transition: opacity var(--transition-base);
-}
+/* Sidebar Overlay - manejado por css/responsive.css */
 
-.sidebar-overlay.active {
-    display: block;
-    opacity: 1;
-}
-
-/* Tablet */
-@media (max-width: 1024px) {
-    .mobile-menu-btn {
-        display: flex;
-    }
-    
-    .sidebar {
-        transform: translateX(-100%);
-    }
-    
-    .sidebar.active {
-        transform: translateX(0);
-    }
-    
-    .main-content {
-        margin-left: 0;
-    }
-    
-    .page-content {
-        padding: var(--space-6);
-    }
-    
-    .modules-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .page-header {
-        padding: var(--space-4) var(--space-6);
-    }
-    
-    .page-title {
-        font-size: 1.5rem;
-    }
-    
-    .page-content {
-        padding: var(--space-4);
-    }
-    
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .modules-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .card {
-        padding: var(--space-4);
-    }
-    
-    .table-container {
-        overflow-x: auto;
-    }
-}
-
-/* Small Mobile */
-@media (max-width: 480px) {
-    .page-title {
-        font-size: 1.25rem;
-    }
-    
-    .btn {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .form-actions {
-        flex-direction: column;
-    }
-}
+/* Responsive manejado por css/responsive.css */
 
 /* ============================================
    ANIMATIONS

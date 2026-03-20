@@ -1,107 +1,83 @@
-// Sidebar Toggle - Menú hamburguesa para móvil
+// Sidebar Toggle - Menú hamburguesa responsive
+// Activo en tablet (≤1024px) y móvil (≤768px)
 (function() {
     'use strict';
-    
-    // Crear botón de toggle si no existe
-    function createToggleButton() {
-        if (document.querySelector('.sidebar-toggle')) return;
-        
-        const button = document.createElement('button');
-        button.className = 'sidebar-toggle';
-        button.setAttribute('aria-label', 'Abrir menú');
-        button.innerHTML = '<span>☰</span>';
-        
-        document.body.appendChild(button);
-        
-        return button;
-    }
-    
-    // Crear overlay si no existe
-    function createOverlay() {
-        if (document.querySelector('.sidebar-overlay')) return;
-        
-        const overlay = document.createElement('div');
-        overlay.className = 'sidebar-overlay';
-        
-        document.body.appendChild(overlay);
-        
-        return overlay;
-    }
-    
-    // Inicializar sidebar toggle
-    function initSidebarToggle() {
-        const sidebar = document.querySelector('.sidebar');
+
+    var BREAKPOINT = 1024; // px - sidebar oculto por debajo de este valor
+
+    function init() {
+        var sidebar = document.querySelector('.sidebar');
         if (!sidebar) return;
-        
-        const toggleBtn = createToggleButton();
-        const overlay = createOverlay();
-        
-        // Toggle sidebar
-        function toggleSidebar() {
-            const isActive = sidebar.classList.contains('active');
-            
-            if (isActive) {
-                closeSidebar();
-            } else {
-                openSidebar();
-            }
+
+        // Reutilizar o crear botón toggle
+        var toggleBtn = document.querySelector('.sidebar-toggle') || document.querySelector('.mobile-menu-btn');
+        if (!toggleBtn) {
+            toggleBtn = document.createElement('button');
+            toggleBtn.className = 'sidebar-toggle';
+            toggleBtn.setAttribute('aria-label', 'Abrir menú');
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            toggleBtn.innerHTML = '<span aria-hidden="true">☰</span>';
+            document.body.appendChild(toggleBtn);
         }
-        
-        // Abrir sidebar
+
+        // Reutilizar o crear overlay
+        var overlay = document.querySelector('.sidebar-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.className = 'sidebar-overlay';
+            overlay.setAttribute('aria-hidden', 'true');
+            document.body.appendChild(overlay);
+        }
+
         function openSidebar() {
             sidebar.classList.add('active');
             overlay.classList.add('active');
-            toggleBtn.setAttribute('aria-label', 'Cerrar menú');
+            toggleBtn.setAttribute('aria-expanded', 'true');
             toggleBtn.querySelector('span').textContent = '✕';
             document.body.style.overflow = 'hidden';
         }
-        
-        // Cerrar sidebar
+
         function closeSidebar() {
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
-            toggleBtn.setAttribute('aria-label', 'Abrir menú');
+            toggleBtn.setAttribute('aria-expanded', 'false');
             toggleBtn.querySelector('span').textContent = '☰';
             document.body.style.overflow = '';
         }
-        
-        // Event listeners
+
+        function toggleSidebar() {
+            sidebar.classList.contains('active') ? closeSidebar() : openSidebar();
+        }
+
+        // Eventos
         toggleBtn.addEventListener('click', toggleSidebar);
         overlay.addEventListener('click', closeSidebar);
-        
-        // Cerrar al hacer click en un link (móvil)
-        const navLinks = sidebar.querySelectorAll('.nav-item');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    closeSidebar();
-                }
+
+        // Cerrar al navegar en mobile/tablet
+        sidebar.querySelectorAll('.nav-item').forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= BREAKPOINT) closeSidebar();
             });
         });
-        
-        // Cerrar con tecla Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && sidebar.classList.contains('active')) {
-                closeSidebar();
-            }
+
+        // Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && sidebar.classList.contains('active')) closeSidebar();
         });
-        
-        // Cerrar sidebar al cambiar a desktop
-        let resizeTimer;
-        window.addEventListener('resize', () => {
+
+        // Al pasar a desktop, cerrar sidebar y restaurar scroll
+        var resizeTimer;
+        window.addEventListener('resize', function() {
             clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                if (window.innerWidth > 768) {
-                    closeSidebar();
-                }
-            }, 250);
+            resizeTimer = setTimeout(function() {
+                if (window.innerWidth > BREAKPOINT) closeSidebar();
+            }, 200);
         });
     }
-    
-    // Inicializar cuando el DOM esté listo
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initSidebarToggle);
+        document.addEventListener('DOMContentLoaded', init);
     } else {
-        initSidebarToggle();
+        init();
     }
 })();

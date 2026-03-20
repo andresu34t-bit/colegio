@@ -378,74 +378,38 @@
 }
 
 /* ============================================
-   RESPONSIVE - TABLET
+   RESPONSIVE - TABLET Y MÓVIL
+   El archivo css/responsive.css maneja el comportamiento
+   de ocultar/mostrar el sidebar en ≤1024px.
+   Aquí solo ajustamos tamaños internos del sidebar.
    ============================================ */
 @media (max-width: 1024px) {
-    .sidebar {
-        width: var(--sidebar-width-tablet);
-    }
-    
-    .main-content {
-        margin-left: var(--sidebar-width-tablet);
-    }
-    
     .sidebar-header {
         padding: 1.5rem 1rem;
     }
-    
+
     .sidebar-logo {
         width: 56px;
         height: 56px;
     }
-    
+
     .sidebar-brand {
         font-size: 1.25rem;
     }
-    
+
     .user-avatar {
         width: 48px;
         height: 48px;
         font-size: 1.25rem;
     }
-    
+
     .nav-item {
         font-size: 0.875rem;
         padding: 0.5rem 1rem;
     }
-    
+
     .nav-icon {
         font-size: 1.125rem;
-    }
-}
-
-/* ============================================
-   RESPONSIVE - MÓVIL
-   ============================================ */
-@media (max-width: 768px) {
-    .sidebar {
-        width: var(--sidebar-width-mobile);
-        transform: translateX(-100%);
-    }
-    
-    .sidebar.active {
-        transform: translateX(0);
-    }
-    
-    .main-content {
-        margin-left: 0;
-    }
-    
-    .sidebar-toggle {
-        display: flex;
-    }
-    
-    /* Ajustar padding del contenido cuando el toggle está visible */
-    .page-header {
-        padding-left: 4.5rem;
-    }
-    
-    .page-content {
-        padding: 1.5rem 1rem;
     }
 }
 
