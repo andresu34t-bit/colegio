@@ -359,3 +359,4 @@ localStorage:
 **¡Disfruta probando el sistema multi-colegio! 🏫🚀**
 
 *Última actualización: Marzo 2026*
+*Última actualización: Marzo 2026*
