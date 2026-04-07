@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIE - Programa de Integración Escolar - EDUGEST</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/advanced-features.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .mod-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .mod-summary-item {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,.07);
+            text-align: center;
+        }
+        .mod-summary-value { font-size: 1.6rem; font-weight: 800; color: var(--gray-800); }
+        .mod-summary-label { font-size: .75rem; color: var(--gray-500); margin-top: .2rem; }
+
+        .mod-progress-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .mod-progress-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f59e0b, #b45309);
+        }
+        .mod-progress-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 1rem; flex-wrap: wrap; gap: .5rem;
+        }
+        .mod-progress-title { font-size: 1rem; font-weight: 700; color: var(--gray-800); }
+        .mod-progress-pct { font-size: 2rem; font-weight: 800; color: #b45309; }
+        .mod-bar-bg {
+            height: 12px; border-radius: 99px;
+            background: var(--gray-100); overflow: hidden;
+        }
+        .mod-bar-fill {
+            height: 100%; border-radius: 99px;
+            background: linear-gradient(90deg, #f59e0b, #b45309);
+            transition: width .8s ease;
+        }
+
+        .mod-table-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+        }
+        .mod-table-title {
+            font-size: 1rem; font-weight: 700; color: var(--gray-800);
+            margin-bottom: 1.25rem;
+            display: flex; align-items: center; gap: .5rem;
+        }
+        table.mod-table {
+            width: 100%; border-collapse: collapse;
+            font-size: .875rem;
+        }
+        .mod-table th {
+            text-align: left; padding: .6rem .75rem;
+            background: var(--gray-50); color: var(--gray-600);
+            font-weight: 600; font-size: .75rem; text-transform: uppercase;
+            letter-spacing: .04em;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .mod-table td {
+            padding: .75rem; border-bottom: 1px solid var(--gray-100);
+            color: var(--gray-700);
+        }
+        .mod-table tr:last-child td { border-bottom: none; }
+        .mod-table tr:hover td { background: var(--gray-50); }
+
+        .badge {
+            display: inline-flex; align-items: center; gap: .3rem;
+            padding: .2rem .6rem; border-radius: 99px;
+            font-size: .72rem; font-weight: 600;
+        }
+        .badge-green  { background: #dcfce7; color: #15803d; }
+        .badge-yellow { background: #fef3c7; color: #b45309; }
+        .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+        .badge-gray   { background: #f3f4f6; color: #6b7280; }
+
+        .no-data-box {
+            text-align: center; padding: 3rem 1rem;
+            color: var(--gray-400);
+        }
+        .no-data-box .no-data-icon { font-size: 3rem; margin-bottom: .75rem; }
+        .no-data-box p { font-size: .9rem; }
+
+        @media (max-width: 640px) {
+            .mod-summary { grid-template-columns: repeat(2, 1fr); }
+            .mod-table th:nth-child(4),
+            .mod-table td:nth-child(4) { display: none; }
+            .mod-progress-pct { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <script src="js/roles-permissions.js"></script>
+    <script src="js/multi-school.js"></script>
+    <script>
+        (function() {
+            try {
+                if (typeof EdugestRoles !== 'undefined' && !EdugestRoles.protectPage()) return;
+                const user = typeof EdugestRoles !== 'undefined' ? EdugestRoles.getCurrentUser() : null;
+                if (user) {
+                    const av = document.getElementById('userAvatar');
+                    const un = document.getElementById('userName');
+                    const ur = document.getElementById('userRole');
+                    if (av && user.name) av.textContent = user.name.charAt(0).toUpperCase();
+                    if (un && user.name) un.textContent = user.name;
+                    if (ur && user.role) ur.textContent = typeof EdugestRoles !== 'undefined' ? EdugestRoles.getRoleName(user.role) : user.role;
+                }
+            } catch(e) {}
+        })();
+    </script>
+
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="LOGO EDUGEST.png" alt="EDUGEST" onerror="this.style.display='none'">
+                </div>
+                <h1 class="sidebar-brand">EDUGEST</h1>
+            </div>
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">D</div>
+                <div class="user-name" id="userName">Usuario Demo</div>
+                <div class="user-role" id="userRole">Director</div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Vista General</div>
+                    <a href="dashboard-general.html" class="nav-item">
+                        <span class="nav-icon">🏠</span><span>Dashboard General</span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Módulo PME</div>
+                    <a href="dashboard.html" class="nav-item">
+                        <span class="nav-icon">📊</span><span>Dashboard PME</span>
+                    </a>
+                    <a href="areas-new.html" class="nav-item">
+                        <span class="nav-icon">📝</span><span>Registrar Evento</span>
+                    </a>
+                    <a href="informes.html" class="nav-item">
+                        <span class="nav-icon">📄</span><span>Informes PME</span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Observación Clases</div>
+                    <a href="seo-dashboard.html" class="nav-item">
+                        <span class="nav-icon">👨‍🏫</span><span>Dashboard</span>
+                    </a>
+                    <a href="seo-lista.html" class="nav-item">
+                        <span class="nav-icon">📋</span><span>Mis Observaciones</span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Cobertura Curricular</div>
+                    <a href="cobertura.html" class="nav-item">
+                        <span class="nav-icon">📚</span><span>Dashboard</span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">PIE</div>
+                    <a href="pie.html" class="nav-item active">
+                        <span class="nav-icon">🤝</span><span>Dashboard PIE</span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <div class="nav-section-title">Comunicación</div>
+                    <a href="chat-interno.html" class="nav-item">
+                        <span class="nav-icon">💬</span><span>Chat Interno</span>
+                    </a>
+                    <a href="notificaciones.html" class="nav-item">
+                        <span class="nav-icon">🔔</span><span>Notificaciones</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="logout()">
+                    <span>🚪</span><span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <div class="page-header-content">
+                    <div>
+                        <h1 class="page-title">🤝 Programa de Integración Escolar</h1>
+                        <p class="page-subtitle">Seguimiento de estudiantes PIE · EDUGEST 2026</p>
+                    </div>
+                    <a href="dashboard-general.html" class="btn btn-secondary" style="font-size:.85rem">
+                        ← Volver al Dashboard
+                    </a>
+                </div>
+            </header>
+
+            <div class="page-content">
+
+                <!-- Resumen superior -->
+                <div class="mod-summary">
+                    <div class="mod-summary-item">
+                        <div class="mod-summary-value" id="pieAvance">0%</div>
+                        <div class="mod-summary-label">Avance general</div>
+                    </div>
+                    <div class="mod-summary-item">
+                        <div class="mod-summary-value" id="pieTotal">0</div>
+                        <div class="mod-summary-label">Estudiantes registrados</div>
+                    </div>
+                    <div class="mod-summary-item">
+                        <div class="mod-summary-value" id="pieAtendidos">0</div>
+                        <div class="mod-summary-label">Atendidos</div>
+                    </div>
+                    <div class="mod-summary-item">
+                        <div class="mod-summary-value">2026</div>
+                        <div class="mod-summary-label">Año en curso</div>
+                    </div>
+                </div>
+
+                <!-- Barra de avance general -->
+                <div class="mod-progress-card">
+                    <div class="mod-progress-header">
+                        <span class="mod-progress-title">Avance General PIE</span>
+                        <span class="mod-progress-pct" id="piePct">0%</span>
+                    </div>
+                    <div class="mod-bar-bg">
+                        <div class="mod-bar-fill" id="pieBar" style="width:0%"></div>
+                    </div>
+                </div>
+
+                <!-- Tabla de registros -->
+                <div class="mod-table-card">
+                    <div class="mod-table-title">
+                        <span>📋</span> Registros de Estudiantes PIE
+                    </div>
+                    <div id="pieTableWrap"></div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+    function logout() {
+        if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+            try {
+                localStorage.removeItem('edugest_session');
+                sessionStorage.removeItem('edugest_session');
+            } catch(e) {}
+            window.location.replace('login.html');
+        }
+    }
+
+    function getEstadoBadge(estado) {
+        const map = {
+            'atendido':    '<span class="badge badge-green">✓ Atendido</span>',
+            'en_proceso':  '<span class="badge badge-yellow">En proceso</span>',
+            'pendiente':   '<span class="badge badge-blue">Pendiente</span>',
+        };
+        return map[estado] || '<span class="badge badge-gray">Sin datos</span>';
+    }
+
+    function renderTabla(registros) {
+        const wrap = document.getElementById('pieTableWrap');
+        if (!registros || registros.length === 0) {
+            wrap.innerHTML = `
+                <div class="no-data-box">
+                    <div class="no-data-icon">📭</div>
+                    <p>Sin datos disponibles</p>
+                    <p style="font-size:.8rem;margin-top:.5rem">Los registros de estudiantes PIE aparecerán aquí cuando se ingresen datos.</p>
+                </div>`;
+            return;
+        }
+
+        const rows = registros.map(r => `
+            <tr>
+                <td><strong>${r.nombre || '—'}</strong></td>
+                <td>${r.curso || '—'}</td>
+                <td>${r.responsable || '—'}</td>
+                <td>${getEstadoBadge(r.estado)}</td>
+                <td style="font-size:.8rem;color:var(--gray-500)">${r.intervencion || '—'}</td>
+            </tr>`).join('');
+
+        wrap.innerHTML = `
+            <table class="mod-table">
+                <thead>
+                    <tr>
+                        <th>Estudiante</th>
+                        <th>Curso</th>
+                        <th>Responsable</th>
+                        <th>Estado</th>
+                        <th>Intervención</th>
+                    </tr>
+                </thead>
+                <tbody>${rows}</tbody>
+            </table>`;
+    }
+
+    function init() {
+        let registros = [];
+        let avance = 0;
+        let atendidos = 0;
+
+        try {
+            const raw = localStorage.getItem('pie_registros');
+            if (raw) {
+                const items = JSON.parse(raw);
+                if (Array.isArray(items) && items.length > 0) {
+                    registros = items;
+                    atendidos = items.filter(i => i.estado === 'atendido').length;
+                    avance = Math.round((atendidos / items.length) * 100);
+                }
+            }
+        } catch(e) {}
+
+        document.getElementById('pieAvance').textContent   = avance + '%';
+        document.getElementById('pieTotal').textContent    = registros.length;
+        document.getElementById('pieAtendidos').textContent = atendidos;
+        document.getElementById('piePct').textContent      = avance + '%';
+        document.getElementById('pieBar').style.width      = avance + '%';
+
+        renderTabla(registros);
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
