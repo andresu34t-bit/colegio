@@ -162,6 +162,18 @@
         @media (max-width: 640px) {
             .dg-grid { grid-template-columns: 1fr; }
             .dg-summary { grid-template-columns: repeat(2, 1fr); }
+            .dg-btn {
+                padding: .65rem 1.2rem;
+                font-size: .9rem;
+                width: 100%;
+                justify-content: center;
+            }
+            .dg-meta { flex-direction: column; align-items: flex-start; }
+            .dg-card { padding: 1.25rem; }
+        }
+
+        @media (min-width: 1200px) {
+            .dg-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -285,7 +297,7 @@
                 <!-- Resumen superior -->
                 <div class="dg-summary" id="summaryBar">
                     <div class="dg-summary-item">
-                        <div class="dg-summary-value" id="sumModulos">2</div>
+                        <div class="dg-summary-value" id="sumModulos">4</div>
                         <div class="dg-summary-label">Módulos activos</div>
                     </div>
                     <div class="dg-summary-item">
@@ -392,8 +404,25 @@
             icono: '📚',
             titulo: 'Cobertura Curricular',
             subtitulo: 'Seguimiento de contenidos por asignatura',
-            activo: false,
-            href: null
+            activo: true,
+            href: 'cobertura.html',
+            getData() {
+                try {
+                    const raw = localStorage.getItem('cobertura_registros');
+                    if (raw) {
+                        const items = JSON.parse(raw);
+                        if (Array.isArray(items) && items.length > 0) {
+                            const completados = items.filter(i => i && i.estado === 'completado').length;
+                            return {
+                                avance: Math.round((completados / items.length) * 100),
+                                registros: items.length,
+                                label: 'contenidos registrados'
+                            };
+                        }
+                    }
+                } catch(e) { /* usar fallback */ }
+                return { avance: 0, registros: 0, label: 'contenidos registrados' };
+            }
         },
         {
             id: 'pie',
@@ -401,8 +430,25 @@
             icono: '🤝',
             titulo: 'PIE',
             subtitulo: 'Programa de Integración Escolar',
-            activo: false,
-            href: null
+            activo: true,
+            href: 'pie.html',
+            getData() {
+                try {
+                    const raw = localStorage.getItem('pie_registros');
+                    if (raw) {
+                        const items = JSON.parse(raw);
+                        if (Array.isArray(items) && items.length > 0) {
+                            const atendidos = items.filter(i => i && i.estado === 'atendido').length;
+                            return {
+                                avance: Math.round((atendidos / items.length) * 100),
+                                registros: items.length,
+                                label: 'estudiantes registrados'
+                            };
+                        }
+                    }
+                } catch(e) { /* usar fallback */ }
+                return { avance: 0, registros: 0, label: 'estudiantes registrados' };
+            }
         }
     ];
 
@@ -465,18 +511,15 @@
                 </div>
             </div>
 
-            ${sinDatos
-                ? `<div class="dg-no-data">Sin datos disponibles aún</div>`
-                : `<div class="dg-progress-wrap">
-                    <div class="dg-progress-label">
-                        <span>Avance</span>
-                        <span class="dg-progress-pct">${avance}%</span>
-                    </div>
-                    <div class="dg-bar-bg">
-                        <div class="dg-bar-fill" style="width:${avance}%"></div>
-                    </div>
-                </div>`
-            }
+            <div class="dg-progress-wrap">
+                <div class="dg-progress-label">
+                    <span>Avance</span>
+                    <span class="dg-progress-pct">${avance}%</span>
+                </div>
+                <div class="dg-bar-bg">
+                    <div class="dg-bar-fill" style="width:${avance}%"></div>
+                </div>
+            </div>
 
             <div class="dg-meta">
                 <div>
@@ -485,7 +528,10 @@
                         ${sinDatos ? 'Sin datos' : estado.texto}
                     </span>
                     <div class="dg-records" style="margin-top:.4rem">
-                        <strong>${registros}</strong> ${label}
+                        ${sinDatos
+                            ? '<span style="color:var(--gray-400)">Sin datos disponibles</span>'
+                            : `<strong>${registros}</strong> ${label}`
+                        }
                     </div>
                 </div>
                 <a href="${mod.href}" class="dg-btn">Ver detalle →</a>
